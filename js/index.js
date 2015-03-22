@@ -33,12 +33,7 @@ app.nextPage= function (){
   if( app.numPagina == app.numMaxPagine){
     // vuoi aggiungere una pagina?
     alert("ok. pag:"+app.numPagina);
-    $.mobile.pageContainer.pagecontainer("change", "#page-elencomete", {
-        transition: 'flip',
-        changeHash: false,
-        reverse: true,
-        showLoadMsg: true
-    });
+    app.elencoMete();
   } else {
     app.numPagina += 1;
     if( app.numPagina>0) {
@@ -77,12 +72,72 @@ app.prevPage= function (){
   }
 }
 // va alla pagina cobn l'elenco delle mete
+app.elencoMete= function (){
+  $.mobile.pageContainer.pagecontainer("change", "#page-elencomete", {
+      transition: 'flip',
+      changeHash: false,
+      reverse: true,
+      showLoadMsg: true
+  });
+}
+// aggiunge meta
 app.nuovaMeta= function (){
   app.numMaxPagine +=1;
   app.nextPage();
 }
-    
+
+// classe con le mete
+var mete = {
+  // elenco dei luoghi
+  elenco: [],
+  // mostra elenco mete
+  elencoMete: function() {
+    $('#lstMete').empty();
+    $.each(mete.elenco, function(key, value){
+      var testo = '<li id="'+ key +'" ><a href="#" >';
+      testo += '<p>'+value.nome ;
+      testo += '</p>';
+      testo += '</a></li>';
+      $('#lstMete').append(testo);
+      $("#lstMete li").bind("click", function(){
+          app.nuovaMeta();
+          //app.arcanoShow(this.id);
+      });
+    })
+    $('#lstPlaces').listview("refresh");
+  }
+}
+
 $(document).ready(function() {
     app.initialize();
-    URL_PREFIX = "http://www.troni.it/passapport/";       
+    URL_PREFIX = "http://www.troni.it/passapport/";
+    // aggiorna elenco mete
+    while(mete.elenco.length > 0) {
+      mete.elenco.pop();
+    };
+    var i=0;
+    while(i <5) {
+      mete.elenco.push({"nome": "nome " + i});
+      i++;
+    };
+  
+    //$.ajax({
+    //  type: 'GET',
+    //  url: URL_PREFIX + 'php/leggi_mete.php',
+    //  async: false,
+    //  data: {
+    //    tipo: 'vicino',
+    //    param: ''
+    //    },
+    //  cache: false
+    //}).done(function(result) {
+    //  var obj = $.parseJSON(result);
+    //  $.each(obj, function(i, valore){
+    //    mete.elenco.push(valore);
+    //    //alert(mappa.luoghi[i].descrizione);
+    //  })
+    //}).fail(function(){
+    //  alert("Attenzione! Problemi di conenssione");
+    //})
+
 });
