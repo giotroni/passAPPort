@@ -1,5 +1,4 @@
 // v0.1
-var CORDOVA= true;
 // git remote add origin https://github.com/giotroni/passAPPort.git
 // git add .
 // git commit -m "memorizzazione locale"
@@ -7,16 +6,12 @@ var CORDOVA= true;
 
 // MAIN
 var app = {
-    storage: window.localStorage,   // per il salvataggio locale delle info
-    user_data: {nome: "", id: 0},
     initialize: function() {
       this.bind();
     },
      
     bind: function() {
-        if ( CORDOVA) {
-          document.addEventListener('deviceready', this.deviceready, false);
-        }
+        document.addEventListener('deviceready', this.deviceready, false);
         // alert("ok");
         $("#page-home").on("tap", app.entra_pagina);
         
@@ -52,9 +47,5 @@ app.torna_copertina= function (){
     
 $(document).ready(function() {
     app.initialize();
-    if ( CORDOVA ) {
-      URL_PREFIX = "http://www.troni.it/passapport/";       
-    } else {
-      URL_PREFIX = "";
-    }
+    URL_PREFIX = "http://www.troni.it/passapport/";       
 });
