@@ -29,10 +29,10 @@ var app = {
 
 // va alla pagina successiva
 app.nextPage= function (){
-  alert("ok. pag:"+app.numPagina);
+
   if( app.numPagina == app.numMaxPagine){
     // vuoi aggiungere una pagina?
-    alert("ok");
+    alert("ok. pag:"+app.numPagina);
     $.mobile.pageContainer.pagecontainer("change", "#page-elencomete", {
         transition: 'flip',
         changeHash: false,
@@ -79,6 +79,7 @@ app.prevPage= function (){
 // va alla pagina cobn l'elenco delle mete
 app.nuovaMeta= function (){
   app.numMaxPagine +=1;
+  app.nextPage();
 }
     
 $(document).ready(function() {
