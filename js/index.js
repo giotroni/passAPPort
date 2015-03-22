@@ -73,6 +73,7 @@ app.prevPage= function (){
 }
 // va alla pagina cobn l'elenco delle mete
 app.elencoMete= function (){
+  mete.elencoMete();
   $.mobile.pageContainer.pagecontainer("change", "#page-elencomete", {
       transition: 'flip',
       changeHash: false,
