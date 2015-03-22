@@ -7,6 +7,7 @@
 // MAIN
 var app = {
     numPagina: 0,
+    numMaxPagine: 0,
     initialize: function() {
       this.bind();
     },
@@ -27,19 +28,22 @@ var app = {
 
 // va alla pagina successiva
 app.nextPage= function (){
-  if( app.numPagina == 0 ) {
-    // in realtà potrebbe andare all'ultima paguina visitata?
-    app.numPagina = 1;
+  if( app.numPagina == numMaxPagine){
+    // vuoi aggiungere una pagina?
+    $( '#popupMenu' ).popup( 'open' );
+    alert("ok");
   } else {
-    app.numPagina += 1;
+        app.numPagina += 1;
   }
-  $("#tit-interno").html("<h2>Pag. "+ app.numPagina +"</h2>");
-  $.mobile.pageContainer.pagecontainer("change", "#page-interno", {
-      transition: 'slide',
-      changeHash: false,
-      reverse: true,
-      showLoadMsg: true
-  });
+  if( app.numPagina>0) {
+    $("#tit-interno").html("<h2>Pag. "+ app.numPagina +"</h2>");
+    $.mobile.pageContainer.pagecontainer("change", "#page-interno", {
+        transition: 'slide',
+        changeHash: false,
+        reverse: true,
+        showLoadMsg: true
+    });
+  }
 }
 // va alla pagina precedente
 app.prevPage= function (){

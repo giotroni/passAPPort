@@ -20,7 +20,7 @@
 	    
         </div>
         <div data-role="footer" data-position="fixed">
-            <a href="#" data-role="button" id="btnEntra" data-icon="ui-icon-arrow-1-e">Prec</a>
+            <a href="#" data-role="button" id="btnEntra" data-icon="arrow-r">Prec</a>
         </div>
 
     </div><!-- /page-home -->
@@ -31,10 +31,20 @@
         <div role="main" class="ui-content" id="content-interno">
         </div>
         <div data-role="footer" data-position="fixed">
-            <a href="#" data-role="button" data-icon="ui-icon-arrow-1-w" id="btnPrev">Prec</a>
-            <a href="#" data-role="button" data-icon="ui-icon-arrow-1-e" id="btnNext">Next</a>
+            <a href="#" data-role="button" data-icon="arrow-l" id="btnPrev">Prec</a>
+            <a href="#" data-role="button" data-icon="arrow-r" id="btnNext">Next</a>
         </div>
     </div><!-- /page-interno -->
+    
+    <div data-role="popup" id="popupMenu" data-theme="d">
+        <ul data-role="listview" data-inset="true" style="min-width:210px;" data-theme="d">
+            <li data-role="divider" data-theme="e">Choose an action</li>
+            <li><a href="#">View details</a></li>
+            <li><a href="#">Edit</a></li>
+            <li><a href="#">Disable</a></li>
+            <li><a href="#">Delete</a></li>
+        </ul>
+    </div>
     
 </body>
 </html>
