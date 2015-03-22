@@ -13,11 +13,7 @@ var app = {
     bind: function() {
         document.addEventListener('deviceready', this.deviceready, false);
         // alert("ok");
-        $("#page-home").on("tap", app.entra_pagina);
-        
-        //$("#page-home").on("swipeleft", app.entra);
-        //$("#btnLst").on("tap", app.entra);
-        
+        $("#page-home").on("swiperight", app.entra_pagina);
         $("#page-interno").on("swipeleft", app.torna_copertina);
 
     },
