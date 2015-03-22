@@ -1,0 +1,65 @@
+<!DOCTYPE html> 
+<html>
+<head>
+    <title>passAPPort</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.css">
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js"></script>
+    
+    <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBH7uaEdJNrfDU4RHjgtPg971Fm8pHzZ3o">
+    </script>
+
+    <script type="text/javascript" src="js/index.js"></script>
+    <style>
+        .copertina {
+            	background: FireBrick url("img/maschera1.jpg") no-repeat fixed center;
+                background-size: 100% 100%;
+        }
+        .interno {
+            	background: Gainsboro url("img/interno3.png") no-repeat fixed center;
+                background-size: 100% 100%;
+        }
+	.center-wrapper{
+	text-align: center;
+	}
+	.center-wrapper * {
+	margin: 0 auto;
+	}
+        #page-map, #map-canvas { width: 100%; height: 600px; padding: 0; }
+
+    </style>
+</head>
+
+<body>
+    <div data-role="page" id="page-home" class="copertina">
+        <div data-role="header">
+            <h2>passAPPort</h2>
+        </div>
+        <div role="main" class="ui-content" id="content-home">
+	    
+        </div>
+        <div data-role="footer" data-position="fixed">
+	    <div data-role="fieldcontain">
+		<label for="btnLogin" id="lblBtnLogin">nome? </label>
+		<button name = "btnLogin" id="btnLogin" >Entra</button>
+	    </div>
+        </div>
+
+    </div><!-- /page-home -->
+    
+    <div data-role="page" id="page-interno" data-add-back-btn="false"  class="interno">
+        <div data-role="header" id="tit-interno">
+            <h2>Le mete</h2>
+        </div>
+        <div role="main" class="ui-content" id="content-interno">
+        </div>
+        <div data-role="footer" data-position="fixed">
+            <a href="#page-home" data-role="button" data-icon="arrow-l">Prec</a>
+        </div>
+    </div><!-- /page-interno -->
+    
+</body>
+</html>
