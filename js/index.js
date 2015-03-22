@@ -20,6 +20,7 @@ var app = {
         // $("#page-interno").on("swipeleft", app.torna_copertina);
         $("#btnPrev").on("tap", app.prevPage);
         $("#btnNext").on("tap", app.nextPage);
+        $("#btnOkNuovameta").on("tap", app.nuovaMeta);
     },
      
     deviceready: function() {
@@ -31,19 +32,24 @@ app.nextPage= function (){
   alert("ok. pag:"+app.numPagina);
   if( app.numPagina == app.numMaxPagine){
     // vuoi aggiungere una pagina?
-    $( '#popupMenu' ).popup( 'open' );
     alert("ok");
-  } else {
-        app.numPagina += 1;
-  }
-  if( app.numPagina>0) {
-    $("#tit-interno").html("<h2>Pag. "+ app.numPagina +"</h2>");
-    $.mobile.pageContainer.pagecontainer("change", "#page-interno", {
-        transition: 'slide',
+    $.mobile.pageContainer.pagecontainer("change", "#page-elencomete", {
+        transition: 'flip',
         changeHash: false,
         reverse: true,
         showLoadMsg: true
     });
+  } else {
+    app.numPagina += 1;
+    if( app.numPagina>0) {
+      $("#tit-interno").html("<h2>Pag. "+ app.numPagina +"</h2>");
+      $.mobile.pageContainer.pagecontainer("change", "#page-interno", {
+          transition: 'slide',
+          changeHash: false,
+          reverse: true,
+          showLoadMsg: true
+      });
+    }
   }
 }
 // va alla pagina precedente
@@ -69,6 +75,10 @@ app.prevPage= function (){
         showLoadMsg: true
     });
   }
+}
+// va alla pagina cobn l'elenco delle mete
+app.nuovaMeta= function (){
+  app.numMaxPagine +=1;
 }
     
 $(document).ready(function() {
