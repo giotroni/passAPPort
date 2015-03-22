@@ -28,7 +28,8 @@ var app = {
 
 // va alla pagina successiva
 app.nextPage= function (){
-  if( app.numPagina == numMaxPagine){
+  alert("ok. pag:"+app.numPagina);
+  if( app.numPagina == app.numMaxPagine){
     // vuoi aggiungere una pagina?
     $( '#popupMenu' ).popup( 'open' );
     alert("ok");
