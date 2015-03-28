@@ -96,11 +96,12 @@ var mete = {
     $('#lstMete').empty();
     $.each(mete.elenco, function(key, value){
       var testo = '<li id="'+ key +'" ><a href="#" >';
-      testo += '<p>'+value.nome ;
-      testo += '</p>';
+      testo += value.nome ;
       testo += '</a></li>';
+      alert(testo);
       $('#lstMete').append(testo);
-      $("#lstMete li").bind("click", function(){
+//      $("#lstMete li").bind("click", function(){
+      $("#lstMete").on("click", function(){
           app.nuovaMeta();
           //app.arcanoShow(this.id);
       });

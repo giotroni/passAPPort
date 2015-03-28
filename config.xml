@@ -7,6 +7,8 @@
         
     <preference name="phonegap-version" value="3.7.0" />
     
+    <gap:platform name="android" />
+
     <name>passAPPort</name>
     <description>
         raggiungi le tue mete
