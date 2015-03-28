@@ -24,13 +24,6 @@
     
     <icon src="www/img/icon/icon.png" />
     
-    <feature name="Geolocation">
-        <param name="android-package" value="org.apache.cordova.geolocation.GeoBroker" />
-    </feature>
+    <gap:plugin name="org.apache.cordova.geolocation"/>
 
-    <feature name="http://api.phonegap.com/1.0/network"/>
-    <plugin name="Storage" value="org.apache.cordova.Storage" />
-
-
-    
 </widget>
