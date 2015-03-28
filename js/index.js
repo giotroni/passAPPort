@@ -58,10 +58,9 @@ app.prevPage= function (){
 }
 // chiamata quando la posizione è stata letta
 app.onSuccessGeo = function(position){
+  alert(coordinate.lat  + " " + coordinate.long );
   coordinate.lat = position.coords.latitude;
   coordinate.long = position.coords.longitude;
-  alert(coordinate.lat  + " " + coordinate.long );
-  mappa.checkArrivato();
 }
 // chiamata quando c'è un errore nella lettura della posizione
 app.onErrorGeo  = function(error) {
@@ -69,7 +68,8 @@ app.onErrorGeo  = function(error) {
 }
 // verifica la posizione GPS
 app.checkPos = function(){
- navigator.geolocation.getCurrentPosition(app.onSuccessGeo, app.onErrorGeo, {maximumAge: 500000, enableHighAccuracy:true, timeout: 6000});
+  alert("check Pos");
+  navigator.geolocation.getCurrentPosition(app.onSuccessGeo, app.onErrorGeo);
 }
 
 
