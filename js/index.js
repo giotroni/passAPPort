@@ -77,6 +77,7 @@ app.elencoMete= function (){
 }
 // aggiunge meta
 app.nuovaMeta= function (id){
+  alert(id);
   app.numMaxPagine +=1;
   pagine.lista.push({
       "id": id,
@@ -97,19 +98,19 @@ var mete = {
   elencaMete: function() {
     $('#lstMete').empty();
     $.each(mete.elenco, function(key, value){
-        var testo = '<li id="meta_'+ key +'" ><a href="#" >';
-        testo += value.nome ;
-        testo += '</a></li>';
-        alert(testo);
-        $('#lstMete').append(testo);
-        $("#lstMete li#meta_"+key).bind("click", function(){
-            alert("Aggiungi meta: " + key);
-            app.nuovaMeta(key);
-        });
-        alert("Rinfresca");
-        $('#lstMete').listview("refresh");
-        alert("Rinfrescato");
+      var testo = '<li id="meta_'+ key +'" ><a href="#" >';
+      testo += value.nome ;
+      testo += '</a></li>';
+      alert(testo);
+      $('#lstMete').append(testo);
+      $("#lstMete li#meta_"+key).bind("click", function(){
+          alert("Aggiungi meta: " + key);
+          app.nuovaMeta(key);
+      });
     });
+    alert("Rinfresca");
+    $('#lstMete').listview("refresh");
+    alert("Rinfrescato");
   }
 }
 
