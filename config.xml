@@ -23,8 +23,6 @@
     <access origin="*" />
     
     <icon src="www/img/icon/icon.png" />
-
-    <gap:platform name="android" />
     
     <feature name="Geolocation">
         <param name="android-package" value="org.apache.cordova.geolocation.GeoBroker" />
