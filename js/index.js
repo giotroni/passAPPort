@@ -94,9 +94,9 @@ var mete = {
         testo += '</a></li>';
         alert(testo);
         $('#lstMete').append(testo);
-        $("#lstMete li").bind("click", function(){
+        $("#lstMete li#meta_"+key).bind("click", function(){
+            alert("Aggiungi meta: " + key);
             app.nuovaMeta();
-            alert("Aggiungi meta: " + this.id);
         });
         alert("Rinfresca");
         $('#lstMete').listview("refresh");
