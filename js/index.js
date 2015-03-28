@@ -87,6 +87,8 @@ app.nuovaMeta= function (id){
       "alt": mete.elenco[id].alt,
       "arrivato":"0"
       });
+  alert(pagine.lista[pagine.lista.length-1].nome);
+  pagine.lista.
   app.nextPage();
 }
 
