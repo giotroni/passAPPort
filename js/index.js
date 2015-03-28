@@ -15,12 +15,12 @@ var app = {
     bind: function() {
         document.addEventListener('deviceready', this.deviceready, false);
         // alert("ok");
-        $("#page-home").on("swiperight", app.nextPage);
-        $("#btnEntra").on("tap", app.nextPage);
+//      $("#page-home").on("swiperight", app.nextPage);
+        $("#btnEntra").on("click", app.nextPage);
         // $("#page-interno").on("swipeleft", app.torna_copertina);
-        $("#btnPrev").on("tap", app.prevPage);
-        $("#btnNext").on("tap", app.nextPage);
-        $("#btnOkNuovameta").on("tap", app.nuovaMeta);
+        $("#btnPrev").on("click", app.prevPage);
+        $("#btnNext").on("click", app.nextPage);
+//        $("#btnOkNuovameta").on("click", app.nuovaMeta);
     },
      
     deviceready: function() {
@@ -29,51 +29,45 @@ var app = {
 
 // va alla pagina successiva
 app.nextPage= function (){
-
-  if( app.numPagina == app.numMaxPagine){
+  if( app.numPagina >= app.numMaxPagine){
     // vuoi aggiungere una pagina?
     alert("ok. pag:"+app.numPagina);
     app.elencoMete();
   } else {
     app.numPagina += 1;
-    if( app.numPagina>0) {
-      $("#tit-interno").html("<h2>Pag. "+ app.numPagina +"</h2>");
-      $.mobile.pageContainer.pagecontainer("change", "#page-interno", {
-          transition: 'slide',
-          changeHash: false,
-          reverse: true,
-          showLoadMsg: true
-      });
-    }
+    app.showPage();
   }
 }
 // va alla pagina precedente
 app.prevPage= function (){
-  if( app.numPagina == 0 ) {
-    // questo è un errore. rimane qua
-  } else {
+  if( app.numPagina > 0 ) {
     app.numPagina -= 1;
   }
-  if(app.numPagina == 0){
+  if(app.numPagina <= 0){
     $.mobile.pageContainer.pagecontainer("change", "#page-home", {
         transition: 'flip',
         changeHash: false,
         reverse: true,
         showLoadMsg: true
     });
+    app.numPagina = 0;
   } else {
+    app.showPage();
+  }
+}
+// Mostra la pagina corrente
+app.showPage = function(){
     $("#tit-interno").html("<h2>Pag. "+ app.numPagina +"</h2>");
     $.mobile.pageContainer.pagecontainer("change", "#page-interno", {
         transition: 'slide',
         changeHash: false,
         reverse: true,
         showLoadMsg: true
-    });
-  }
+    });    
 }
 // va alla pagina cobn l'elenco delle mete
 app.elencoMete= function (){
-  mete.elencoMete();
+  mete.elencaMete();
   $.mobile.pageContainer.pagecontainer("change", "#page-elencomete", {
       transition: 'flip',
       changeHash: false,
@@ -92,17 +86,18 @@ var mete = {
   // elenco dei luoghi
   elenco: [],
   // mostra elenco mete
-  elencoMete: function() {
+  elencaMete: function() {
     $('#lstMete').empty();
     $.each(mete.elenco, function(key, value){
-      var testo = '<li id="'+ key +'" ><a href="#" >';
+      var testo = '<li id="'+ key +'" class="listItemMete"><a href="#" >';
       testo += value.nome ;
       testo += '</a></li>';
       alert(testo);
       $('#lstMete').append(testo);
 //      $("#lstMete li").bind("click", function(){
-      $("#lstMete").on("click", function(){
+      $("#lstMete").on("click", ".listItemMete", function(){
           app.nuovaMeta();
+          alert("Aggiungi meta: " + this.id);
           //app.arcanoShow(this.id);
       });
     })
