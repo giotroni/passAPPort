@@ -98,10 +98,10 @@ var mete = {
             app.nuovaMeta();
             alert("Aggiungi meta: " + this.id);
         });
+        alert("Rinfresca");
+        $('#lstMete').listview("refresh");
+        alert("Rinfrescato");
     });
-    alert("Rinfresca");
-    $('#lstMete').listview("refresh");
-    alert("Rinfrescato");
   }
 }
 
