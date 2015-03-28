@@ -57,7 +57,8 @@ app.prevPage= function (){
 }
 // Mostra la pagina corrente
 app.showPage = function(){
-    $("#tit-interno").html("<h2>Pag. "+ app.numPagina + " " + pagine.lista[app.numPagina].nome + "</h2>");
+    alert("Show page" + app.numPAgina);
+    $("#tit-interno").html("<h2>Pag. "+ app.numPagina + " " + pagine.lista[app.numPagina-1].nome + "</h2>");
     $.mobile.pageContainer.pagecontainer("change", "#page-interno", {
         transition: 'slide',
         changeHash: false,
@@ -88,7 +89,6 @@ app.nuovaMeta= function (id){
       "arrivato":"0"
       });
   alert(pagine.lista[pagine.lista.length-1].nome);
-  pagine.lista.
   app.nextPage();
 }
 
