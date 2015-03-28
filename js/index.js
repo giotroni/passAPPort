@@ -89,19 +89,19 @@ var mete = {
   elencaMete: function() {
     $('#lstMete').empty();
     $.each(mete.elenco, function(key, value){
-      var testo = '<li id="'+ key +'" class="listItemMete"><a href="#" >';
+      var testo = '<li id="meta_'+ key +'" class="listItemMete"><a href="#" >';
       testo += value.nome ;
       testo += '</a></li>';
       alert(testo);
       $('#lstMete').append(testo);
 //      $("#lstMete li").bind("click", function(){
-      $("#lstMete").on("click", ".listItemMete", function(){
+      $("li").on("click", function(){
           app.nuovaMeta();
           alert("Aggiungi meta: " + this.id);
           //app.arcanoShow(this.id);
       });
     })
-    $('#lstPlaces').listview("refresh");
+    $('#lstMete').listview("refresh");
   }
 }
 
