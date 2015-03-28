@@ -69,10 +69,10 @@ app.showPage = function(){
 app.elencoMete= function (){
   mete.elencaMete();
   $.mobile.pageContainer.pagecontainer("change", "#page-elencomete", {
-      transition: 'flip',
-      changeHash: false,
-      reverse: true,
-      showLoadMsg: true
+      transition:   'flip',
+      changeHash:   false,
+      reverse:      true,
+      showLoadMsg:  true
   });
 }
 // aggiunge meta
@@ -89,19 +89,19 @@ var mete = {
   elencaMete: function() {
     $('#lstMete').empty();
     $.each(mete.elenco, function(key, value){
-      var testo = '<li id="meta_'+ key +'" class="listItemMete"><a href="#" >';
-      testo += value.nome ;
-      testo += '</a></li>';
-      alert(testo);
-      $('#lstMete').append(testo);
-//      $("#lstMete li").bind("click", function(){
-      $("li").on("click", function(){
-          app.nuovaMeta();
-          alert("Aggiungi meta: " + this.id);
-          //app.arcanoShow(this.id);
-      });
+        var testo = '<li id="meta_'+ key +'" ><a href="#" >';
+        testo += value.nome ;
+        testo += '</a></li>';
+        alert(testo);
+        $('#lstMete').append(testo);
+    //      $("#lstMete li").bind("click", function(){
+        $("li").on("click", function(){
+            app.nuovaMeta();
+            alert("Aggiungi meta: " + this.id);
+            //app.arcanoShow(this.id);
+        });   
+        $('#lstMete').listview("refresh");
     })
-    $('#lstMete').listview("refresh");
   }
 }
 
