@@ -57,7 +57,7 @@ app.prevPage= function (){
 }
 // Mostra la pagina corrente
 app.showPage = function(){
-    $("#tit-interno").html("<h2>Pag. "+ app.numPagina +"</h2>");
+    $("#tit-interno").html("<h2>Pag. "+ app.numPagina + " " + pagine.lista[app.numPagina].nome + "</h2>");
     $.mobile.pageContainer.pagecontainer("change", "#page-interno", {
         transition: 'slide',
         changeHash: false,
@@ -76,8 +76,16 @@ app.elencoMete= function (){
   mete.elencaMete();
 }
 // aggiunge meta
-app.nuovaMeta= function (){
+app.nuovaMeta= function (id){
   app.numMaxPagine +=1;
+  pagine.lista.push({
+      "id": id,
+      "nome": mete.elenco[id].nome,
+      "lat": mete.elenco[id].lat,
+      "long": mete.elenco[id].long,
+      "alt": mete.elenco[id].alt,
+      "arrivato":"0"
+      });
   app.nextPage();
 }
 
@@ -96,7 +104,7 @@ var mete = {
         $('#lstMete').append(testo);
         $("#lstMete li#meta_"+key).bind("click", function(){
             alert("Aggiungi meta: " + key);
-            app.nuovaMeta();
+            app.nuovaMeta(key);
         });
         alert("Rinfresca");
         $('#lstMete').listview("refresh");
@@ -105,6 +113,13 @@ var mete = {
   }
 }
 
+// classe con le pagine
+var pagine = {
+  // elenco dei luoghi
+  lista: []
+}
+
+
 $(document).ready(function() {
     app.initialize();
     URL_PREFIX = "http://www.troni.it/passapport/";
@@ -112,11 +127,34 @@ $(document).ready(function() {
     while(mete.elenco.length > 0) {
       mete.elenco.pop();
     };
-    var i=0;
-    while(i <5) {
-      mete.elenco.push({"nome": "nome " + i});
-      i++;
-    };
+    mete.elenco.push({
+      "id": "meta_" + 1,
+      "nome": "Prima",
+      "lat": "45.443853",
+      "long": "12.338316",
+      "alt": "0"
+      });
+    mete.elenco.push({
+      "id": "meta_" + 2,
+      "nome": "Seconda",
+      "lat": "45.443454",
+      "long": "12.338730",
+      "alt": "0"
+      });
+    mete.elenco.push({
+      "id": "meta_" + 3,
+      "nome": "Terza",
+      "lat": "45.442558",
+      "long": "12.338237",
+      "alt": "0"
+      });
+    mete.elenco.push({
+      "id": "meta_" + 4,
+      "nome": "Quarta",
+      "lat": "45.441684",
+      "long": "12.337671",
+      "alt": "0"
+      });
   
     //$.ajax({
     //  type: 'GET',
