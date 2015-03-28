@@ -94,13 +94,12 @@ var mete = {
         testo += '</a></li>';
         alert(testo);
         $('#lstMete').append(testo);
-    //      $("#lstMete li").bind("click", function(){
-        $("#lstMete li").click(function(){
+        $("#lstMete li").bind("click", function(){
             app.nuovaMeta();
             alert("Aggiungi meta: " + this.id);
-            //app.arcanoShow(this.id);
-        });   
-    })
+        });
+    });
+    alert("Rinfresca");
     $('#lstMete').listview("refresh");
     alert("Rinfrescato");
   }
