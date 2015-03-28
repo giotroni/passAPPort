@@ -4,6 +4,24 @@
 // git commit -m "memorizzazione locale"
 // git push origin master
 
+// calcolo della distanza
+function getDistanceFromLatLng(lat1,lng1,lat2,lng2) {
+  var R = 6371; // Radius of the earth in km
+  var dLat = deg2rad(lat2-lat1); // deg2rad below
+  var dLng = deg2rad(lng2-lng1);
+  var a =
+  Math.sin(dLat/2) * Math.sin(dLat/2) +
+  Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+  Math.sin(dLng/2) * Math.sin(dLng/2)
+  ;
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  var d = R * c * 1000; // Distance in m
+  return d;
+}
+// calcolo in gradi
+function deg2rad(deg) {
+  return deg * (Math.PI/180)
+}
 // MAIN
 var app = {
     numPagina: 0,
@@ -61,6 +79,7 @@ app.onSuccessGeo = function(position){
   alert(coordinate.lat  + " " + coordinate.long );
   coordinate.lat = position.coords.latitude;
   coordinate.long = position.coords.longitude;
+  pagine.checkArrivato();
 }
 // chiamata quando c'è un errore nella lettura della posizione
 app.onErrorGeo  = function(error) {
@@ -71,8 +90,6 @@ app.checkPos = function(){
   alert("check Pos");
   navigator.geolocation.getCurrentPosition(app.onSuccessGeo, app.onErrorGeo);
 }
-
-
 // Mostra la pagina corrente
 app.showPage = function(){
     $("#tit-interno").html("<h2>Pag. "+ app.numPagina + " - " + pagine.lista[app.numPagina-1].nome + "</h2>");
@@ -150,7 +167,14 @@ var coordinate = {
   long: 0
 }
 
-
+pagine.checkArrivato = function(){
+  var el = pagine.lista[app.numPagina-1];
+  var dst = getDistanceFromLatLng(coordinate.lat, coordinate.long, el.lat, el.long);
+  alert(dst);
+  if( getDistanceFromLatLng  < 50 ){
+    alert("arrivato");
+  }
+}
 
 $(document).ready(function() {
     app.initialize();
@@ -162,8 +186,8 @@ $(document).ready(function() {
     mete.elenco.push({
       "id": "meta_" + 1,
       "nome": "Prima",
-      "lat": "45.443853",
-      "long": "12.338316",
+      "lat": "45.4439153",
+      "long":"12.3386693",
       "alt": "0"
       });
     mete.elenco.push({
