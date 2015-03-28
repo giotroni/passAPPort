@@ -20,6 +20,7 @@ var app = {
         // $("#page-interno").on("swipeleft", app.torna_copertina);
         $("#btnPrev").on("click", app.prevPage);
         $("#btnNext").on("click", app.nextPage);
+        $("#btnCheckPos").on("click", app.checkPos);
 //        $("#btnOkNuovameta").on("click", app.nuovaMeta);
     },
      
@@ -55,10 +56,26 @@ app.prevPage= function (){
     app.showPage();
   }
 }
+// chiamata quando la posizione è stata letta
+app.onSuccessGeo = function(position){
+  coordinate.lat = position.coords.latitude;
+  coordinate.long = position.coords.longitude;
+  alert(coordinate.lat  + " " + coordinate.long );
+  mappa.checkArrivato();
+}
+// chiamata quando c'è un errore nella lettura della posizione
+app.onErrorGeo  = function(error) {
+  alert("nessun dato dal GPS...");
+}
+// verifica la posizione GPS
+app.checkPos = function(){
+ navigator.geolocation.getCurrentPosition(app.onSuccessGeo, app.onErrorGeo, {maximumAge: 500000, enableHighAccuracy:true, timeout: 6000});
+}
+
+
 // Mostra la pagina corrente
 app.showPage = function(){
-    alert("Show page" + app.numPAgina);
-    $("#tit-interno").html("<h2>Pag. "+ app.numPagina + " " + pagine.lista[app.numPagina-1].nome + "</h2>");
+    $("#tit-interno").html("<h2>Pag. "+ app.numPagina + " - " + pagine.lista[app.numPagina-1].nome + "</h2>");
     $.mobile.pageContainer.pagecontainer("change", "#page-interno", {
         transition: 'slide',
         changeHash: false,
@@ -78,7 +95,15 @@ app.elencoMete= function (){
 }
 // aggiunge meta
 app.nuovaMeta= function (id){
+  var dt = new Date();
+  var sTime = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
   alert(id);
+  $.each(pagine.lista, function(key, value){
+    // evita di aggiungere più volte la stessa meta se non è ancora stata raggiunta o se è stata raggiunta oggi
+    if(value.id == id && (value.arrivato == 0 || value.dataora.indexOf(sTime) >= 0)){
+      return;
+    }
+  })
   app.numMaxPagine +=1;
   pagine.lista.push({
       "id": id,
@@ -86,7 +111,8 @@ app.nuovaMeta= function (id){
       "lat": mete.elenco[id].lat,
       "long": mete.elenco[id].long,
       "alt": mete.elenco[id].alt,
-      "arrivato":"0"
+      "arrivato":"0",
+      "dataora":"0000-00-00 00:00:00"
       });
   alert(pagine.lista[pagine.lista.length-1].nome);
   app.nextPage();
@@ -103,16 +129,13 @@ var mete = {
       var testo = '<li id="meta_'+ key +'" ><a href="#" >';
       testo += value.nome ;
       testo += '</a></li>';
-      alert(testo);
       $('#lstMete').append(testo);
       $("#lstMete li#meta_"+key).bind("click", function(){
           alert("Aggiungi meta: " + key);
           app.nuovaMeta(key);
       });
     });
-    alert("Rinfresca");
     $('#lstMete').listview("refresh");
-    alert("Rinfrescato");
   }
 }
 
@@ -121,6 +144,12 @@ var pagine = {
   // elenco dei luoghi
   lista: []
 }
+// classe con le coordinate
+var coordinate = {
+  lat: 0,
+  long: 0
+}
+
 
 
 $(document).ready(function() {
