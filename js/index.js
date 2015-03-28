@@ -67,13 +67,13 @@ app.showPage = function(){
 }
 // va alla pagina cobn l'elenco delle mete
 app.elencoMete= function (){
-  mete.elencaMete();
   $.mobile.pageContainer.pagecontainer("change", "#page-elencomete", {
       transition:   'flip',
       changeHash:   false,
       reverse:      true,
       showLoadMsg:  true
   });
+  mete.elencaMete();
 }
 // aggiunge meta
 app.nuovaMeta= function (){
