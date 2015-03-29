@@ -86,12 +86,6 @@ app.onSuccessGeo = function(position){
     var el = pagine.lista[app.numPagina-1];
     coordinate.dist = getDistanceFromLatLng(coordinate.lat, coordinate.long, el.lat, el.long);
     var dst = coordinate.dist;
-    //var unita = " m";
-    //if( dst>1000){
-    //  dst = dst / 1000;
-    //  unita = " km";
-    //}
-    //$("#lblDistanza").html("Distanza: "+ dst.toString.substring(0, dst.toString.indexOf(".")) + unita);  
     $("#lblDistanza").html("Distanza: "+ dst);  
     pagine.checkArrivato();
   }
@@ -151,11 +145,7 @@ app.nuovaMeta= function (id){
   var sTime = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
   alert(id);
   $.each(pagine.lista, function(key, value){
-<<<<<<< HEAD
-    // evita di aggiungere più volte la stessa meta se non è ancora stata raggiunta o se è stata raggiunta oggi
-=======
     // evita di aggiungere piÃ¹ volte la stessa meta se non Ã¨ ancora stata raggiunta o se Ã¨ stata raggiunta oggi
->>>>>>> origin/Photo
     alert(value.arrivato);
     if(value.id == id && (value.arrivato == 0 || value.dataora.indexOf(sTime) >= 0)){
       return;
@@ -286,7 +276,7 @@ $(document).ready(function() {
       "long": "12.337671",
       "alt": "0"
       });
-  
+  //alert(navigator.camera);
     //$.ajax({
     //  type: 'GET',
     //  url: URL_PREFIX + 'php/leggi_mete.php',
