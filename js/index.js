@@ -3,7 +3,8 @@
 // git add .
 // git commit -m "memorizzazione locale"
 // git push origin master
-
+// COSTANTE CON LA DISTANZA ENTRO LA QUALE SI SETTA L'ARRIVO
+var DISTANZA_ARRIVO = 30;
 // calcolo della distanza
 function getDistanceFromLatLng(lat1,lng1,lat2,lng2) {
   var R = 6371; // Radius of the earth in km
@@ -79,26 +80,50 @@ app.onSuccessGeo = function(position){
   alert(coordinate.lat  + " " + coordinate.long );
   coordinate.lat = position.coords.latitude;
   coordinate.long = position.coords.longitude;
-  pagine.checkArrivato();
+  coordinate.alt = position.coords.altitude;
+  // se c'è una meta selezionata, ne calcola la distanza
+  if( app.numPagina>0){
+    var el = pagine.lista[app.numPagina-1];
+    coordinate.dist = getDistanceFromLatLng(coordinate.lat, coordinate.long, el.lat, el.long);
+    $("#lblDistanza").html("Distanza: "+ coordinate.dist );  
+    pagine.checkArrivato();
+  }
 }
 // chiamata quando c'è un errore nella lettura della posizione
 app.onErrorGeo  = function(error) {
-  alert("nessun dato dal GPS...");
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            x.innerHTML = "User denied the request for Geolocation."
+            break;
+        case error.POSITION_UNAVAILABLE:
+            x.innerHTML = "Location information is unavailable."
+            break;
+        case error.TIMEOUT:
+            x.innerHTML = "The request to get user location timed out."
+            break;
+        case error.UNKNOWN_ERROR:
+            x.innerHTML = "An unknown error, reading position, occurred."
+            break;
+    }
 }
 // verifica la posizione GPS
 app.checkPos = function(){
   alert("check Pos");
-  navigator.geolocation.getCurrentPosition(app.onSuccessGeo, app.onErrorGeo);
+  navigator.geolocation.getCurrentPosition(app.onSuccessGeo, app.onErrorGeo, { timeout: 15000 });
 }
-// Mostra la pagina corrente
+// Mostra la pagina META corrente
 app.showPage = function(){
-    $("#tit-interno").html("<h2>Pag. "+ app.numPagina + " - " + pagine.lista[app.numPagina-1].nome + "</h2>");
-    $.mobile.pageContainer.pagecontainer("change", "#page-interno", {
-        transition: 'slide',
-        changeHash: false,
-        reverse: true,
-        showLoadMsg: true
-    });    
+  $.mobile.pageContainer.pagecontainer("change", "#page-interno", {
+      transition: 'slide',
+      changeHash: false,
+      reverse: true,
+      showLoadMsg: true
+  });
+  var el = pagine.corrente;
+  $("#tit-interno").html("<h2>Pag. "+ app.numPagina + " - " + el.nome + "</h2>");
+  if( el.arrivato>0){
+    $("#lblArrivo").html("Arrivato: "+ el.dataora);  
+  }
 }
 // va alla pagina cobn l'elenco delle mete
 app.elencoMete= function (){
@@ -159,22 +184,53 @@ var mete = {
 // classe con le pagine
 var pagine = {
   // elenco dei luoghi
-  lista: []
-}
-// classe con le coordinate
-var coordinate = {
-  lat: 0,
-  long: 0
-}
-
-pagine.checkArrivato = function(){
-  var el = pagine.lista[app.numPagina-1];
-  var dst = getDistanceFromLatLng(coordinate.lat, coordinate.long, el.lat, el.long);
-  alert(dst);
-  if( getDistanceFromLatLng  < 50 ){
-    alert("arrivato");
+  lista: [],
+  corrente: function(){
+    if( lista.length>0){
+      return lista[app.numPagina-1];
+    } else {
+      return null;
+    }
   }
 }
+// classe con le coordinate e le altre info di geolocalizzazione
+var coordinate = {
+  lat: 0,
+  long: 0,
+  alt: 0,
+  dist: -1     // dalla meta attuale
+}
+// verifica la distanza
+pagine.checkArrivato = function(){
+  alert(coordinate.dist );
+  var el = pagine.corrente;
+  // SE non è ancora arrivato a questa meta
+  if(el.arrivato == 0 && coordinate.dist  < DISTANZA_ARRIVO ){    
+      alert("arrivato");
+  }
+}
+// chiamata quando la foto riesce e mosta l'immagine
+function onPhotoDataSuccess(imageData) {
+  // Get image handle
+  //
+  var smallImage = document.getElementById('smallImage');
+  // Unhide image elements
+  //
+  smallImage.style.display = 'block';
+  // Show the captured photo
+  // The inline CSS rules are used to resize the image
+  //
+  smallImage.src = "data:image/jpeg;base64," + imageData;
+}
+// QUando la foto non riesce
+function onFail(message) {
+  alert('Failed because: ' + message);
+}
+// scatta la foto
+function capturePhotoWithData() {
+  // Take picture using device camera and retrieve image as base64-encoded string
+  navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50 });
+} 
 
 $(document).ready(function() {
     app.initialize();
