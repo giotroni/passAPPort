@@ -85,7 +85,13 @@ app.onSuccessGeo = function(position){
   if( app.numPagina>0){
     var el = pagine.lista[app.numPagina-1];
     coordinate.dist = getDistanceFromLatLng(coordinate.lat, coordinate.long, el.lat, el.long);
-    $("#lblDistanza").html("Distanza: "+ coordinate.dist );  
+    var dst = coordinate.dist;
+    var unita = " m";
+    if( dst>1000){
+      dst = dst / 1000;
+      unita = " km";
+    }
+    $("#lblDistanza").html("Distanza: "+ dst.toString.substring(0, dst.toString.indexOf(".")) + unita);  
     pagine.checkArrivato();
   }
 }
@@ -215,6 +221,7 @@ pagine.checkArrivato = function(){
 }
 // chiamata quando la foto riesce e mosta l'immagine
 function onPhotoDataSuccess(imageData) {
+  alert('Foto fatta');
   // Get image handle
   //
   var smallImage = document.getElementById('smallImage');
@@ -233,7 +240,9 @@ function onFail(message) {
 // scatta la foto
 function capturePhotoWithData() {
   // Take picture using device camera and retrieve image as base64-encoded string
+  alert('Foto da fare');
   navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50 });
+  alert('Foto ...');
 } 
 
 $(document).ready(function() {
