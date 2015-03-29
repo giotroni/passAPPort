@@ -83,7 +83,7 @@ app.onSuccessGeo = function(position){
   coordinate.alt = position.coords.altitude;
   // se c'è una meta selezionata, ne calcola la distanza
   if( app.numPagina>0){
-    var el = pagine.corrente();
+    var el = pagine.lista[app.numPagina-1];
     coordinate.dist = getDistanceFromLatLng(coordinate.lat, coordinate.long, el.lat, el.long);
     $("#lblDistanza").html("Distanza: "+ coordinate.dist );  
     pagine.checkArrivato();
@@ -122,7 +122,7 @@ app.showPage = function(){
   // cancella l'esistente
   $("#lblDistanza").empty();  
   $("#lblArrivato").empty();  
-  var el = pagine.corrente();
+  var el = pagine.lista[app.numPagina-1];
   $("#tit-interno").html("<h2>Pag. "+ app.numPagina + " - " + el.nome + "</h2>");
   if( el.arrivato>0){
     $("#lblArrivo").html("Arrivato: "+ el.dataora);  
@@ -190,7 +190,7 @@ var pagine = {
   lista: [],
   corrente: function(){
     if( lista.length>0){
-      return lista[app.numPagina-1];
+      return pagine.lista[app.numPagina-1];
     } else {
       return null;
     }
@@ -206,7 +206,7 @@ var coordinate = {
 // verifica la distanza
 pagine.checkArrivato = function(){
   alert(coordinate.dist );
-  var el = pagine.corrente();
+  var el = pagine.lista[app.numPagina-1];
   // SE non è ancora arrivato a questa meta
   if(el.arrivato == 0 && coordinate.dist  < DISTANZA_ARRIVO ){    
       alert("arrivato");
