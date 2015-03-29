@@ -75,27 +75,28 @@ app.prevPage= function (){
     app.showPage();
   }
 }
-// chiamata quando la posizione è stata letta
+// chiamata quando la posizione Ã¨ stata letta
 app.onSuccessGeo = function(position){
   alert(coordinate.lat  + " " + coordinate.long );
   coordinate.lat = position.coords.latitude;
   coordinate.long = position.coords.longitude;
   coordinate.alt = position.coords.altitude;
-  // se c'è una meta selezionata, ne calcola la distanza
+  // se c'Ã¨ una meta selezionata, ne calcola la distanza
   if( app.numPagina>0){
     var el = pagine.lista[app.numPagina-1];
     coordinate.dist = getDistanceFromLatLng(coordinate.lat, coordinate.long, el.lat, el.long);
     var dst = coordinate.dist;
-    var unita = " m";
-    if( dst>1000){
-      dst = dst / 1000;
-      unita = " km";
-    }
-    $("#lblDistanza").html("Distanza: "+ dst.toString.substring(0, dst.toString.indexOf(".")) + unita);  
+    //var unita = " m";
+    //if( dst>1000){
+    //  dst = dst / 1000;
+    //  unita = " km";
+    //}
+    //$("#lblDistanza").html("Distanza: "+ dst.toString.substring(0, dst.toString.indexOf(".")) + unita);  
+    $("#lblDistanza").html("Distanza: "+ dst);  
     pagine.checkArrivato();
   }
 }
-// chiamata quando c'è un errore nella lettura della posizione
+// chiamata quando c'Ã¨ un errore nella lettura della posizione
 app.onErrorGeo  = function(error) {
     switch(error.code) {
         case error.PERMISSION_DENIED:
@@ -150,7 +151,8 @@ app.nuovaMeta= function (id){
   var sTime = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
   alert(id);
   $.each(pagine.lista, function(key, value){
-    // evita di aggiungere più volte la stessa meta se non è ancora stata raggiunta o se è stata raggiunta oggi
+    // evita di aggiungere piÃ¹ volte la stessa meta se non Ã¨ ancora stata raggiunta o se Ã¨ stata raggiunta oggi
+    alert(value.arrivato);
     if(value.id == id && (value.arrivato == 0 || value.dataora.indexOf(sTime) >= 0)){
       return;
     }
@@ -213,7 +215,7 @@ var coordinate = {
 pagine.checkArrivato = function(){
   alert(coordinate.dist );
   var el = pagine.lista[app.numPagina-1];
-  // SE non è ancora arrivato a questa meta
+  // SE non Ã¨ ancora arrivato a questa meta
   if(el.arrivato == 0 && coordinate.dist  < DISTANZA_ARRIVO ){    
       alert("arrivato");
       capturePhotoWithData();
