@@ -14,6 +14,7 @@ var destinationType; // sets the format of returned value
 // Funzione che calcola la distanza
 // MAIN
 var app = {
+  storage: window.localStorage,   // per il salvataggio locale delle info
   // inixzializzazione di phonegap
   initialize: function() {
     this.bindEvents();
@@ -25,8 +26,9 @@ var app = {
     // ok, il dispositivo è pronto: configuralo
     // app.showAlert("Chiamata alla fine del caricamento","msg");
     destinationType=navigator.camera.DestinationType;
-    // inizializza l'elenco delle mete
+    // inizializza l'elenco delle mete e le pagine
     mete.inizializza();
+    pagine.leggePagine();
     // EVENTI DA LEGARE
     $("#btnEntra").on("click", pagine.nextPage);
     $("#btnNext").on("click", pagine.nextPage);
@@ -276,6 +278,7 @@ var pagine = {
           "dataora":"0000-00-00 00:00:00",
           "foto": ""
           });
+      scrivePagine();
       // mostra la pagina
       pagine.nextPage();
     } else {
@@ -315,8 +318,28 @@ var pagine = {
     el.foto = tst;
     var smallImage = document.getElementById('smallImage');    
     smallImage.src = el.foto;
+    scrivePagine();
+  },
+  // legge dalla memoria le pagine
+  leggePagine: function(){
+    if ("lunghezza" in localStorage){
+      var lung = app.storage.getItem("lunghezza");
+      for(i=0; i<lung; i++){
+        var valore = app.storage.getItem("pag"+i);
+        pagine.lista.push(JSON.parse(valore));
+      }
+      pagine.numMaxPagine = lung;
+    }
+  },
+  // scrive in memoria le pagine
+  scrivePagine: function(){
+    app.storage.clear();
+    // salva le pagine
+    app.storage.setItem("lunghezza", pagine.lista.length);
+    $.each(pagine.lista, function(key, value){
+      app.storage.setItem("pag"+key, JSON.stringify(value))  
+    })
   }
 }
-
 
 app.initialize();
