@@ -75,5 +75,6 @@ function adesso(){
   var dt = new Date();
   var sGiorno = dt.getFullYear() + "-" + dt.getMonth + "-" + dt.getDay();
   var sOra= dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+  dbgMsg("adesso: " + sGiorno + " " + sOra)
   return (sGiorno + " " + sOra);
 }

@@ -281,13 +281,13 @@ var pagine = {
   // verifica la distanza
   checkArrivato: function(){
     // alert(dati.dist );
-    dbgMsg("Check arrivato");
     var el = pagine.lista[pagine.numPagina-1];
+    dbgMsg("Check arrivato: " + el.arrivato + " dist " + el.dist );
     // SE non è ancora arrivato a questa meta
-    if(!el.arrivato && el.dist < DISTANZA_ARRIVO ){
+    if((el.arrivato<=0) && (el.dist >0) && (el.dist < DISTANZA_ARRIVO) ){
       el.arrivato = 1;
       el.dataora = adesso();
-      vibra(1000)
+      vibra(1000);
       showAlertModal("Sei arrivato!",app.capturePhoto,"BRAVO");
     }
   },
