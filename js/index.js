@@ -4,7 +4,7 @@
 // git commit -m "memorizzazione locale"
 // git push origin master
 var DBG = true;
-var DISTANZA_ARRIVO = 30;         // distanza (in metri) entrpo la quale si giudica arrivati a destinazione
+var DISTANZA_ARRIVO = 50;         // distanza (in metri) entrpo la quale si giudica arrivati a destinazione
 var GPS_TIMEOUT = 15000;           // intervallo di tempo della chiamata al GPS
 
 var URL_PREFIX = "http://www.troni.it/passapport/";
@@ -245,6 +245,7 @@ var pagine = {
   },
   // aggiunge una meta al database
   nuovaMeta: function (id){
+    var metaOK = true;
     var sData = adesso().substring(0, 10);
     dbgMsg(sData);
     $.each(pagine.lista, function(key, value){
@@ -256,25 +257,30 @@ var pagine = {
         } else if (value.dataora.indexOf(sData) >= 0){
           showAlert("Meta già raggiunta oggi", "Attenzione");
         }
-        return;
+        metaOK = false;
+        return false;
       }
     });
-    // aggiorna l'indicatore del numero di pagine totale
-    pagine.numMaxPagine +=1;
-    // inserisce i dati della meta nell'array delle pagine
-    pagine.lista.push({
-        "id": id,
-        "nome": mete.elenco[id].nome,
-        "lat": mete.elenco[id].lat,
-        "lng": mete.elenco[id].lng,
-        "alt": mete.elenco[id].alt,
-        "dist": -1,
-        "arrivato":"0",
-        "dataora":"0000-00-00 00:00:00",
-        "foto": ""
-        });
-    // mostra la pagina
-    pagine.nextPage();
+    if( metaOK){
+      // aggiorna l'indicatore del numero di pagine totale
+      pagine.numMaxPagine +=1;
+      // inserisce i dati della meta nell'array delle pagine
+      pagine.lista.push({
+          "id": id,
+          "nome": mete.elenco[id].nome,
+          "lat": mete.elenco[id].lat,
+          "lng": mete.elenco[id].lng,
+          "alt": mete.elenco[id].alt,
+          "dist": -1,
+          "arrivato":"0",
+          "dataora":"0000-00-00 00:00:00",
+          "foto": ""
+          });
+      // mostra la pagina
+      pagine.nextPage();
+    } else {
+      pagine.showPage();
+    }
   },
   aggiornaDistanza: function(){
     dbgMsg("Aggiorna Distanza");
