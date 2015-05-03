@@ -25,8 +25,24 @@ function showAlert (message, title) {
         alert(title ? (title + ": " + message) : message);
     }
 }
+// messaggi diagnostici
 function dbgMsg(msg){
   if(DBG){
     showAlert(msg, "Debug");
   }
 }
+// mostra l'icona dell'attesa
+function attesa(valore, testo){
+  if (valore) {
+    $.mobile.loading( "show", {
+            text: testo,
+            textVisible: true,
+            theme: 'b',
+            textonly: false,
+            html: ""
+    });
+  } else {
+    $.mobile.loading( "hide" );
+  }
+}
+

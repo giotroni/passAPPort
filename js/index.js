@@ -36,16 +36,18 @@ var app = {
   // chiamata quando la posizione è stata letta
   onSuccessGeo: function(position){
     // aggiorna le coordinate
+    attesa(false,"");
     pagine.coordinate.lat = position.coords.latitude;
-    pagine.coordinate.long = position.coords.longitude;
+    pagine.coordinate.lng = position.coords.longitude;
     pagine.coordinate.alt = position.coords.altitude;
-    dbgMsg(pagine.coordinate.lat  + " " + pagine.coordinate.long );
+    dbgMsg(pagine.coordinate.lat  + " " + pagine.coordinate.lng );
     // aggiorna la distanza dalla meta corrente
     pagine.aggiornaDistanza();
   },
   // chiamata quando c'è un errore nella lettura della posizione
   onErrorGeo: function(error) {
     var msg;
+    attesa(false,"");
     switch(error.code) {
         case error.PERMISSION_DENIED:
             msg = "User denied the request for Geolocation."
@@ -65,6 +67,7 @@ var app = {
   // verifica la posizione GPS
   checkPos: function(){
     dbgMsg("check Pos");
+    attesa(true, "cerco la posizione...");
     navigator.geolocation.getCurrentPosition(app.onSuccessGeo, app.onErrorGeo, { timeout: GPS_TIMEOUT });
   },
   capturePhoto: function() {
@@ -97,29 +100,29 @@ var mete = {
     questo.push({
       "id": "meta_" + 1,
       "nome": "Prima",
-      "lat": "45.4439153",
-      "long":"12.3386693",
+      "lat": "45.4439901",
+      "lng":"12.3386693",
       "alt": "0"
       });
     questo.push({
       "id": "meta_" + 2,
       "nome": "Seconda",
       "lat": "45.443454",
-      "long": "12.338730",
+      "lng": "12.338730",
       "alt": "0"
       });
     questo.push({
       "id": "meta_" + 3,
       "nome": "Terza",
       "lat": "45.442558",
-      "long": "12.338237",
+      "lng": "12.338237",
       "alt": "0"
       });
     questo.push({
       "id": "meta_" + 4,
       "nome": "Quarta",
       "lat": "45.441684",
-      "long": "12.337671",
+      "lng": "12.337671",
       "alt": "0"
       });
   }
@@ -132,7 +135,7 @@ var pagine = {
   // struttura con le coordinate e le altre info di geolocalizzazione
   coordinate: {
     lat: 0,
-    long: 0,
+    lng: 0,
     alt: 0,
     dist: -1     // dalla meta attuale
   },
@@ -179,9 +182,11 @@ var pagine = {
       // cancella l'esistente
       $("#lblDistanza").empty();  
       $("#lblArrivato").empty();
+      $("#lblCoordinate").empty();
       // scrive i nuovi dati
       var el = pagine.lista[pagine.numPagina-1];
       $("#tit-interno").html("<h2>Pag. "+ pagine.numPagina + " - " + el.nome + "</h2>");
+      $("#lblCoordinate").html(el.lat + " - " + el.lng);
       if( el.arrivato>0){
         $("#lblArrivo").html("Arrivato: "+ el.dataora);  
       }
@@ -241,7 +246,7 @@ var pagine = {
         "id": id,
         "nome": mete.elenco[id].nome,
         "lat": mete.elenco[id].lat,
-        "long": mete.elenco[id].long,
+        "lng": mete.elenco[id].lng,
         "alt": mete.elenco[id].alt,
         "arrivato":"0",
         "dataora":"0000-00-00 00:00:00"
@@ -250,9 +255,10 @@ var pagine = {
     pagine.nextPage();
   },
   aggiornaDistanza: function(){
+    dbgMsg("Aggiorna Distanza");
     if( pagine.numPagina>0){
       var el = pagine.lista[pagine.numPagina-1];
-      coordinate.dist = getDistanceFromLatLng(coordinate.lat, coordinate.long, el.lat, el.long);
+      coordinate.dist = getDistanceFromLatLng(coordinate.lat, coordinate.lng, el.lat, el.lng);
       var dst = coordinate.dist;
       $("#lblDistanza").html("Distanza: "+ dst);
       // verifica se sei arrivato
@@ -262,6 +268,7 @@ var pagine = {
   // verifica la distanza
   checkArrivato: function(){
     // alert(coordinate.dist );
+    dbgMsg("Check arrivato");
     var el = pagine.lista[pagine.numPagina-1];
     // SE non è ancora arrivato a questa meta
     if(!el.arrivato == 0 && pagine.coordinate.dist < DISTANZA_ARRIVO ){    
