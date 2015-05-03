@@ -287,7 +287,7 @@ var pagine = {
     if((el.arrivato<=0) && (el.dist >0) && (el.dist < DISTANZA_ARRIVO) ){
       el.arrivato = 1;
       el.dataora = adesso();
-      vibra(1000);
+      //vibra(1000);
       showAlertModal("Sei arrivato!",app.capturePhoto,"BRAVO");
     }
   },

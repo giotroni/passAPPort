@@ -73,7 +73,7 @@ function strDistanza(x){
 // restituisce l'ora attuale nel formato 0000-00-00 00:00:00
 function adesso(){
   var dt = new Date();
-  var sGiorno = dt.getFullYear() + "-" + dt.getMonth + "-" + dt.getDay();
+  var sGiorno = dt.getFullYear() + "-" + dt.getMonth() + "-" + dt.getDay();
   var sOra= dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
   dbgMsg("adesso: " + sGiorno + " " + sOra)
   return (sGiorno + " " + sOra);
