@@ -257,7 +257,7 @@ var pagine = {
     if( pagine.numPagina>0){
       var el = pagine.lista[pagine.numPagina-1];
       pagine.coordinate.dist = getDistanceFromLatLng(pagine.coordinate.lat, pagine.coordinate.lng, el.lat, el.lng);
-      var dst = coordinate.dist;
+      var dst = pagine.coordinate.dist;
       $("#lblDistanza").html("Distanza: "+ dst);
       // verifica se sei arrivato
       pagine.checkArrivato();
