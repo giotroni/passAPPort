@@ -45,4 +45,13 @@ function attesa(valore, testo){
     $.mobile.loading( "hide" );
   }
 }
-
+// formatta la distanza in modo "umano"
+function strDistanza(x){
+  var num;
+  var val = " mt";
+  if(x>1000){
+    num = x/1000;
+    val = " km";
+  }
+  return (num.toFixed(1) + val);
+}

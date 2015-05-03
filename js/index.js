@@ -71,7 +71,7 @@ var app = {
     navigator.geolocation.getCurrentPosition(app.onSuccessGeo, app.onErrorGeo, { timeout: GPS_TIMEOUT });
   },
   capturePhoto: function() {
-    app.showAlert("Fotografa!","Pronto?");
+    showAlert("Fotografa!","Pronto?");
     navigator.camera.getPicture(app.onPhotoFileSuccess, app.onFail, { quality: 50, destinationType: Camera.DestinationType.FILE_URI });
   },
   onPhotoFileSuccess: function(imageData) {
@@ -81,7 +81,7 @@ var app = {
     smallImage.src = imageData;
   },
   onFail: function(msg){
-    app.showAlert("Foto non riuscita: " + error.code,"msg");
+    showAlert("Foto non riuscita: " + error.code,"msg");
   }
 }
 
@@ -257,8 +257,7 @@ var pagine = {
     if( pagine.numPagina>0){
       var el = pagine.lista[pagine.numPagina-1];
       pagine.coordinate.dist = getDistanceFromLatLng(pagine.coordinate.lat, pagine.coordinate.lng, el.lat, el.lng);
-      var dst = pagine.coordinate.dist;
-      $("#lblDistanza").html("Distanza: "+ dst);
+      $("#lblDistanza").html("Distanza: "+ strDistanza(pagine.coordinate.dist));
       // verifica se sei arrivato
       pagine.checkArrivato();
     }
