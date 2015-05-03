@@ -5,7 +5,7 @@
 // git push origin master
 var DBG = true;
 var DISTANZA_ARRIVO = 30;         // distanza (in metri) entrpo la quale si giudica arrivati a destinazione
-var GPS_TIMEOUT = 1500;           // intervallo di tempo della chiamata al GPS
+var GPS_TIMEOUT = 15000;           // intervallo di tempo della chiamata al GPS
 
 var URL_PREFIX = "http://www.troni.it/passapport/";
 
