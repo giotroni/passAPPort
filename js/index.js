@@ -35,7 +35,7 @@ var app = {
   },
   // chiamata quando la posizione è stata letta
   onSuccessGeo: function(position){
-    // alert(coordinate.lat  + " " + coordinate.long );
+    dbgMsg(coordinate.lat  + " " + coordinate.long );
     // aggiorna le coordinate
     pagine.coordinate.lat = position.coords.latitude;
     pagine.coordinate.long = position.coords.longitude;
