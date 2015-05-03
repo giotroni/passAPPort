@@ -256,7 +256,7 @@ var pagine = {
     dbgMsg("Aggiorna Distanza");
     if( pagine.numPagina>0){
       var el = pagine.lista[pagine.numPagina-1];
-      coordinate.dist = getDistanceFromLatLng(pagine.coordinate.lat, pagine.coordinate.lng, el.lat, el.lng);
+      pagine.coordinate.dist = getDistanceFromLatLng(pagine.coordinate.lat, pagine.coordinate.lng, el.lat, el.lng);
       var dst = coordinate.dist;
       $("#lblDistanza").html("Distanza: "+ dst);
       // verifica se sei arrivato
