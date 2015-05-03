@@ -271,7 +271,7 @@ var pagine = {
     // SE non è ancora arrivato a questa meta
     if(!el.arrivato == 0 && pagine.coordinate.dist < DISTANZA_ARRIVO ){    
         showAlert("Sei arrivato!","BRAVO");
-        capturePhotoWithData();
+        app.capturePhoto();
     }
   }
 }
