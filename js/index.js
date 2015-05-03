@@ -240,7 +240,7 @@ var pagine = {
       testo += '</a></li>';
       $('#lstMete').append(testo);
       $("#lstMete li#meta_"+key).bind("click", function(){
-          dbgMsg("Aggiungi meta: " + key);
+          // dbgMsg("Aggiungi meta: " + key);
           pagine.nuovaMeta(key);
       });
     });
@@ -264,7 +264,7 @@ var pagine = {
         return false;
       }
     });
-    dbgMsg("meta ok: " + metaOK);
+    // dbgMsg("meta ok: " + metaOK);
     if( metaOK){
       // aggiorna l'indicatore del numero di pagine totale
       pagine.numMaxPagine +=1;
@@ -320,37 +320,41 @@ var pagine = {
     el.foto = tst;
     var smallImage = document.getElementById('smallImage');    
     smallImage.src = el.foto;
-    scrivePagine();
+    pagine.scrivePagine();
   },
   // legge dalla memoria le pagine
   leggePagine: function(){
     dbgMsg("Legge pagine");
     if ("lunghezza" in localStorage){
+      attesa("memorizzo", true);
       var lung = app.storage.getItem("lunghezza");
-      dbgMsg(lung);
+      // dbgMsg(lung);
       for(i=0; i<lung; i++){
         var valore = app.storage.getItem("pag"+i);
-        dbgMsg(valore);
+        // dbgMsg(valore);
         pagine.lista.push(JSON.parse(valore));
       }
       pagine.numMaxPagine = lung;
+      attesa("", false);
     }
   },
   // scrive in memoria le pagine
   scrivePagine: function(){
     dbgMsg("Scrive pagine");
+    attesa("memorizzo", true);
     app.storage.clear();
     // salva le pagine
     app.storage.setItem("lunghezza", pagine.lista.length);
     $.each(pagine.lista, function(key, value){
       var valore = JSON.stringify(value);
-      dbgMsg(valore);
+      // dbgMsg(valore);
       app.storage.setItem("pag"+key, valore)  
     })
+    attesa("", false);
   },
   // scrive in memoria le pagine
   reset: function(){
-    dbgMsg("Reset");
+    // dbgMsg("Reset");
     app.storage.clear();
   }
 }
