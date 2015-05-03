@@ -45,20 +45,22 @@ var app = {
   },
   // chiamata quando c'è un errore nella lettura della posizione
   onErrorGeo: function(error) {
-      switch(error.code) {
-          case error.PERMISSION_DENIED:
-              x.innerHTML = "User denied the request for Geolocation."
-              break;
-          case error.POSITION_UNAVAILABLE:
-              x.innerHTML = "Location information is unavailable."
-              break;
-          case error.TIMEOUT:
-              x.innerHTML = "The request to get user location timed out."
-              break;
-          case error.UNKNOWN_ERROR:
-              x.innerHTML = "An unknown error, reading position, occurred."
-              break;
-      }
+    var msg;
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            msg = "User denied the request for Geolocation."
+            break;
+        case error.POSITION_UNAVAILABLE:
+            msg = "Location information is unavailable."
+            break;
+        case error.TIMEOUT:
+            msg = "The request to get user location timed out."
+            break;
+        case error.UNKNOWN_ERROR:
+            msg = "An unknown error, reading position, occurred."
+            break;
+    }
+    showAlert("msg", "Errore");
   },
   // verifica la posizione GPS
   checkPos: function(){
