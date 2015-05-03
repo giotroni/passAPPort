@@ -83,9 +83,9 @@ var app = {
   },
   onPhotoFileSuccess: function(imageData) {
     // Get image handle
-    var smallImage = document.getElementById('smallImage');    
-    // Show the captured photo The inline CSS rules are used to resize the image
-    smallImage.src = imageData;
+    //var smallImage = document.getElementById('smallImage');    
+    //// Show the captured photo The inline CSS rules are used to resize the image
+    //smallImage.src = imageData;
     // memorizza la foto nell'array delle mete
     pagine.saveFoto(imageData);
   },
@@ -187,6 +187,9 @@ var pagine = {
           reverse: true,
           showLoadMsg: true
       });
+
+      var smallImage = document.getElementById('smallImage');    
+
       // cancella l'esistente
       $("#lblDistanza").empty();  
       $("#lblArrivo").empty();
@@ -194,11 +197,12 @@ var pagine = {
       // scrive i nuovi dati
       var el = pagine.lista[pagine.numPagina-1];
       $("#tit-interno").html("<h2>Pag. "+ pagine.numPagina + " - " + el.nome + "</h2>");
+      dbgMsg(el.foto);
       $("#lblCoordinate").html(el.lat + " - " + el.lng);
       if( el.arrivato>0){
         $("#lblArrivo").html("Arrivato: "+ el.dataora);
         $('#smallImage').display = 'block';
-        $('#smallImage').src = el.foto;
+        smallImage.src = el.foto;
       } else {
         $("#lblArrivo").html("Non ancora arrivato");
         $('#smallImage').display = 'none';
@@ -298,6 +302,8 @@ var pagine = {
     dbgMsg(tst);
     var el = pagine.lista[pagine.numPagina-1];
     el.foto = tst;
+    var smallImage = document.getElementById('smallImage');    
+    smallImage.src = el.foto;
   }
 }
 
