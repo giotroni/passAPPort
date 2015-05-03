@@ -288,6 +288,8 @@ var pagine = {
       el.arrivato = 1;
       el.dataora = adesso();
       //vibra(1000);
+      var my_media = new Media("audio/audio_suonerie_applauso_01.mp3");
+      my_media.play();
       showAlertModal("Sei arrivato!",app.capturePhoto,"BRAVO");
     }
   },
