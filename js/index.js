@@ -31,7 +31,7 @@ var app = {
     $("#btnEntra").on("click", pagine.nextPage);
     $("#btnNext").on("click", pagine.nextPage);
     $("#btnPrev").on("click", pagine.prevPage);
-    $("#btnCheckPos").on("click", pagine.checkPos);
+    $("#btnCheckPos").on("click", app.checkPos);
   },
   // chiamata quando la posizione è stata letta
   onSuccessGeo: function(position){
