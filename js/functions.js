@@ -47,7 +47,7 @@ function attesa(valore, testo){
 }
 // formatta la distanza in modo "umano"
 function strDistanza(x){
-  var num;
+  var num = x;
   var val = " mt";
   if(x>1000){
     num = x/1000;
