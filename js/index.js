@@ -264,6 +264,7 @@ var pagine = {
         return false;
       }
     });
+    dbgMsg("meta ok: " + metaOK);
     if( metaOK){
       // aggiorna l'indicatore del numero di pagine totale
       pagine.numMaxPagine +=1;
@@ -323,6 +324,7 @@ var pagine = {
   },
   // legge dalla memoria le pagine
   leggePagine: function(){
+    dbgMsg("Legge pagine");
     if ("lunghezza" in localStorage){
       var lung = app.storage.getItem("lunghezza");
       msgDbg(lung);
@@ -336,6 +338,7 @@ var pagine = {
   },
   // scrive in memoria le pagine
   scrivePagine: function(){
+    dbgMsg("Scrive pagine");
     app.storage.clear();
     // salva le pagine
     app.storage.setItem("lunghezza", pagine.lista.length);
