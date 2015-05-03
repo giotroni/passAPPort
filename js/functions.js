@@ -25,3 +25,8 @@ function showAlert (message, title) {
         alert(title ? (title + ": " + message) : message);
     }
 }
+function dbgMsg(msg){
+  if(DBG){
+    showAlert(msg, "Debug");
+  }
+}

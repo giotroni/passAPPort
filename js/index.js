@@ -3,11 +3,13 @@
 // git add .
 // git commit -m "memorizzazione locale"
 // git push origin master
-
+var DBG = true;
 var DISTANZA_ARRIVO = 30;         // distanza (in metri) entrpo la quale si giudica arrivati a destinazione
 var GPS_TIMEOUT = 1500;           // intervallo di tempo della chiamata al GPS
 
 var URL_PREFIX = "http://www.troni.it/passapport/";
+
+var destinationType; // sets the format of returned value
 
 // Funzione che calcola la distanza
 // MAIN
@@ -58,7 +60,7 @@ var app = {
   },
   // verifica la posizione GPS
   checkPos: function(){
-    alert("check Pos");
+    dbgMsg("check Pos");
     navigator.geolocation.getCurrentPosition(app.onSuccessGeo, app.onErrorGeo, { timeout: GPS_TIMEOUT });
   },
   capturePhoto: function() {
@@ -72,7 +74,7 @@ var app = {
     smallImage.src = imageData;
   },
   onFail: function(msg){
-    app.showAlert("failed : " + error.code,"msg");
+    app.showAlert("Foto non riuscita: " + error.code,"msg");
   }
 }
 
@@ -132,16 +134,9 @@ var pagine = {
   },
   // elenco dei luoghi
   lista: [],
-  // "oggetto" pagina corrente
-  corrente: function(){
-    if( lista.length>0){
-      return pagine.lista[pagine.numPagina-1];
-    } else {
-      return null;
-    }
-  },
   // va alla pagina successiva
   nextPage: function (){
+    dbgMsg("Next page: "+pagine.numPagina + " max page: " + pagine.numMaxPagine);
     // verifica se siamo all'ultima pagina
     if( pagine.numPagina >= pagine.numMaxPagine){
       // se si aggiunge una meta?
@@ -154,6 +149,7 @@ var pagine = {
   },
   // va alla pagina precedente
   prevPage: function (){
+    dbgMsg("Next page: "+pagine.numPagina + " max page: " + pagine.numMaxPagine);
     // se non siamo già alla copertina, va alla pagina precedente
     if( pagine.numPagina > 0 ) {
       pagine.numPagina -= 1;
@@ -169,6 +165,7 @@ var pagine = {
   showPage: function(){
     if(pagine.numPagina>0){
       // siamo dentro il passAPPort
+      dbgMsg("mostra la pagina interna: ");
       $.mobile.pageContainer.pagecontainer("change", "#page-interno", {
           transition: 'slide',
           changeHash: false,
@@ -177,7 +174,8 @@ var pagine = {
       });
       // cancella l'esistente
       $("#lblDistanza").empty();  
-      $("#lblArrivato").empty();  
+      $("#lblArrivato").empty();
+      // scrive i nuovi dati
       var el = pagine.lista[pagine.numPagina-1];
       $("#tit-interno").html("<h2>Pag. "+ pagine.numPagina + " - " + el.nome + "</h2>");
       if( el.arrivato>0){
@@ -185,6 +183,7 @@ var pagine = {
       }
     } else {
       // mostra la copertina
+      dbgMsg("mostra la copertina");
       $.mobile.pageContainer.pagecontainer("change", "#page-home", {
           transition: 'flip',
           changeHash: false,
@@ -195,6 +194,7 @@ var pagine = {
   },
   // mostra la pagina con l'elenco delle mete
   showMete: function (){
+    dbgMsg("mostra l'elenco delle mete");
     $.mobile.pageContainer.pagecontainer("change", "#page-elencomete", {
         transition:   'flip',
         changeHash:   false,
@@ -203,7 +203,7 @@ var pagine = {
     });
     pagine.elencaMete();
   },
-  // crea l'elenco mete e lo 
+  // crea l'elenco mete 
   elencaMete: function() {
     $('#lstMete').empty();
     $.each(mete.elenco, function(key, value){
@@ -215,6 +215,7 @@ var pagine = {
           alert("Aggiungi meta: " + key);
           app.nuovaMeta(key);
       });
+      dbgMsg("Meta: " + testo);
     });
     $('#lstMete').listview("refresh");
   },
@@ -228,8 +229,9 @@ var pagine = {
         return;
       }
     })
+    // aggiorna l'indicatore del numero di pagine totale
     pagine.numMaxPagine +=1;
-    // inserisce i dati nell'archivio
+    // inserisce i dati della meta nell'array delle pagine
     pagine.lista.push({
         "id": id,
         "nome": mete.elenco[id].nome,
