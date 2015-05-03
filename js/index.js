@@ -37,10 +37,10 @@ var app = {
   onSuccessGeo: function(position){
     // aggiorna le coordinate
     attesa(false,"");
-    pagine.coordinate.lat = position.coords.latitude;
-    pagine.coordinate.lng = position.coords.longitude;
-    pagine.coordinate.alt = position.coords.altitude;
-    dbgMsg(pagine.coordinate.lat  + " " + pagine.coordinate.lng );
+    pagine.dati.lat = position.coords.latitude;
+    pagine.dati.lng = position.coords.longitude;
+    pagine.dati.alt = position.coords.altitude;
+    dbgMsg(pagine.dati.lat  + " " + pagine.dati.lng );
     // aggiorna la distanza dalla meta corrente
     pagine.aggiornaDistanza();
   },
@@ -72,13 +72,22 @@ var app = {
   },
   capturePhoto: function() {
     showAlert("Fotografa!","Pronto?");
-    navigator.camera.getPicture(app.onPhotoFileSuccess, app.onFail, { quality: 50, destinationType: Camera.DestinationType.FILE_URI });
+    navigator.camera.getPicture(
+      app.onPhotoFileSuccess,
+      app.onFail,
+      {
+        quality: 50,
+        destinationType: Camera.DestinationType.FILE_URI,
+        saveToPhotoAlbum: true
+      }
+    );
   },
   onPhotoFileSuccess: function(imageData) {
     // Get image handle
     var smallImage = document.getElementById('smallImage');    
     // Show the captured photo The inline CSS rules are used to resize the image
     smallImage.src = imageData;
+    pagine.dati.foto = imageData;
   },
   onFail: function(msg){
     showAlert("Foto non riuscita: " + error.code,"msg");
@@ -133,7 +142,7 @@ var pagine = {
   numPagina: 0,           // numero pagina attuale
   numMaxPagine: 0,        // numero max di pagine attualmente nel passapport
   // struttura con le coordinate e le altre info di geolocalizzazione
-  coordinate: {
+  dati: {
     lat: 0,
     lng: 0,
     alt: 0,
@@ -172,7 +181,7 @@ var pagine = {
   showPage: function(){
     if(pagine.numPagina>0){
       // siamo dentro il passAPPort
-      dbgMsg("mostra la pagina interna: ");
+      // dbgMsg("mostra la pagina interna: ");
       $.mobile.pageContainer.pagecontainer("change", "#page-interno", {
           transition: 'slide',
           changeHash: false,
@@ -181,14 +190,18 @@ var pagine = {
       });
       // cancella l'esistente
       $("#lblDistanza").empty();  
-      $("#lblArrivato").empty();
+      $("#lblArrivo").empty();
       $("#lblCoordinate").empty();
+      $('#smallImage').src = '';
       // scrive i nuovi dati
       var el = pagine.lista[pagine.numPagina-1];
       $("#tit-interno").html("<h2>Pag. "+ pagine.numPagina + " - " + el.nome + "</h2>");
       $("#lblCoordinate").html(el.lat + " - " + el.lng);
       if( el.arrivato>0){
-        $("#lblArrivo").html("Arrivato: "+ el.dataora);  
+        $("#lblArrivo").html("Arrivato: "+ el.dataora);
+        $('#smallImage').src = pagine.dati.foto;
+      } else {
+        $("#lblArrivo").html("Non ancora arrivato");
       }
     } else {
       // mostra la copertina
@@ -203,7 +216,7 @@ var pagine = {
   },
   // mostra la pagina con l'elenco delle mete
   showMete: function (){
-    dbgMsg("mostra l'elenco delle mete");
+    // dbgMsg("mostra l'elenco delle mete");
     $.mobile.pageContainer.pagecontainer("change", "#page-elencomete", {
         transition:   'flip',
         changeHash:   false,
@@ -247,7 +260,8 @@ var pagine = {
         "lng": mete.elenco[id].lng,
         "alt": mete.elenco[id].alt,
         "arrivato":"0",
-        "dataora":"0000-00-00 00:00:00"
+        "dataora":"0000-00-00 00:00:00",
+        "foto": ""
         });
     // mostra la pagina
     pagine.nextPage();
@@ -256,22 +270,24 @@ var pagine = {
     dbgMsg("Aggiorna Distanza");
     if( pagine.numPagina>0){
       var el = pagine.lista[pagine.numPagina-1];
-      pagine.coordinate.dist = getDistanceFromLatLng(pagine.coordinate.lat, pagine.coordinate.lng, el.lat, el.lng);
-      var dst = pagine.coordinate.dist;
-      $("#lblDistanza").html("Distanza: "+ dst); // strDistanza(pagine.coordinate.dist));
+      pagine.dati.dist = getDistanceFromLatLng(pagine.dati.lat, pagine.dati.lng, el.lat, el.lng);
+      var dst = pagine.dati.dist;
+      $("#lblDistanza").html("Distanza: "+ strDistanza(dst));
       // verifica se sei arrivato
       pagine.checkArrivato();
     }
   },
   // verifica la distanza
   checkArrivato: function(){
-    // alert(coordinate.dist );
+    // alert(dati.dist );
     dbgMsg("Check arrivato");
     var el = pagine.lista[pagine.numPagina-1];
     // SE non è ancora arrivato a questa meta
-    if(!el.arrivato == 0 && pagine.coordinate.dist < DISTANZA_ARRIVO ){    
-        showAlert("Sei arrivato!","BRAVO");
-        app.capturePhoto();
+    if(!el.arrivato && pagine.dati.dist < DISTANZA_ARRIVO ){
+      el.arrivato = 1;
+      el.dataora = adesso();
+      vibra(1000)
+      showAlertModal("Sei arrivato!",app.capturePhoto,"BRAVO");
     }
   }
 }

@@ -25,6 +25,21 @@ function showAlert (message, title) {
         alert(title ? (title + ": " + message) : message);
     }
 }
+// mostra un messaggio e lancia una funzione dopo
+function showAlertModal (message, func, title) {
+    if (navigator.notification) {
+        navigator.notification.alert(message, func, title, 'OK');
+    } else {
+        alert(title ? (title + ": " + message) : message);
+        func();
+    }
+}
+// vibra
+function vibra(mm){
+    if (navigator.notification) {
+      navigator.notification.vibrate(mm)
+    }
+}
 // messaggi diagnostici
 function dbgMsg(msg){
   if(DBG){
@@ -54,4 +69,11 @@ function strDistanza(x){
     val = " km";
   }
   return (num.toFixed(1) + val);
+}
+// restituisce l'ora attuale nel formato 0000-00-00 00:00:00
+function adesso(){
+  var dt = new Date();
+  var sGiorno = dt.getFullYear() + "-" + dt.getMonth + "-" + dt.getDay();
+  var sOra= dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+  return (sGiorno + " " + sOra);
 }
