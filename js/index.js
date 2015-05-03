@@ -60,7 +60,7 @@ var app = {
             msg = "An unknown error, reading position, occurred."
             break;
     }
-    showAlert("msg", "Errore");
+    showAlert(msg, "Errore");
   },
   // verifica la posizione GPS
   checkPos: function(){
