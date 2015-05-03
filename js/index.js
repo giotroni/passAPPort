@@ -35,11 +35,11 @@ var app = {
   },
   // chiamata quando la posizione è stata letta
   onSuccessGeo: function(position){
-    dbgMsg(coordinate.lat  + " " + coordinate.long );
     // aggiorna le coordinate
     pagine.coordinate.lat = position.coords.latitude;
     pagine.coordinate.long = position.coords.longitude;
     pagine.coordinate.alt = position.coords.altitude;
+    dbgMsg(pagine.coordinate.lat  + " " + pagine.coordinate.long );
     // aggiorna la distanza dalla meta corrente
     pagine.aggiornaDistanza();
   },
