@@ -25,6 +25,8 @@ var app = {
     // ok, il dispositivo è pronto: configuralo
     // app.showAlert("Chiamata alla fine del caricamento","msg");
     destinationType=navigator.camera.DestinationType;
+    // inizializza l'elenco delle mete
+    mete.inizializza();
     // EVENTI DA LEGARE
     $("#btnEntra").on("click", pagine.nextPage);
     $("#btnNext").on("click", pagine.nextPage);
@@ -206,16 +208,17 @@ var pagine = {
   // crea l'elenco mete 
   elencaMete: function() {
     $('#lstMete').empty();
+    dbgMsg("Elenca mete");
     $.each(mete.elenco, function(key, value){
       var testo = '<li id="meta_'+ key +'" ><a href="#" >';
       testo += value.nome ;
       testo += '</a></li>';
+      dbgMsg("Meta: " + testo);
       $('#lstMete').append(testo);
       $("#lstMete li#meta_"+key).bind("click", function(){
           alert("Aggiungi meta: " + key);
           pagine.nuovaMeta(key);
       });
-      dbgMsg("Meta: " + testo);
     });
     $('#lstMete').listview("refresh");
   },
