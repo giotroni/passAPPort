@@ -70,11 +70,21 @@ function strDistanza(x){
   }
   return (num.toFixed(1) + val);
 }
+// formatta un numero con (almeno) due caratteri, inserendo uno 0 in testa
+function twoDigits( x ){
+  var st = "";
+  if( x > 9) {
+    st = x;
+  } else {
+    st = "0" + x;
+  }
+  return st;
+}
 // restituisce l'ora attuale nel formato 0000-00-00 00:00:00
 function adesso(){
   var dt = new Date();
-  var sGiorno = dt.getFullYear() + "-" + dt.getMonth() + "-" + dt.getDay();
-  var sOra= dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+  var sGiorno = dt.getFullYear() + "-" + (twoDigits(dt.getMonth()*1+1)) + "-" + twoDigits(dt.getDay());
+  var sOra= twoDigits(dt.getHours()) + ":" + twoDigits(dt.getMinutes()) + ":" + twoDigits(dt.getSeconds());
   dbgMsg("adesso: " + sGiorno + " " + sOra)
   return (sGiorno + " " + sOra);
 }

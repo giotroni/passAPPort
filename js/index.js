@@ -71,7 +71,6 @@ var app = {
     navigator.geolocation.getCurrentPosition(app.onSuccessGeo, app.onErrorGeo, { timeout: GPS_TIMEOUT });
   },
   capturePhoto: function() {
-    showAlert("Fotografa!","Pronto?");
     navigator.camera.getPicture(
       app.onPhotoFileSuccess,
       app.onFail,
@@ -192,16 +191,17 @@ var pagine = {
       $("#lblDistanza").empty();  
       $("#lblArrivo").empty();
       $("#lblCoordinate").empty();
-      $('#smallImage').src = '';
       // scrive i nuovi dati
       var el = pagine.lista[pagine.numPagina-1];
       $("#tit-interno").html("<h2>Pag. "+ pagine.numPagina + " - " + el.nome + "</h2>");
       $("#lblCoordinate").html(el.lat + " - " + el.lng);
       if( el.arrivato>0){
         $("#lblArrivo").html("Arrivato: "+ el.dataora);
-        $('#smallImage').src = pagine.dati.foto;
+        $('#smallImage').display = 'block';
+        $('#smallImage').src = el.foto;
       } else {
         $("#lblArrivo").html("Non ancora arrivato");
+        $('#smallImage').display = 'none';
       }
     } else {
       // mostra la copertina
@@ -287,10 +287,10 @@ var pagine = {
     if((el.arrivato<=0) && (el.dist >0) && (el.dist < DISTANZA_ARRIVO) ){
       el.arrivato = 1;
       el.dataora = adesso();
-      //vibra(1000);
-      var my_media = new Media("audio/audio_suonerie_applauso_01.mp3");
-      my_media.play();
-      showAlertModal("Sei arrivato!",app.capturePhoto,"BRAVO");
+      // vibra(1000);
+      // var my_media = new Media("audio/audio_suonerie_applauso_01.mp3");
+      // my_media.play();
+      showAlertModal("Sei arrivato! Pronto per la foto ricordo?",app.capturePhoto,"BRAVO");
     }
   },
   // memorizza l'indirizzo della foto
