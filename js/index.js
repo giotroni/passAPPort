@@ -30,6 +30,7 @@ var app = {
     mete.inizializza();
     pagine.leggePagine();
     // EVENTI DA LEGARE
+    $("#btnReset").on("click", pagine.reset);
     $("#btnEntra").on("click", pagine.nextPage);
     $("#btnNext").on("click", pagine.nextPage);
     $("#btnPrev").on("click", pagine.prevPage);
@@ -324,8 +325,10 @@ var pagine = {
   leggePagine: function(){
     if ("lunghezza" in localStorage){
       var lung = app.storage.getItem("lunghezza");
+      msgDbg(lung);
       for(i=0; i<lung; i++){
         var valore = app.storage.getItem("pag"+i);
+        msgDbg(valore);
         pagine.lista.push(JSON.parse(valore));
       }
       pagine.numMaxPagine = lung;
@@ -337,8 +340,14 @@ var pagine = {
     // salva le pagine
     app.storage.setItem("lunghezza", pagine.lista.length);
     $.each(pagine.lista, function(key, value){
-      app.storage.setItem("pag"+key, JSON.stringify(value))  
+      var valore = JSON.stringify(value);
+      msgDbg(valore);
+      app.storage.setItem("pag"+key, valore)  
     })
+  },
+  // scrive in memoria le pagine
+  reset: function(){
+    app.storage.clear();
   }
 }
 
