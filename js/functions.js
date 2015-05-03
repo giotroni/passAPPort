@@ -85,6 +85,6 @@ function adesso(){
   var dt = new Date();
   var sGiorno = dt.getFullYear() + "-" + (twoDigits(dt.getMonth()*1+1)) + "-" + twoDigits(dt.getDate());
   var sOra= twoDigits(dt.getHours()) + ":" + twoDigits(dt.getMinutes()) + ":" + twoDigits(dt.getSeconds());
-  dbgMsg("adesso: " + sGiorno + " " + sOra)
+  // dbgMsg("adesso: " + sGiorno + " " + sOra)
   return (sGiorno + " " + sOra);
 }

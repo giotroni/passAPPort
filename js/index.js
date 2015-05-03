@@ -40,7 +40,7 @@ var app = {
     pagine.coordinate.lat = position.coords.latitude;
     pagine.coordinate.lng = position.coords.longitude;
     pagine.coordinate.alt = position.coords.altitude;
-    dbgMsg(pagine.coordinate.lat  + " " + pagine.coordinate.lng );
+    // dbgMsg(pagine.coordinate.lat  + " " + pagine.coordinate.lng );
     // aggiorna la distanza dalla meta corrente
     pagine.aggiornaDistanza();
   },
@@ -66,7 +66,7 @@ var app = {
   },
   // verifica la posizione GPS
   checkPos: function(){
-    dbgMsg("check Pos");
+    // dbgMsg("check Pos");
     attesa(true, "cerco la posizione...");
     navigator.geolocation.getCurrentPosition(app.onSuccessGeo, app.onErrorGeo, { timeout: GPS_TIMEOUT });
   },
@@ -151,7 +151,7 @@ var pagine = {
   lista: [],
   // va alla pagina successiva
   nextPage: function (){
-    dbgMsg("Next page: "+pagine.numPagina + " max page: " + pagine.numMaxPagine);
+    // dbgMsg("Next page: "+pagine.numPagina + " max page: " + pagine.numMaxPagine);
     // verifica se siamo all'ultima pagina
     if( pagine.numPagina >= pagine.numMaxPagine){
       // se si aggiunge una meta?
@@ -164,7 +164,7 @@ var pagine = {
   },
   // va alla pagina precedente
   prevPage: function (){
-    dbgMsg("Next page: "+pagine.numPagina + " max page: " + pagine.numMaxPagine);
+    // dbgMsg("Next page: "+pagine.numPagina + " max page: " + pagine.numMaxPagine);
     // se non siamo già alla copertina, va alla pagina precedente
     if( pagine.numPagina > 0 ) {
       pagine.numPagina -= 1;
@@ -197,7 +197,7 @@ var pagine = {
       // scrive i nuovi dati
       var el = pagine.lista[pagine.numPagina-1];
       $("#tit-interno").html("<h2>Pag. "+ pagine.numPagina + " - " + el.nome + "</h2>");
-      dbgMsg(el.foto);
+      // dbgMsg(el.foto);
       $("#lblCoordinate").html(el.lat + " - " + el.lng);
       if( el.arrivato>0){
         $("#lblArrivo").html("Arrivato: "+ el.dataora);
@@ -208,7 +208,7 @@ var pagine = {
       }
     } else {
       // mostra la copertina
-      dbgMsg("mostra la copertina");
+      // dbgMsg("mostra la copertina");
       $.mobile.pageContainer.pagecontainer("change", "#page-home", {
           transition: 'flip',
           changeHash: false,
@@ -247,10 +247,10 @@ var pagine = {
   nuovaMeta: function (id){
     var metaOK = true;
     var sData = adesso().substring(0, 10);
-    dbgMsg(sData);
+    // dbgMsg(sData);
     $.each(pagine.lista, function(key, value){
       // evita di aggiungere più volte la stessa meta se non è ancora stata raggiunta o se è stata raggiunta oggi
-      dbgMsg(value.arrivato + " " + value.dataora);
+      // dbgMsg(value.arrivato + " " + value.dataora);
       if(value.id == id ){
         if( value.arrivato == 0 ){
           showAlert("Meta già presente", "Attenzione");
@@ -283,7 +283,7 @@ var pagine = {
     }
   },
   aggiornaDistanza: function(){
-    dbgMsg("Aggiorna Distanza");
+    // dbgMsg("Aggiorna Distanza");
     if( pagine.numPagina>0){
       var el = pagine.lista[pagine.numPagina-1];
       el.dist = getDistanceFromLatLng(pagine.coordinate.lat, pagine.coordinate.lng, el.lat, el.lng);
@@ -297,7 +297,7 @@ var pagine = {
   checkArrivato: function(){
     // alert(dati.dist );
     var el = pagine.lista[pagine.numPagina-1];
-    dbgMsg("Check arrivato: " + el.arrivato + " dist " + el.dist );
+    // dbgMsg("Check arrivato: " + el.arrivato + " dist " + el.dist );
     // SE non è ancora arrivato a questa meta
     if((el.arrivato<=0) && (el.dist >0) && (el.dist < DISTANZA_ARRIVO) ){
       el.arrivato = 1;
@@ -310,7 +310,7 @@ var pagine = {
   },
   // memorizza l'indirizzo della foto
   saveFoto: function( tst ){
-    dbgMsg(tst);
+    // dbgMsg(tst);
     var el = pagine.lista[pagine.numPagina-1];
     el.foto = tst;
     var smallImage = document.getElementById('smallImage');    
