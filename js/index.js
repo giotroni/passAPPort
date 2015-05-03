@@ -327,10 +327,10 @@ var pagine = {
     dbgMsg("Legge pagine");
     if ("lunghezza" in localStorage){
       var lung = app.storage.getItem("lunghezza");
-      msgDbg(lung);
+      dbgMsg(lung);
       for(i=0; i<lung; i++){
         var valore = app.storage.getItem("pag"+i);
-        msgDbg(valore);
+        dbgMsg(valore);
         pagine.lista.push(JSON.parse(valore));
       }
       pagine.numMaxPagine = lung;
@@ -344,7 +344,7 @@ var pagine = {
     app.storage.setItem("lunghezza", pagine.lista.length);
     $.each(pagine.lista, function(key, value){
       var valore = JSON.stringify(value);
-      msgDbg(valore);
+      dbgMsg(valore);
       app.storage.setItem("pag"+key, valore)  
     })
   },
