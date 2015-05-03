@@ -213,7 +213,7 @@ var pagine = {
       $('#lstMete').append(testo);
       $("#lstMete li#meta_"+key).bind("click", function(){
           alert("Aggiungi meta: " + key);
-          app.nuovaMeta(key);
+          pagine.nuovaMeta(key);
       });
       dbgMsg("Meta: " + testo);
     });
