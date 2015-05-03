@@ -201,11 +201,10 @@ var pagine = {
       $("#lblCoordinate").html(el.lat + " - " + el.lng);
       if( el.arrivato>0){
         $("#lblArrivo").html("Arrivato: "+ el.dataora);
-        $('#smallImage').display = 'block';
         smallImage.src = el.foto;
       } else {
         $("#lblArrivo").html("Non ancora arrivato");
-        $('#smallImage').display = 'none';
+        smallImage.src = "";
       }
     } else {
       // mostra la copertina
@@ -246,14 +245,20 @@ var pagine = {
   },
   // aggiunge una meta al database
   nuovaMeta: function (id){
-    var dt = new Date();
-    var sTime = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+    var sData = adesso().substring(0, 10);
+    dbgMsg(sData);
     $.each(pagine.lista, function(key, value){
       // evita di aggiungere più volte la stessa meta se non è ancora stata raggiunta o se è stata raggiunta oggi
-      if(value.id == id && (value.arrivato == 0 || value.dataora.indexOf(sTime) >= 0)){
+      dbgMsg(value.arrivato + " " + value.dataora);
+      if(value.id == id ){
+        if( value.arrivato == 0 ){
+          showAlert("Meta già presente", "Attenzione");
+        } else if (value.dataora.indexOf(sData) >= 0){
+          showAlert("Meta già raggiunta oggi", "Attenzione");
+        }
         return;
       }
-    })
+    });
     // aggiorna l'indicatore del numero di pagine totale
     pagine.numMaxPagine +=1;
     // inserisce i dati della meta nell'array delle pagine
