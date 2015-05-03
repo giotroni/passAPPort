@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns     = "http://www.w3.org/ns/widgets"
+        xmlns:gap = "http://phonegap.com/ns/1.0"
+        id        = "it.troni.passapport"
+        versionCode="10"
+        version   = "1.1.0">
+
+    <name>passAPPort</name>
+
+    <description>
+        Raggiungi le tue mete
+    </description>
+
+    <author href="http://www.troni.it" email="giorgio@troni.it">
+        Giorgio Troni
+    </author>
+ 
+    <gap:platform name="android" />
+    
+    <icon src="img/passAPPort_icon.png" />
+
+    <feature name="http://api.phonegap.com/1.0/camera"/>
+    <feature name="http://api.phonegap.com/1.0/contacts"/>
+    <feature name="http://api.phonegap.com/1.0/file"/>
+    <feature name="http://api.phonegap.com/1.0/geolocation"/>
+    <feature name="http://api.phonegap.com/1.0/media"/>
+    <feature name="http://api.phonegap.com/1.0/network"/>
+    <feature name="http://api.phonegap.com/1.0/notification"/>
+
+    <feature name="http://api.phonegap.com/1.0/device" />
+
+    <gap:plugin name="org.apache.cordova.camera"/>
+    <gap:plugin name="org.apache.cordova.network-information" />
+    <gap:plugin name="org.apache.cordova.geolocation"/>
+    
+    <gap:plugin name="org.apache.cordova.dialogs" />
+
+</widget>
