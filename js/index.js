@@ -240,7 +240,7 @@ var pagine = {
       testo += '</a></li>';
       $('#lstMete').append(testo);
       $("#lstMete li#meta_"+key).bind("click", function(){
-          alert("Aggiungi meta: " + key);
+          dbgMsg("Aggiungi meta: " + key);
           pagine.nuovaMeta(key);
       });
     });
@@ -279,7 +279,7 @@ var pagine = {
           "dataora":"0000-00-00 00:00:00",
           "foto": ""
           });
-      scrivePagine();
+      pagine.scrivePagine();
       // mostra la pagina
       pagine.nextPage();
     } else {
@@ -347,6 +347,7 @@ var pagine = {
   },
   // scrive in memoria le pagine
   reset: function(){
+    dbgMsg("Reset");
     app.storage.clear();
   }
 }
