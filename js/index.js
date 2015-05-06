@@ -158,6 +158,7 @@ var mete = {
         dataType: 'json',                //data format      
         cache: false
       }).done(function(result) {
+        dbgMsg(result)
         var obj = $.parseJSON(result);
         $.each(obj, function(i, valore){
           questo.push(valore);
