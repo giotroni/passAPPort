@@ -49,6 +49,15 @@ var app = {
     // aggiorna la distanza dalla meta corrente
     pagine.aggiornaDistanza();
   },
+  // memorizza i dati della APP
+  salvaDati: function(){
+    attesa("memorizzo", true);
+    // azzera il database
+    app.storage.clear();
+    pagine.scrivePagine();
+    mete.scriveMete();
+    attesa("", false);
+  },
   // chiamata quando c'è un errore nella lettura della posizione
   onErrorGeo: function(error) {
     var msg;
@@ -108,9 +117,16 @@ var app = {
     states[Connection.CELL_4G]  = 'Cell 4G connection';
     states[Connection.NONE]     = 'No network connection';
     dbgMsg('Connection type: ' + states[networkState]);
+  },
+  checkWifi: function(){
+    var networkState = navigator.network.connection.type;
+    if( networkState == Connection.WIFI){
+      return true;
+    } else {
+      return false;
+    }
   }
 }
-
 
 // classe con le mete
 var mete = {
@@ -119,38 +135,85 @@ var mete = {
   inizializza: function(){
     var questo = mete.elenco;
     // aggiorna elenco mete
-    // prima svuota
-    while(questo.length > 0) {
-      questo.pop();
-    };
-    questo.push({
-      "id": "meta_" + 1,
-      "nome": "Prima",
-      "lat": "45.4439901",
-      "lng":"12.3386693",
-      "alt": "0"
-      });
-    questo.push({
-      "id": "meta_" + 2,
-      "nome": "Seconda",
-      "lat": "45.443454",
-      "lng": "12.338730",
-      "alt": "0"
-      });
-    questo.push({
-      "id": "meta_" + 3,
-      "nome": "Terza",
-      "lat": "45.442558",
-      "lng": "12.338237",
-      "alt": "0"
-      });
-    questo.push({
-      "id": "meta_" + 4,
-      "nome": "Quarta",
-      "lat": "45.441684",
-      "lng": "12.337671",
-      "alt": "0"
-      });
+    if ("numMete" in localStorage){
+      var lung = app.storage.getItem("numMete");
+      // dbgMsg(lung);
+      for(i=0; i<lung; i++){
+        var valore = app.storage.getItem("meta"+i);
+        // dbgMsg(valore);
+        questo.push(JSON.parse(valore));
+      }
+    } else if( app.checkWifi() ){
+      // legge dal sito
+      $.ajax({
+        type: 'GET',
+        url: URL_PREFIX + 'php/leggiMete.php',
+        data: {
+          area: 1
+          },
+        dataType: 'json',                //data format      
+        cache: false
+      }).done(function(result) {
+        var obj = $.parseJSON(result);
+        $.each(obj, function(i, valore){
+          questo.push(valore);
+          //alert(mappa.luoghi[i].descrizione);
+        })
+      }).fail(function(){
+        showAlert("Problemi di conenssione", "Attenzione!");
+      })
+    } else {
+      // niente da fare
+      showAlert("Non c'è la rete", "Attenzione!");
+    }
+    //// prima svuota
+    //while(questo.length > 0) {
+    //  questo.pop();
+    //};
+    //questo.push({
+    //  "id": "meta_" + 1,
+    //  "nome": "Prima",
+    //  "lat": "45.4439901",
+    //  "lng":"12.3386693",
+    //  "alt": "0"
+    //  });
+    //questo.push({
+    //  "id": "meta_" + 2,
+    //  "nome": "Seconda",
+    //  "lat": "45.443454",
+    //  "lng": "12.338730",
+    //  "alt": "0"
+    //  });
+    //questo.push({
+    //  "id": "meta_" + 3,
+    //  "nome": "Terza",
+    //  "lat": "45.442558",
+    //  "lng": "12.338237",
+    //  "alt": "0"
+    //  });
+    //questo.push({
+    //  "id": "meta_" + 4,
+    //  "nome": "Quarta",
+    //  "lat": "45.441684",
+    //  "lng": "12.337671",
+    //  "alt": "0"
+    //  });
+  },
+  // verifica se ci sono nuove mete da scaricare
+  checkmete: function(){
+      var networkState = navigator.network.connection.type;
+    // verifica se siamo in WIFI
+    if( networkState == Connection.WIFI ){
+      
+    }
+  },
+  scriveMete: function(){
+    app.storage.setItem("numMete", mete.elenco.length);
+    $.each(mete.elenco, function(key, value){
+      var valore = JSON.stringify(value);
+      // dbgMsg(valore);
+      app.storage.setItem("meta"+key, valore)  
+    })
   }
 }
 
@@ -216,7 +279,7 @@ var pagine = {
       $("#tit-interno").html("<h2>Pag. "+ pagine.numPagina + " - " + el.nome + "</h2>");
       // dbgMsg(el.foto);
       $("#lblCoordinate").html(el.lat + " - " + el.lng);
-      if( el.dataeroa !=  MAI){
+      if(  el.dataora.indexOf('0000-00-00')>0){
         $("#lblArrivo").html("Arrivato: "+ el.dataora);
         smallImage.src = el.foto;
       } else {
@@ -271,7 +334,7 @@ var pagine = {
       if(value.id == id ){
         if (value.dataora.indexOf(sData) >= 0){
           showAlert("Meta già raggiunta oggi", "Attenzione");
-        } else if( value.dataeora == MAI){
+        } else if( value.dataora.indexOf('0000-00-00')>0){
           showAlert("Meta già presente", "Attenzione");
         }
         metaOK = false;
@@ -291,7 +354,7 @@ var pagine = {
           "alt": mete.elenco[id].alt,
           "dist": -1,
           // "arrivato":"0",
-          "dataora":"0000-00-00 00:00:00",
+          "dataora": MAI,
           "foto": ""
           });
       pagine.scrivePagine();
@@ -338,9 +401,9 @@ var pagine = {
   // legge dalla memoria le pagine
   leggePagine: function(){
     dbgMsg("Legge pagine");
-    if ("lunghezza" in localStorage){
+    if ("numPagine" in localStorage){
       attesa("memorizzo", true);
-      var lung = app.storage.getItem("lunghezza");
+      var lung = app.storage.getItem("numPagine");
       // dbgMsg(lung);
       for(i=0; i<lung; i++){
         var valore = app.storage.getItem("pag"+i);
@@ -351,21 +414,18 @@ var pagine = {
       attesa("", false);
     }
   },
-  // scrive in memoria le pagine
+  // scrive in memoria le pagine e le mete
   scrivePagine: function(){
     dbgMsg("Scrive pagine");
-    attesa("memorizzo", true);
-    app.storage.clear();
     // salva le pagine
-    app.storage.setItem("lunghezza", pagine.lista.length);
+    app.storage.setItem("numPagine", pagine.lista.length);
     $.each(pagine.lista, function(key, value){
       var valore = JSON.stringify(value);
       // dbgMsg(valore);
       app.storage.setItem("pag"+key, valore)  
     })
-    attesa("", false);
   },
-  // scrive in memoria le pagine
+  // cancella tutto
   reset: function(){
     // dbgMsg("Reset");
     app.storage.clear();
