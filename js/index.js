@@ -155,14 +155,12 @@ var mete = {
         data: {
           area: 1
           },
-        dataType: 'json',                //data format      
         cache: false
       }).done(function(result) {
         dbgMsg(result)
         var obj = $.parseJSON(result);
         $.each(obj, function(i, valore){
           dbgMsg(i);
-          dbgMsg(valore.nome);
           questo.push(valore);
         })
       }).fail(function(){
