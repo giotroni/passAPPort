@@ -161,7 +161,8 @@ var mete = {
         dbgMsg(result)
         var obj = $.parseJSON(result);
         $.each(obj, function(i, valore){
-          dbgMsg(valore);
+          dbgMsg(i);
+          dbgMsg(valore.nome);
           questo.push(valore);
         })
       }).fail(function(){
