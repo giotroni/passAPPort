@@ -6,6 +6,7 @@
 var DBG = true;
 var DISTANZA_ARRIVO = 50;         // distanza (in metri) entrpo la quale si giudica arrivati a destinazione
 var GPS_TIMEOUT = 15000;           // intervallo di tempo della chiamata al GPS
+var MAI = "0000-00-00 00:00:00";
 
 var URL_PREFIX = "http://www.troni.it/passapport/";
 
@@ -215,7 +216,7 @@ var pagine = {
       $("#tit-interno").html("<h2>Pag. "+ pagine.numPagina + " - " + el.nome + "</h2>");
       // dbgMsg(el.foto);
       $("#lblCoordinate").html(el.lat + " - " + el.lng);
-      if( el.arrivato>0){
+      if( el.dataeroa !=  MAI){
         $("#lblArrivo").html("Arrivato: "+ el.dataora);
         smallImage.src = el.foto;
       } else {
@@ -268,10 +269,10 @@ var pagine = {
       // evita di aggiungere più volte la stessa meta se non è ancora stata raggiunta o se è stata raggiunta oggi
       // dbgMsg(value.arrivato + " " + value.dataora);
       if(value.id == id ){
-        if( value.arrivato == 0 ){
-          showAlert("Meta già presente", "Attenzione");
-        } else if (value.dataora.indexOf(sData) >= 0){
+        if (value.dataora.indexOf(sData) >= 0){
           showAlert("Meta già raggiunta oggi", "Attenzione");
+        } else if( value.dataeora == MAI){
+          showAlert("Meta già presente", "Attenzione");
         }
         metaOK = false;
         return false;
@@ -289,7 +290,7 @@ var pagine = {
           "lng": mete.elenco[id].lng,
           "alt": mete.elenco[id].alt,
           "dist": -1,
-          "arrivato":"0",
+          // "arrivato":"0",
           "dataora":"0000-00-00 00:00:00",
           "foto": ""
           });
@@ -317,8 +318,7 @@ var pagine = {
     var el = pagine.lista[pagine.numPagina-1];
     // dbgMsg("Check arrivato: " + el.arrivato + " dist " + el.dist );
     // SE non è ancora arrivato a questa meta
-    if((el.arrivato<=0) && (el.dist >0) && (el.dist < DISTANZA_ARRIVO) ){
-      el.arrivato = 1;
+    if((el.dataeora == MAI ) && (el.dist >0) && (el.dist < DISTANZA_ARRIVO) ){
       el.dataora = adesso();
       // vibra(1000);
       // var my_media = new Media("audio/audio_suonerie_applauso_01.mp3");
