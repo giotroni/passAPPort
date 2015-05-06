@@ -106,8 +106,7 @@ var app = {
     states[Connection.CELL_3G]  = 'Cell 3G connection';
     states[Connection.CELL_4G]  = 'Cell 4G connection';
     states[Connection.NONE]     = 'No network connection';
-    dsbMsg('Connection type: ' + states[networkState]);
-    return networkState;
+    dbgMsg('Connection type: ' + states[networkState]);
   }
 }
 
