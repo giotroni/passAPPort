@@ -134,6 +134,9 @@ var mete = {
   elenco: [],
   inizializza: function(){
     var questo = mete.elenco;
+    while(questo.length > 0) {
+      questo.pop();
+    };
     // aggiorna elenco mete
     if ("numMete" in localStorage){
       var lung = app.storage.getItem("numMete");
@@ -145,6 +148,7 @@ var mete = {
       }
     } else if( app.checkWifi() ){
       // legge dal sito
+      dbgMsg("Legge mete")
       $.ajax({
         type: 'GET',
         url: URL_PREFIX + 'php/leggiMete.php',
@@ -157,7 +161,7 @@ var mete = {
         var obj = $.parseJSON(result);
         $.each(obj, function(i, valore){
           questo.push(valore);
-          //alert(mappa.luoghi[i].descrizione);
+          dbgMsg(questo.nome);
         })
       }).fail(function(){
         showAlert("Problemi di conenssione", "Attenzione!");
