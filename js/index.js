@@ -7,6 +7,7 @@ var DBG = true;
 var DISTANZA_ARRIVO = 50;         // distanza (in metri) entrpo la quale si giudica arrivati a destinazione
 var GPS_TIMEOUT = 15000;           // intervallo di tempo della chiamata al GPS
 var MAI = "0000-00-00 00:00:00";
+var INTERNET_SEMPRE = true;        // si collega ad internet anche se non in WiFi
 
 var URL_PREFIX = "http://www.troni.it/passapport/";
 
@@ -37,6 +38,10 @@ var app = {
     $("#btnNext").on("click", pagine.nextPage);
     $("#btnPrev").on("click", pagine.prevPage);
     $("#btnCheckPos").on("click", app.checkPos);
+    
+    $.event.special.swipe.horizontalDistanceThreshold = 120;
+    $(document).on("swiperight", "#page-home", pagine.nextPage);
+    
   },
   // chiamata quando la posizione è stata letta
   onSuccessGeo: function(position){
@@ -120,7 +125,7 @@ var app = {
   },
   checkWifi: function(){
     var networkState = navigator.network.connection.type;
-    if( networkState == Connection.WIFI){
+    if( networkState == Connection.WIFI || (INTERNET_SEMPRE && (networkState != Connection.NONE) ) ){
       return true;
     } else {
       return false;
@@ -132,15 +137,17 @@ var app = {
 var mete = {
   // elenco dei luoghi
   elenco: [],
+  // inizializza il database interno delle mete
   inizializza: function(){
     var questo = mete.elenco;
-    while(questo.length > 0) {
+    while(questo.length > 0) { // svuota l'array esistente
       questo.pop();
     };
     // aggiorna elenco mete
     if ("numMete" in localStorage){
+      // legge le mete dal DB interno
       var lung = app.storage.getItem("numMete");
-      // dbgMsg(lung);
+      dbgMsg("DB interno: " + lung);
       for(i=0; i<lung; i++){
         var valore = app.storage.getItem("meta"+i);
         // dbgMsg(valore);
@@ -148,7 +155,7 @@ var mete = {
       }
     } else if( app.checkWifi() ){
       // legge dal sito
-      dbgMsg("Legge mete")
+      dbgMsg("Legge mete da internet")
       $.ajax({
         type: 'GET',
         url: URL_PREFIX + 'php/leggiMete.php',
@@ -163,45 +170,14 @@ var mete = {
           dbgMsg(i);
           questo.push(valore);
         })
+        mete.scriveMete();    // salva i dati nel DB interno
       }).fail(function(){
-        showAlert("Problemi di conenssione", "Attenzione!");
+        showAlert("Problemi di conessione", "Attenzione!");
       })
     } else {
       // niente da fare
       showAlert("Non c'è la rete", "Attenzione!");
     }
-    //// prima svuota
-    //while(questo.length > 0) {
-    //  questo.pop();
-    //};
-    //questo.push({
-    //  "id": "meta_" + 1,
-    //  "nome": "Prima",
-    //  "lat": "45.4439901",
-    //  "lng":"12.3386693",
-    //  "alt": "0"
-    //  });
-    //questo.push({
-    //  "id": "meta_" + 2,
-    //  "nome": "Seconda",
-    //  "lat": "45.443454",
-    //  "lng": "12.338730",
-    //  "alt": "0"
-    //  });
-    //questo.push({
-    //  "id": "meta_" + 3,
-    //  "nome": "Terza",
-    //  "lat": "45.442558",
-    //  "lng": "12.338237",
-    //  "alt": "0"
-    //  });
-    //questo.push({
-    //  "id": "meta_" + 4,
-    //  "nome": "Quarta",
-    //  "lat": "45.441684",
-    //  "lng": "12.337671",
-    //  "alt": "0"
-    //  });
   },
   // verifica se ci sono nuove mete da scaricare
   checkmete: function(){
