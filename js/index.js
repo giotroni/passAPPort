@@ -207,6 +207,16 @@ var pagine = {
   },
   // elenco dei luoghi
   lista: [],
+  // conta i punti
+  checkPunti: function(){
+    var pti = 0;
+    $.each(pagine.lista, function(key, value){
+      if(value.dataora.indexOf(MAI)>0){
+        pti += value.punti;
+      }
+    });
+    return pti;
+  },
   // va alla pagina successiva
   nextPage: function (){
     // dbgMsg("Next page: "+pagine.numPagina + " max page: " + pagine.numMaxPagine());
@@ -361,7 +371,7 @@ var pagine = {
     var el = pagine.lista[pagine.numPagina-1];
     // dbgMsg("Check arrivato: " + el.arrivato + " dist " + el.dist );
     // SE non è ancora arrivato a questa meta
-    dbgMsg(el.dataora.indexOf(MAI) + " " + el.dataora.indexOf("0000-00-00") + " dist " + el.dist );
+    dbgMsg(el.dataora + " " + el.dataora.indexOf(MAI) + " " + el.dataora.indexOf("0000-00-00") + " dist " + el.dist );
     if((el.dataora.indexOf(MAI)>0 ) && (el.dist >0) && (el.dist < DISTANZA_ARRIVO) ){
       el.dataora = adesso();
       // vibra(1000);
