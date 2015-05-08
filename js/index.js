@@ -147,7 +147,7 @@ var mete = {
     if ("numMete" in localStorage){
       // legge le mete dal DB interno
       var lung = app.storage.getItem("numMete");
-      dbgMsg("DB interno: " + lung);
+      dbgMsg("Legge mete da DB interno: " + lung);
       for(i=0; i<lung; i++){
         var valore = app.storage.getItem("meta"+i);
         // dbgMsg(valore);
@@ -167,7 +167,6 @@ var mete = {
         dbgMsg(result)
         var obj = $.parseJSON(result);
         $.each(obj, function(i, valore){
-          dbgMsg(i);
           questo.push(valore);
         })
         mete.scriveMete();    // salva i dati nel DB interno
@@ -332,6 +331,10 @@ var pagine = {
           "lat": mete.elenco[id].lat,
           "lng": mete.elenco[id].lng,
           "alt": mete.elenco[id].alt,
+          "img": mete.elenco[id].img,
+          "timbro": mete.elenco[id].timbro,
+          "punti": mete.elenco[id].punti,
+          "nota": mete.elenco[id].nota,
           "dist": -1,
           // "arrivato":"0",
           "dataora": MAI,
@@ -361,7 +364,7 @@ var pagine = {
     var el = pagine.lista[pagine.numPagina-1];
     // dbgMsg("Check arrivato: " + el.arrivato + " dist " + el.dist );
     // SE non è ancora arrivato a questa meta
-    if((el.dataeora == MAI ) && (el.dist >0) && (el.dist < DISTANZA_ARRIVO) ){
+    if((el.dataeora.indexOf(MAI)>0 ) && (el.dist >0) && (el.dist < DISTANZA_ARRIVO) ){
       el.dataora = adesso();
       // vibra(1000);
       // var my_media = new Media("audio/audio_suonerie_applauso_01.mp3");
