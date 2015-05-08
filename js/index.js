@@ -364,6 +364,7 @@ var pagine = {
     var el = pagine.lista[pagine.numPagina-1];
     // dbgMsg("Check arrivato: " + el.arrivato + " dist " + el.dist );
     // SE non è ancora arrivato a questa meta
+    dbgMsg(el.dataeora.indexOf(MAI) + " " + el.dataeora.indexOf("0000-00-00") + " dist " + el.dist );
     if((el.dataeora.indexOf(MAI)>0 ) && (el.dist >0) && (el.dist < DISTANZA_ARRIVO) ){
       el.dataora = adesso();
       // vibra(1000);
