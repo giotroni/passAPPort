@@ -209,8 +209,8 @@ var pagine = {
   lista: [],
   // verifica se già arrivato
   arrivato: function(){
-    var el  = pagine.lista[numPagina-1].dataora;
-    dbgMsg(el + " + " + MAI + " + " + el.indexOf(MAI) + " + " + el.indexOf('0000'))
+    var el  = this.lista[this.numPagina-1].dataora;
+    dbgMsg(el + " + " + MAI + " + " + el.indexOf(MAI) + " + " + el.indexOf('0000') + " + " + el == MAI + " + " + el.localCompare(MAI))
     return el.indexOf(MAI) >0;
   },
   // verifica se in zona VICINA
