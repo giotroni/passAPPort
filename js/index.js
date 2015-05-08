@@ -207,6 +207,17 @@ var pagine = {
   },
   // elenco dei luoghi
   lista: [],
+  // verifica se già arrivato
+  arrivato: function(){
+    var el  = pagine.lista[numPagina-1].dataora;
+    dbgMsg(el + " + " + MAI + " + " + el.indexOf(MAI) + " + " + el.indexOf('0000'))
+    return el.indexOf(MAI) >0;
+  },
+  // verifica se in zona VICINA
+  vicino: function(){
+    var el  = pagine.lista[numPagina-1].dist;
+    return ((el >= 0) && (el <= DISTANZA_ARRIVO));
+  },
   // conta i punti
   checkPunti: function(){
     var pti = 0;
@@ -267,7 +278,7 @@ var pagine = {
       $("#tit-interno").html("<h2>Pag. "+ pagine.numPagina + " - " + el.nome + "</h2>");
       // dbgMsg(el.foto);
       $("#lblCoordinate").html(el.lat + " - " + el.lng);
-      if(  el.dataora.indexOf('0000-00-00')>0){
+      if(  pagine.arrivato() ){
         $("#lblArrivo").html("Arrivato: "+ el.dataora);
         smallImage.src = el.foto;
       } else {
@@ -371,8 +382,7 @@ var pagine = {
     var el = pagine.lista[pagine.numPagina-1];
     // dbgMsg("Check arrivato: " + el.arrivato + " dist " + el.dist );
     // SE non è ancora arrivato a questa meta
-    dbgMsg(el.dataora + " + " + MAI + " + " + el.dataora.indexOf(MAI) + " " + el.dataora.indexOf("0000") + " dist " + el.dist );
-    if((el.dataora.indexOf(MAI)>0 ) && (el.dist >0) && (el.dist < DISTANZA_ARRIVO) ){
+    if(!pagine.arrivato() && pagine.vicino() ){
       el.dataora = adesso();
       // vibra(1000);
       // var my_media = new Media("audio/audio_suonerie_applauso_01.mp3");
