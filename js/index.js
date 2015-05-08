@@ -6,7 +6,7 @@
 var DBG = true;
 var DISTANZA_ARRIVO = 50;         // distanza (in metri) entrpo la quale si giudica arrivati a destinazione
 var GPS_TIMEOUT = 15000;           // intervallo di tempo della chiamata al GPS
-var MAI = "0000-00-00 00:00:00";
+var MAI = '0000-00-00 00:00:00';
 var INTERNET_SEMPRE = true;        // si collega ad internet anche se non in WiFi
 
 var URL_PREFIX = "http://www.troni.it/passapport/";
@@ -210,9 +210,9 @@ var pagine = {
   // verifica se già arrivato
   arrivato: function(){
     var el  = pagine.lista[pagine.numPagina-1].dataora;
-    dbgMsg(el + " + " + MAI + " + " + el.indexOf(MAI) + " + " + el.indexOf('0000'));
-    dbgMsg(el == MAI + " + " + el.localCompare(MAI));
-    return el.indexOf(MAI) >0;
+    dbgMsg(el + " + " + MAI + " + " + el.indexOf(MAI) + " + " + el.indexOf('0000') + el.indexOf('1234') );
+    dbgMsg(el == MAI);
+    return (el.indexOf(MAI) >0);
   },
   // verifica se in zona VICINA
   vicino: function(){
