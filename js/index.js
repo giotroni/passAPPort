@@ -209,8 +209,9 @@ var pagine = {
   lista: [],
   // verifica se già arrivato
   arrivato: function(){
-    var el  = this.lista[this.numPagina-1].dataora;
-    dbgMsg(el + " + " + MAI + " + " + el.indexOf(MAI) + " + " + el.indexOf('0000') + " + " + el == MAI + " + " + el.localCompare(MAI))
+    var el  = pagine.lista[pagine.numPagina-1].dataora;
+    dbgMsg(el + " + " + MAI + " + " + el.indexOf(MAI) + " + " + el.indexOf('0000'));
+    dbgMsg(el == MAI + " + " + el.localCompare(MAI));
     return el.indexOf(MAI) >0;
   },
   // verifica se in zona VICINA
@@ -221,7 +222,7 @@ var pagine = {
   // conta i punti
   checkPunti: function(){
     var pti = 0;
-    $.each(pagine.lista, function(key, value){
+    $.each(this.lista, function(key, value){
       if(value.dataora.indexOf(MAI)>0){
         pti += value.punti;
       }
