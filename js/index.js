@@ -199,7 +199,6 @@ var mete = {
 // classe con le pagine
 var pagine = {
   numPagina: 0,           // numero pagina attuale
-  numMaxPagine: 0,        // numero max di pagine attualmente nel passapport
   // struttura con le coordinate e le altre info di geolocalizzazione
   coordinate: {
     lat: 0,
@@ -210,9 +209,9 @@ var pagine = {
   lista: [],
   // va alla pagina successiva
   nextPage: function (){
-    // dbgMsg("Next page: "+pagine.numPagina + " max page: " + pagine.numMaxPagine);
+    // dbgMsg("Next page: "+pagine.numPagina + " max page: " + pagine.numMaxPagine());
     // verifica se siamo all'ultima pagina
-    if( pagine.numPagina >= pagine.numMaxPagine){
+    if( pagine.numPagina >= pagine.lista.length){
       // se si aggiunge una meta?
       pagine.showMete();
     } else {
@@ -322,8 +321,6 @@ var pagine = {
     });
     // dbgMsg("meta ok: " + metaOK);
     if( metaOK){
-      // aggiorna l'indicatore del numero di pagine totale
-      pagine.numMaxPagine +=1;
       // inserisce i dati della meta nell'array delle pagine
       pagine.lista.push({
           "id": id,
@@ -364,8 +361,8 @@ var pagine = {
     var el = pagine.lista[pagine.numPagina-1];
     // dbgMsg("Check arrivato: " + el.arrivato + " dist " + el.dist );
     // SE non è ancora arrivato a questa meta
-    dbgMsg(el.dataeora.indexOf(MAI) + " " + el.dataeora.indexOf("0000-00-00") + " dist " + el.dist );
-    if((el.dataeora.indexOf(MAI)>0 ) && (el.dist >0) && (el.dist < DISTANZA_ARRIVO) ){
+    dbgMsg(el.dataora.indexOf(MAI) + " " + el.dataora.indexOf("0000-00-00") + " dist " + el.dist );
+    if((el.dataora.indexOf(MAI)>0 ) && (el.dist >0) && (el.dist < DISTANZA_ARRIVO) ){
       el.dataora = adesso();
       // vibra(1000);
       // var my_media = new Media("audio/audio_suonerie_applauso_01.mp3");
@@ -394,7 +391,6 @@ var pagine = {
         // dbgMsg(valore);
         pagine.lista.push(JSON.parse(valore));
       }
-      pagine.numMaxPagine = lung;
       attesa("", false);
     }
   },
