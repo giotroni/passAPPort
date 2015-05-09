@@ -36,14 +36,17 @@ var app = {
     mete.inizializza();
     pagine.leggePagine();
     // EVENTI DA LEGARE
+    $("#btnSettings").on("click", pagine.settings);    
     $("#btnReset").on("click", pagine.reset);
+    $("#btnBack").on("click", pagine.home);    
     $("#btnEntra").on("click", pagine.nextPage);
     $("#btnNext").on("click", pagine.nextPage);
     $("#btnPrev").on("click", pagine.prevPage);
     $("#btnCheckPos").on("click", app.checkPos);
-    
+
+
     //$.event.special.swipe.horizontalDistanceThreshold = 120;
-    $(document).on("swiperight", ".ui_page", function(event){
+    $(document).on("swiperight", ".interno", function(event){
       dbgMsg("swipe");
       if( event.handled !== true){
         dbgMsg("Swipe ok");
@@ -214,7 +217,7 @@ var pagine = {
   },
   // verifica se in zona VICINA
   vicino: function(){
-    var el  = pagine.lista[numPagina-1].dist;
+    var el  = pagine.lista[pagine.numPagina-1].dist;
     dbgMsg(el + " " + DISTANZA_ARRIVO + " + " + (el <= DISTANZA_ARRIVO) );
     return ((el >= 0) && (el <= DISTANZA_ARRIVO));
   },
@@ -227,6 +230,20 @@ var pagine = {
       }
     });
     return pti;
+  },
+  // va alla pagina copertina
+  home: function (){
+    pagine.numPagina = 0;
+    pagine.showPage();
+  },
+  // va alla pagina dei settings
+  home: function (){
+    $.mobile.pageContainer.pagecontainer("change", "#page-settings", {
+      transition: 'slide',
+      changeHash: false,
+      reverse: true,
+      showLoadMsg: true
+    });
   },
   // va alla pagina successiva
   nextPage: function (){
@@ -312,7 +329,7 @@ var pagine = {
     $('#lstMete').empty();
     $.each(mete.elenco, function(key, value){
       var testo = '<li id="meta_'+ key +'" ><a href="#" >';
-      testo += value.nome ;
+      testo += value.meta ;
       testo += '</a></li>';
       $('#lstMete').append(testo);
       $("#lstMete li#meta_"+key).bind("click", function(){
