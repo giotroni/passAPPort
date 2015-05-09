@@ -42,8 +42,14 @@ var app = {
     $("#btnPrev").on("click", pagine.prevPage);
     $("#btnCheckPos").on("click", app.checkPos);
     
-    $.event.special.swipe.horizontalDistanceThreshold = 120;
-    $(document).on("swiperight", "#page-home", pagine.nextPage);
+    //$.event.special.swipe.horizontalDistanceThreshold = 120;
+    $(document).on("swiperight", ".ui_page", function(event){
+      if( event.handled !== true){
+        pagine.nextPage();
+        event.handled = true;
+      }
+      return false;         
+    });
     
   },
   // chiamata quando la posizione è stata letta
@@ -116,7 +122,7 @@ var app = {
   },
   checkWifi: function(){
     var networkState = navigator.network.connection.type;
-    if( networkState == Connection.WIFI || (INTERNET_SEMPRE && (networkState != Connection.NONE) ) ){
+    if( networkState == Connection.WIFI || (INTERNET_SEMPRE && (networkState !== Connection.NONE) ) ){
       return true;
     } else {
       return false;
