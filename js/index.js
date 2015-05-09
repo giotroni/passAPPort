@@ -44,6 +44,7 @@ var app = {
     
     //$.event.special.swipe.horizontalDistanceThreshold = 120;
     $(document).on("swiperight", ".ui_page", function(event){
+      dbgMsg("swipe");
       if( event.handled !== true){
         dbgMsg("Swipe ok");
         pagine.nextPage();
@@ -214,6 +215,7 @@ var pagine = {
   // verifica se in zona VICINA
   vicino: function(){
     var el  = pagine.lista[numPagina-1].dist;
+    dbgMsg(el + " " + DISTANZA_ARRIVO + " + " + (el <= DISTANZA_ARRIVO) );
     return ((el >= 0) && (el <= DISTANZA_ARRIVO));
   },
   // conta i punti
