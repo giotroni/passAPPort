@@ -39,7 +39,7 @@ var app = {
     $("#btnSettings").on("click", pagine.settings);    
     $("#btnReset").on("click", pagine.reset);
     $("#btnSave").on("click", pagine.savePagine);
-    $("#btnBack").on("click", pagine.home);    
+    $("#btnHome").on("click", pagine.home);    
     $("#btnEntra").on("click", pagine.nextPage);
     $("#btnNext").on("click", pagine.nextPage);
     $("#btnPrev").on("click", pagine.prevPage);
@@ -455,6 +455,7 @@ var pagine = {
   },
   // salva le pagine sul DB internet
   savePagine: function(){
+    dbmMsg("Save Pagine - " + pagine.saved);
     if(!pagine.saved && app.checkWifi() ){
       // se le pagine non sono state salvate e c'è la connessione salva le pagine su internet
       dbgMsg("Save pagine");
