@@ -45,6 +45,7 @@ var app = {
     //$.event.special.swipe.horizontalDistanceThreshold = 120;
     $(document).on("swiperight", ".ui_page", function(event){
       if( event.handled !== true){
+        dbgMsg("Swipe ok");
         pagine.nextPage();
         event.handled = true;
       }
@@ -208,7 +209,7 @@ var pagine = {
   // verifica se già arrivato
   arrivato: function(){
     var el  = pagine.lista[pagine.numPagina-1].dataora;
-    return (el.indexOf(MAI) >=0);
+    return (el.indexOf(MAI) <0);
   },
   // verifica se in zona VICINA
   vicino: function(){
