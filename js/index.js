@@ -176,15 +176,18 @@ var mete = {
         $.each(obj, function(i, valore){
           questo.push(valore);
           // scarica l'immagine
+          var url = valore.img;
+          dbgMsg("url: " + url);
           window.requestFileSystem(
             LocalFileSystem.PERSISTENT, 0,
             function onFileSystemSuccess( fileSystem ){
-              dbgMsg(fileSystem.root.name);
-              var filePath = fileSystem.root.name;
-              var fileTransfer = new FileTransfer();
-              dbgMsg(valore.img);
+              // create the download directory is doesn't exist
+              fileSystem .root.getDirectory('passAPPort', { create: true });           
+              // we will save file in .. downloads/phonegap-logo.png
+              var filePath = fileSystem.root.fullPath + '/passAPPort/' + url;
+              var fileTransfer = new window.FileTransfer();
               fileTransfer.download(
-                encodeURI(URL_PREFIX + "down/" + valore.img),   // indirizzo del file da scaricare
+                encodeURI(URL_PREFIX + "img/" + url),   // indirizzo del file da scaricare
                 filePath,                                       // indirizzo locale dove salvare
                 function(entry) {                               // funzione chiamata se tutto ok
                   dbgMsg("download complete: " + entry.toURI());
