@@ -490,7 +490,7 @@ var pagine = {
   },
   // cancella tutto
   reset: function(){
-    // dbgMsg("Reset");
+    dbgMsg("Reset");
     app.storage.clear();
   }
 }
