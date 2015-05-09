@@ -175,6 +175,7 @@ var mete = {
         var obj = $.parseJSON(result);
         $.each(obj, function(i, valore){
           dbgMsg("i: " + i);
+          dbgMsg("img " + valore.img)
           questo.push(valore);
           // scarica l'immagine
         })
@@ -200,6 +201,7 @@ var mete = {
     $.each(mete.elenco, function(key, value){
       var valore = JSON.stringify(value);
       dbgMsg(valore);
+      dbgMsg("Img: " + value.img);
       app.storage.setItem("meta"+key, valore)  
     })
   }
@@ -368,6 +370,7 @@ var pagine = {
     if( metaOK){
       // inserisce i dati della meta nell'array delle pagine
       dbgMsg("Immagine: " + mete.elenco[id].img);
+      
       pagine.lista.push({
           "idMeta": id,
           "meta": mete.elenco[id].meta,
