@@ -38,6 +38,7 @@ var app = {
     // EVENTI DA LEGARE
     $("#btnSettings").on("click", pagine.settings);    
     $("#btnReset").on("click", pagine.reset);
+    $("#btnSave").on("click", pagine.savePagine);
     $("#btnBack").on("click", pagine.home);    
     $("#btnEntra").on("click", pagine.nextPage);
     $("#btnNext").on("click", pagine.nextPage);
@@ -218,7 +219,7 @@ var pagine = {
   // verifica se in zona VICINA
   vicino: function(){
     var el  = pagine.lista[pagine.numPagina-1].dist;
-    dbgMsg(el + " " + DISTANZA_ARRIVO + " + " + (el <= DISTANZA_ARRIVO) );
+    // dbgMsg(el + " " + DISTANZA_ARRIVO + " + " + (el <= DISTANZA_ARRIVO) );
     return ((el >= 0) && (el <= DISTANZA_ARRIVO));
   },
   // conta i punti
@@ -237,7 +238,7 @@ var pagine = {
     pagine.showPage();
   },
   // va alla pagina dei settings
-  home: function (){
+  settings: function (){
     $.mobile.pageContainer.pagecontainer("change", "#page-settings", {
       transition: 'slide',
       changeHash: false,
@@ -292,7 +293,7 @@ var pagine = {
       $("#lblCoordinate").empty();
       // scrive i nuovi dati
       var el = pagine.lista[pagine.numPagina-1];
-      $("#tit-interno").html("<h2>Pag. "+ pagine.numPagina + " - " + el.nome + "</h2>");
+      $("#tit-interno").html("<h2>Pag. "+ pagine.numPagina + " - " + el.meta + "</h2>");
       // dbgMsg(el.foto);
       $("#lblCoordinate").html(el.lat + " - " + el.lng);
       if(  pagine.arrivato() ){
@@ -369,8 +370,9 @@ var pagine = {
           "img": mete.elenco[id].img,
           "timbro": mete.elenco[id].timbro,
           "punti": mete.elenco[id].punti,
-          "nota": mete.elenco[id].nota,
+          "desc": mete.elenco[id].desc,
           "dist": -1,
+          "saved": true,
           // "arrivato":"0",
           "dataora": MAI,
           "foto": ""
@@ -403,6 +405,7 @@ var pagine = {
     if(!pagine.arrivato() && pagine.vicino() ){
       el.dataora = adesso();
       pagine.saved = false;
+      el.saved = false;
       // vibra(1000);
       // var my_media = new Media("audio/audio_suonerie_applauso_01.mp3");
       // my_media.play();
@@ -455,19 +458,30 @@ var pagine = {
     if(!pagine.saved && app.checkWifi() ){
       // se le pagine non sono state salvate e c'è la connessione salva le pagine su internet
       dbgMsg("Save pagine");
+      var listaProvvisoria = [];
+      // legge le pagine e memorizza quelle non salvate per salvarle sul DB internet
+      $.each(pagine.lista, function(key, value){
+        dbgMsg(value.meta + " " + value.saved);
+        if( !value.saved ){
+          listaProvvisoria.push(value);
+        }
+      });
       // salva l'array
-      var arr_string = JSON.stringify(pagine.lista);
       $.ajax({
         type: 'GET',
         url: URL_PREFIX + 'php/savePagine.php',
         data: {
           id: id_User,
-          arr: arr_string
+          arr: JSON.stringify(listaProvvisoria)
           },
         cache: false
       }).done(function(result) {
         dbgMsg(result)
+        $.each(pagine.lista, function(key, value){
+          value.saved = true;
+        });
         pagine.saved = true;
+        scrivePagine();
       }).fail(function(){
         showAlert("Problemi di conessione", "Attenzione!");
       })
