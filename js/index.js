@@ -362,7 +362,7 @@ var pagine = {
     if( metaOK){
       // inserisce i dati della meta nell'array delle pagine
       pagine.lista.push({
-          "id": id,
+          "idMeta": id,
           "meta": mete.elenco[id].meta,
           "lat": mete.elenco[id].lat,
           "lng": mete.elenco[id].lng,
@@ -371,6 +371,7 @@ var pagine = {
           "timbro": mete.elenco[id].timbro,
           "punti": mete.elenco[id].punti,
           "desc": mete.elenco[id].desc,
+          "note": "",
           "dist": -1,
           "saved": true,
           // "arrivato":"0",
