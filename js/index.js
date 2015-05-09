@@ -187,7 +187,7 @@ var mete = {
               var filePath = fileSystem.root.fullPath + '/passAPPort/' + url;
               dbgMsg("File path: " + filePath );
             },
-            function downFail(){dbgMsg("Errore file: " + error.source + " + " + error.target+ " + " + error.code)}
+            function fail(error){dbgMsg("Errore file: " + error.source + " + " + error.target+ " + " + error.code)}
           );
         })
         mete.scriveMete();    // salva i dati nel DB interno
