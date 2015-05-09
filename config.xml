@@ -29,9 +29,10 @@
 
     <feature name="http://api.phonegap.com/1.0/device" />
 
-    <gap:plugin name="org.apache.cordova.camera" version="0.3.2" />    
-    <gap:plugin name="org.apache.cordova.dialogs" version="0.2.10" />
-    <gap:plugin name="org.apache.cordova.geolocation" version="0.3.10" />
-    <gap:plugin name="org.apache.cordova.network-information" version="0.2.12" />
+    <gap:plugin name="org.apache.cordova.file" />    
+    <gap:plugin name="org.apache.cordova.camera" />    
+    <gap:plugin name="org.apache.cordova.dialogs" />
+    <gap:plugin name="org.apache.cordova.geolocation" />
+    <gap:plugin name="org.apache.cordova.network-information" />
     <gap:plugin name="org.apache.cordova.media"  />
 </widget>

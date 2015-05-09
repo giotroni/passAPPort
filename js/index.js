@@ -136,6 +136,10 @@ var app = {
   }
 }
 
+function fail(error){
+  dbgMsg(error.source + " + " + error.target+ " + " + error.code)
+}
+
 // classe con le mete
 var mete = {
   // elenco dei luoghi
@@ -171,6 +175,25 @@ var mete = {
         var obj = $.parseJSON(result);
         $.each(obj, function(i, valore){
           questo.push(valore);
+          // scarica l'immagine
+          window.requestFileSystem(
+            LocalFileSystem.PERSISTENT, 0,
+            function onFileSystemSuccess( fileSystem ){
+              dbgMsg(fileSystem.root.name);
+              var filePath = fileSystem.root.name;
+              var fileTransfer = new FileTransfer();
+              dbgMsg(valore.img);
+              fileTransfer.download(
+                encodeURI(URL_PREFIX + "down/" + valore.img),   // indirizzo del file da scaricare
+                filePath,                                       // indirizzo locale dove salvare
+                function(entry) {                               // funzione chiamata se tutto ok
+                  dbgMsg("download complete: " + entry.toURI());
+                },
+                fail                                          // funzioone chiamata se problemi
+              );         
+            },
+            fail
+          );
         })
         mete.scriveMete();    // salva i dati nel DB interno
       }).fail(function(){
