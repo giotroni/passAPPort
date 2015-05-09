@@ -5,13 +5,16 @@
 // git push origin master
 var DBG = true;
 var DISTANZA_ARRIVO = 50;         // distanza (in metri) entrpo la quale si giudica arrivati a destinazione
-var GPS_TIMEOUT = 15000;           // intervallo di tempo della chiamata al GPS
+var GPS_TIMEOUT = 10000;           // intervallo di tempo della chiamata al GPS
+var GPS_MAXIMUMAGE = 60000;       // intervallo di tempo MASSIMO per cui tenre buono il dato
 var MAI = '0000-00-00 00:00:00';
 var INTERNET_SEMPRE = true;        // si collega ad internet anche se non in WiFi
 
 var URL_PREFIX = "http://www.troni.it/passapport/";
 
 var destinationType; // sets the format of returned value
+
+var id_User = 1;    // id dell'utilizzatore
 
 // Funzione che calcola la distanza
 // MAIN
@@ -26,7 +29,7 @@ var app = {
   },
   onDeviceReady: function(){
     // ok, il dispositivo è pronto: configuralo
-    app.checkConnection();
+    // app.checkConnection();
     // app.showAlert("Chiamata alla fine del caricamento","msg");
     destinationType=navigator.camera.DestinationType;
     // inizializza l'elenco delle mete e le pagine
@@ -87,7 +90,7 @@ var app = {
   checkPos: function(){
     // dbgMsg("check Pos");
     attesa(true, "cerco la posizione...");
-    navigator.geolocation.getCurrentPosition(app.onSuccessGeo, app.onErrorGeo, { timeout: GPS_TIMEOUT });
+    navigator.geolocation.getCurrentPosition(app.onSuccessGeo, app.onErrorGeo, { maximumAge: GPS_MAXIMUMAGE, timeout: GPS_TIMEOUT });
   },
   capturePhoto: function() {
     navigator.camera.getPicture(
@@ -106,22 +109,10 @@ var app = {
     //// Show the captured photo The inline CSS rules are used to resize the image
     //smallImage.src = imageData;
     // memorizza la foto nell'array delle mete
-    pagine.saveFoto(imageData);
+    pagine.scriviFoto(imageData);
   },
   onFail: function(msg){
     showAlert("Foto non riuscita: " + error.code,"msg");
-  },
-  checkConnection: function() {
-    var networkState = navigator.network.connection.type;
-    var states = {};
-    states[Connection.UNKNOWN]  = 'Unknown connection';
-    states[Connection.ETHERNET] = 'Ethernet connection';
-    states[Connection.WIFI]     = 'WiFi connection';
-    states[Connection.CELL_2G]  = 'Cell 2G connection';
-    states[Connection.CELL_3G]  = 'Cell 3G connection';
-    states[Connection.CELL_4G]  = 'Cell 4G connection';
-    states[Connection.NONE]     = 'No network connection';
-    dbgMsg('Connection type: ' + states[networkState]);
   },
   checkWifi: function(){
     var networkState = navigator.network.connection.type;
@@ -199,6 +190,7 @@ var mete = {
 // classe con le pagine
 var pagine = {
   numPagina: 0,           // numero pagina attuale
+  saved: true,            // flag che indica se le pagine sono state salvate sul DB internet
   // struttura con le coordinate e le altre info di geolocalizzazione
   coordinate: {
     lat: 0,
@@ -210,9 +202,7 @@ var pagine = {
   // verifica se già arrivato
   arrivato: function(){
     var el  = pagine.lista[pagine.numPagina-1].dataora;
-    dbgMsg(el + " + " + MAI + " + " + el.indexOf(MAI) + " + " + el.indexOf('0000') + el.indexOf('1234') );
-    dbgMsg(el == MAI);
-    return (el.indexOf(MAI) >0);
+    return (el.indexOf(MAI) >=0);
   },
   // verifica se in zona VICINA
   vicino: function(){
@@ -223,7 +213,7 @@ var pagine = {
   checkPunti: function(){
     var pti = 0;
     $.each(this.lista, function(key, value){
-      if(value.dataora.indexOf(MAI)>0){
+      if(value.dataora.indexOf(MAI)>=0){
         pti += value.punti;
       }
     });
@@ -346,7 +336,7 @@ var pagine = {
       // inserisce i dati della meta nell'array delle pagine
       pagine.lista.push({
           "id": id,
-          "nome": mete.elenco[id].nome,
+          "meta": mete.elenco[id].meta,
           "lat": mete.elenco[id].lat,
           "lng": mete.elenco[id].lng,
           "alt": mete.elenco[id].alt,
@@ -359,6 +349,7 @@ var pagine = {
           "dataora": MAI,
           "foto": ""
           });
+      pagine.saved = false;
       pagine.scrivePagine();
       // mostra la pagina
       pagine.nextPage();
@@ -385,6 +376,7 @@ var pagine = {
     // SE non è ancora arrivato a questa meta
     if(!pagine.arrivato() && pagine.vicino() ){
       el.dataora = adesso();
+      pagine.saved = false;
       // vibra(1000);
       // var my_media = new Media("audio/audio_suonerie_applauso_01.mp3");
       // my_media.play();
@@ -392,17 +384,21 @@ var pagine = {
     }
   },
   // memorizza l'indirizzo della foto
-  saveFoto: function( tst ){
+  scriviFoto: function( tst ){
     // dbgMsg(tst);
     var el = pagine.lista[pagine.numPagina-1];
     el.foto = tst;
     var smallImage = document.getElementById('smallImage');    
     smallImage.src = el.foto;
+    pagine.saved = false;
     pagine.scrivePagine();
   },
   // legge dalla memoria le pagine
   leggePagine: function(){
     dbgMsg("Legge pagine");
+    if ("pagineSaved" in localStorage){
+      pagine.saved = app.storage.getItem("pagineSaved");
+    }
     if ("numPagine" in localStorage){
       attesa("memorizzo", true);
       var lung = app.storage.getItem("numPagine");
@@ -420,11 +416,36 @@ var pagine = {
     dbgMsg("Scrive pagine");
     // salva le pagine
     app.storage.setItem("numPagine", pagine.lista.length);
+    app.storage.setItem("pagineSaved", pagine.saved);
     $.each(pagine.lista, function(key, value){
       var valore = JSON.stringify(value);
       // dbgMsg(valore);
       app.storage.setItem("pag"+key, valore)  
     })
+    // pagine.savePagine();
+  },
+  // salva le pagine sul DB internet
+  savePagine: function(){
+    if(!pagine.saved && app.checkWifi() ){
+      // se le pagine non sono state salvate e c'è la connessione salva le pagine su internet
+      dbgMsg("Save pagine");
+      // salva l'array
+      var arr_string = JSON.stringify(pagine.lista);
+      $.ajax({
+        type: 'GET',
+        url: URL_PREFIX + 'php/savePagine.php',
+        data: {
+          id: id_User,
+          arr: arr_string
+          },
+        cache: false
+      }).done(function(result) {
+        dbgMsg(result)
+        pagine.saved = true;
+      }).fail(function(){
+        showAlert("Problemi di conessione", "Attenzione!");
+      })
+    }
   },
   // cancella tutto
   reset: function(){
