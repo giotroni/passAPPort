@@ -174,30 +174,9 @@ var mete = {
         dbgMsg(result)
         var obj = $.parseJSON(result);
         $.each(obj, function(i, valore){
-          dbgMsg("i: " + i + "Valore: " + valore);
+          dbgMsg("i: " + i);
           questo.push(valore);
           // scarica l'immagine
-          var url = valore.img;
-          dbgMsg("url: " + url);
-          window.requestFileSystem(
-            LocalFileSystem.PERSISTENT, 0,
-            function onFileSystemSuccess( fileSystem ){
-              // create the download directory is doesn't exist
-              fileSystem .root.getDirectory('passAPPort', { create: true });           
-              // we will save file in .. downloads/phonegap-logo.png
-              var filePath = fileSystem.root.fullPath + '/passAPPort/' + url;
-              var fileTransfer = new window.FileTransfer();
-              fileTransfer.download(
-                encodeURI(URL_PREFIX + "img/" + url),   // indirizzo del file da scaricare
-                filePath,                                       // indirizzo locale dove salvare
-                function(entry) {                               // funzione chiamata se tutto ok
-                  dbgMsg("download complete: " + entry.toURI());
-                },
-                function downFail(){dbgMsg("Errore down: " + error.source + " + " + error.target+ " + " + error.code)}
-              );         
-            },
-            function fileFail(){dbgMsg("Errore file: " + error.source + " + " + error.target+ " + " + error.code)}
-          );
         })
         mete.scriveMete();    // salva i dati nel DB interno
       }).fail(function(){
@@ -220,7 +199,7 @@ var mete = {
     app.storage.setItem("numMete", mete.elenco.length);
     $.each(mete.elenco, function(key, value){
       var valore = JSON.stringify(value);
-      // dbgMsg(valore);
+      dbgMsg(valore);
       app.storage.setItem("meta"+key, valore)  
     })
   }
