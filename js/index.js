@@ -455,7 +455,7 @@ var pagine = {
   },
   // salva le pagine sul DB internet
   savePagine: function(){
-    dbmMsg("Save Pagine - " + pagine.saved);
+    dbgMsg("Save Pagine - " + pagine.saved);
     if(!pagine.saved && app.checkWifi() ){
       // se le pagine non sono state salvate e c'è la connessione salva le pagine su internet
       dbgMsg("Save pagine");
