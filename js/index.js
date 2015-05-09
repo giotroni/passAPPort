@@ -137,7 +137,7 @@ var app = {
 }
 
 function fail(error){
-  dbgMsg(error.source + " + " + error.target+ " + " + error.code)
+  dbgMsg("Errore: " + error.source + " + " + error.target+ " + " + error.code)
 }
 
 // classe con le mete
@@ -174,6 +174,7 @@ var mete = {
         dbgMsg(result)
         var obj = $.parseJSON(result);
         $.each(obj, function(i, valore){
+          dbgMsg("i: " + i + "Valore: " + valore);
           questo.push(valore);
           // scarica l'immagine
           var url = valore.img;
@@ -192,10 +193,10 @@ var mete = {
                 function(entry) {                               // funzione chiamata se tutto ok
                   dbgMsg("download complete: " + entry.toURI());
                 },
-                fail                                          // funzioone chiamata se problemi
+                function downFail(){dbgMsg("Errore down: " + error.source + " + " + error.target+ " + " + error.code)}
               );         
             },
-            fail
+            function fileFail(){dbgMsg("Errore file: " + error.source + " + " + error.target+ " + " + error.code)}
           );
         })
         mete.scriveMete();    // salva i dati nel DB interno
@@ -387,6 +388,7 @@ var pagine = {
     // dbgMsg("meta ok: " + metaOK);
     if( metaOK){
       // inserisce i dati della meta nell'array delle pagine
+      dbgMsg("Immagine: " + mete.elenco[id].img);
       pagine.lista.push({
           "idMeta": id,
           "meta": mete.elenco[id].meta,
