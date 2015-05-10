@@ -159,7 +159,7 @@ var app = {
     var uri = encodeURI(origine);
     var dest = appDir + nome;
     var ft = new FileTransfer();
-    dbgMsg("Pronto al download: " + uri  + " " + dest);
+    // dbgMsg("Pronto al download: " + uri  + " " + dest);
     ft.download(
         uri,
         dest,
@@ -167,7 +167,7 @@ var app = {
             dbgMsg("download complete: " + theFile.toURI());
         },
         function(error) {
-            dbgMsg("upload error code: " + error.code + "download error source " + error.source + "download error target " + error.target);
+            dbgMsg("download error source " + error.source + "download error target " + error.target + "upload error code: " + error.code);
         }
     );
   }
@@ -214,6 +214,10 @@ var mete = {
           questo.push(valore);
           // scarica l'immagine
           var img = valore.img;
+          if(img.length>0){
+            app.downloadFile(URL_PREFIX + "php/img/" + valore.img, valore.img);
+          }
+          img = valore.timbro;
           if(img.length>0){
             app.downloadFile(URL_PREFIX + "php/img/" + valore.img, valore.img);
           }
@@ -342,13 +346,15 @@ var pagine = {
       // dbgMsg(el.foto);
       $("#lblCoordinate").html(el.lat + " - " + el.lng);
       var imgMeta = document.getElementById('imgMeta');    
-      imgMeta.src = el.img;
+      imgMeta.src =  appDir + el.img;
       if(  pagine.arrivato() ){
         $("#lblArrivo").html("Arrivato: "+ el.dataora);
         smallImage.src = el.foto;
+        $('#imgTimbro').attr('src',appDir + el.timbro);
       } else {
         $("#lblArrivo").html("Non ancora arrivato");
         smallImage.src = "";
+        $('#imgTimbro').attr('src','');
       }
     } else {
       // mostra la copertina
@@ -359,6 +365,7 @@ var pagine = {
           reverse: true,
           showLoadMsg: true
       });
+      $("#lblPunti").html("Hai " +  pagine.checkPunti() +" punti");
     }
   },
   // mostra la pagina con l'elenco delle mete
@@ -375,6 +382,7 @@ var pagine = {
   // crea l'elenco mete 
   elencaMete: function() {
     $('#lstMete').empty();
+    
     $.each(mete.elenco, function(key, value){
       var testo = '<li id="meta_'+ key +'" ><a href="#" >';
       testo += '<img src="' + appDir + value.img +'">';
