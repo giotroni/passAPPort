@@ -402,7 +402,7 @@ var pagine = {
       testo += '</a></li>';
       $('#lstMete').append(testo);
       $("#lstMete li#meta_"+key).bind("click", function(){
-          // dbgMsg("Aggiungi meta: " + key);
+          dbgMsg("Aggiungi meta: " + key + value.id);
           pagine.nuovaMeta(value.id);
       });
     });
@@ -561,7 +561,8 @@ var pagine = {
   popupNote: function(){
     $( "#popupNote" ).popup( "open" )
   },
-  cancellaPagina: function(){
+  cancellaPagina: function( ind ){
+    dbgMsg("Cancella: " + ind);
     lista.splice(pagine.numPagina-1, 1);
     pagine.numPagina -= 1;
     pagine.showPage();
