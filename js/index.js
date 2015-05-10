@@ -51,12 +51,44 @@ var app = {
     $("#imgMeta").on("click", pagine.popupNote);
     $("#txtNota").on( "change", pagine.memoNota );
 
+    var draggable = document.getElementById('draggable');
+    var altezza = $(document).height();
+    draggable.addEventListener('touchmove', function(event){
+        var touch = event.targetTouches[0];
+        draggable.style.left = touch.pageX - 25 + 'px';
+        draggable.style.top= touch.pageY - 25 + 'px';
+        $("#btnDownload").html("alt" + (altezza *3 / 4)+"X:"+touch.pageX+" Y:"+touch.pageY  );
+        if(touch.pageY  > (altezza *3 / 4)){
+            alert("Bravo");
+            app.capturePhoto();
+        }
+        event.preventDefault();            
+    }, false);
 
+    app.checkPos();
     //$.event.special.swipe.horizontalDistanceThreshold = 120;
     $(document).on("swiperight", ".interno", function(event){
-      dbgMsg("swipe");
+      // dbgMsg("swipe right");
       if( event.handled !== true){
-        dbgMsg("Swipe ok");
+        // dbgMsg("Swipe ok");
+        pagine.prevPage();
+        event.handled = true;
+      }
+      return false;         
+    });
+    $(document).on("swipeleft", ".interno", function(event){
+      // dbgMsg("swipe left");
+      if( event.handled !== true){
+        // dbgMsg("Swipe ok");
+        pagine.nextPage();
+        event.handled = true;
+      }
+      return false;         
+    });
+    $(document).on("swipeleft", ".copertina", function(event){
+      // dbgMsg("swipe left");
+      if( event.handled !== true){
+        // dbgMsg("Swipe ok");
         pagine.nextPage();
         event.handled = true;
       }
@@ -358,6 +390,7 @@ var pagine = {
       $("#lblCoordinate").html(el.lat + " - " + el.lng);
       var imgMeta = document.getElementById('imgMeta');    
       imgMeta.src =  appDir + el.img;
+      $("#txtNota").val(el.note);
       if(  pagine.arrivato() ){
         $("#lblArrivo").html("Arrivato: "+ el.dataora);
         smallImage.src = el.foto;
@@ -480,7 +513,13 @@ var pagine = {
       // vibra(1000);
       // var my_media = new Media("audio/audio_suonerie_applauso_01.mp3");
       // my_media.play();
-      showAlertModal("Sei arrivato! Pronto per la foto ricordo?",app.capturePhoto,"BRAVO");
+      // showAlertModal("Sei arrivato! Pronto per la foto ricordo?",app.capturePhoto,"BRAVO");
+      $.mobile.pageContainer.pagecontainer("change", "#page-arrivo", {
+          transition: 'slide',
+          changeHash: false,
+          reverse: true,
+          showLoadMsg: true
+      });
     }
   },
   // memorizza l'indirizzo della foto
@@ -565,7 +604,9 @@ var pagine = {
   cancellaPagina: function( ind ){
     if(ind == 1){
       pagine.lista.splice(pagine.numPagina-1, 1);
-      pagine.numPagina -= 1;
+      if(pagine.numPagina > pagine.lista.length ){
+        pagine.numPagina = pagine.lista.length;
+      }
       pagine.showPage();
     }
   },
@@ -576,7 +617,7 @@ var pagine = {
   },
   memoNota: function(){
     pagine.lista[pagine.numPagina-1].note = $("#txtNota").val();
-    dbgMsg(pagine.lista[pagine.numPagina-1].note);
+    // dbgMsg(pagine.lista[pagine.numPagina-1].note);
   }
 }
 

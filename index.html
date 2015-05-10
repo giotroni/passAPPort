@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.css">
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js"></script>
+    <style>
+        #draggable { width: 130px; height: 160px; position: absolute; padding: 0.5em; }
+    </style>    
 
     <script type="text/javascript" src="phonegap.js"></script>
     
@@ -72,6 +75,19 @@
         </div>
     </div><!-- /page-interno -->
     
+    <div data-role="page" id="page-arrivo" >
+        <div data-role="header">
+            <h2>passAPPort - META!</h2>
+        </div>
+        <div role="main" class="ui-content" id="content-home">
+	    <div id="draggable" class="ui-widget-content">
+	      <img src="img/timbro.png">
+	    </div>
+	</div>
+
+
+    </div><!-- /page-arrivo -->
+
     <div data-role="page" id="page-elencomete" data-add-back-btn="false"  class="interno">
         <div data-role="header" id="tit-elencomete">
         </div>
