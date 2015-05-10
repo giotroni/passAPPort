@@ -47,8 +47,8 @@ var app = {
     $("#btnNext").on("click", pagine.nextPage);
     $("#btnPrev").on("click", pagine.prevPage);
     $("#btnCheckPos").on("click", app.checkPos);
-    //$("#btnDelete").on("click", function(){showYesNo("Vuoi DAVVERO cancellare questa meta?", pagine.cancellaPagina)} );
-    //$("#imgMeta").on("click", pagine.popupNote);
+    $("#btnDelete").on("click", function(){showYesNo("Vuoi DAVVERO cancellare questa meta?", pagine.cancellaPagina)} );
+    $("#imgMeta").on("click", pagine.popupNote);
 
 
     //$.event.special.swipe.horizontalDistanceThreshold = 120;
@@ -401,9 +401,9 @@ var pagine = {
       testo += '<p>'+value.desc + '</p>';
       testo += '</a></li>';
       $('#lstMete').append(testo);
-      $("#lstMete li#meta_"+value.id).bind("click", function(){
+      $("#lstMete li#meta_"+key).bind("click", function(){
           // dbgMsg("Aggiungi meta: " + key);
-          pagine.nuovaMeta(key);
+          pagine.nuovaMeta(value.id);
       });
     });
     $('#lstMete').listview("refresh");
