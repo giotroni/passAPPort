@@ -12,6 +12,8 @@ var INTERNET_SEMPRE = true;        // si collega ad internet anche se non in WiF
 
 var URL_PREFIX = "http://www.troni.it/passapport/";
 
+var myFolderApp = "passAPPort";
+var appDir = "";
 var destinationType; // sets the format of returned value
 
 var id_User = 1;    // id dell'utilizzatore
@@ -31,6 +33,7 @@ var app = {
     // ok, il dispositivo è pronto: configuralo
     // app.checkConnection();
     // app.showAlert("Chiamata alla fine del caricamento","msg");
+    app.getDir();   // memorizza il path della cartella applicazione
     destinationType=navigator.camera.DestinationType;
     // inizializza l'elenco delle mete e le pagine
     mete.inizializza();
@@ -133,6 +136,40 @@ var app = {
     } else {
       return false;
     }
+  },
+  // memorizza il path della cartella 
+  getDir: function(){
+    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,     // accede al file system
+      function(fileSys) {                                     // ok accede
+        //The folder is created if doesn't exist
+        fileSys.root.getDirectory(
+          myFolderApp, {create:true, exclusive: false},
+          function(directory) {                           // cartella creata
+            appDir = directory.toURL();
+            dbgMsg("Cartella della app pronta: " + appDir );
+          },
+          fail
+        );
+      },
+      fail                                              // accesso al file system non riuscito
+    );
+  },
+  // scarica un file da internet
+  downloadFile: function(origine, nome){
+    var uri = encodeURI(origine);
+    var dest = appDir + nome;
+    var ft = new FileTransfer();
+    dbgMsg("Pronto al download: " + uri  + " " + dest);
+    ft.download(
+        uri,
+        dest,
+        function(theFile) {
+            dbgMsg("download complete: " + theFile.toURI());
+        },
+        function(error) {
+            dbgMsg("upload error code: " + error.code + "download error source " + error.source + "download error target " + error.target);
+        }
+    );
   }
 }
 
@@ -176,19 +213,7 @@ var mete = {
         $.each(obj, function(i, valore){
           questo.push(valore);
           // scarica l'immagine
-          var url_img = valore.img;
-          dbgMsg("img " + url_img );
-          window.requestFileSystem(
-            LocalFileSystem.PERSISTENT, 0,
-            function onFileSystemSuccess( fileSystem ){
-              // create the download directory is doesn't exist
-              fileSystem.root.getDirectory('passAPPort', { create: true });           
-              // we will save file in .. downloads/phonegap-logo.png
-              var filePath = fileSystem.root.fullPath + '/passAPPort/' + url;
-              dbgMsg("File path: " + filePath );
-            },
-            function fail(error){dbgMsg("Errore file: " + error.source + " + " + error.target+ " + " + error.code)}
-          );
+          app.downloadFile(URL_PREFIX + "php/img/" + valore.img, valore.img);
         })
         mete.scriveMete();    // salva i dati nel DB interno
       }).fail(function(){

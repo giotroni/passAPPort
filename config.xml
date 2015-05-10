@@ -19,6 +19,13 @@
     
     <icon src="img/passAPPort_icon.png" />
 
+    <gap:plugin name="org.apache.cordova.file" />    
+    <gap:plugin name="org.apache.cordova.camera" />    
+    <gap:plugin name="org.apache.cordova.dialogs" />
+    <gap:plugin name="org.apache.cordova.geolocation" />
+    <gap:plugin name="org.apache.cordova.network-information" />
+    <gap:plugin name="org.apache.cordova.media"  />
+
     <feature name="http://api.phonegap.com/1.0/camera"/>
     <feature name="http://api.phonegap.com/1.0/contacts"/>
     <feature name="http://api.phonegap.com/1.0/file"/>
@@ -29,10 +36,14 @@
 
     <feature name="http://api.phonegap.com/1.0/device" />
 
-    <gap:plugin name="org.apache.cordova.file" />    
-    <gap:plugin name="org.apache.cordova.camera" />    
-    <gap:plugin name="org.apache.cordova.dialogs" />
-    <gap:plugin name="org.apache.cordova.geolocation" />
-    <gap:plugin name="org.apache.cordova.network-information" />
-    <gap:plugin name="org.apache.cordova.media"  />
+    <feature name="File">
+        <param name="android-package" value="org.apache.cordova.file.FileUtils" />
+    </feature>
+
+    <gap:plugin name="org.apache.cordova.file-transfer" />
+
+    <feature name="FileTransfer">
+        <param name="android-package" value="org.apache.cordova.filetransfer.FileTransfer" />
+    </feature>
+
 </widget>
