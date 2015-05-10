@@ -403,7 +403,7 @@ var pagine = {
       $('#lstMete').append(testo);
       $("#lstMete li#meta_"+key).bind("click", function(){
           dbgMsg("Aggiungi meta - key " + key + " id " + value.id + " meta " + value.meta);
-          pagine.nuovaMeta(value.id);
+          pagine.nuovaMeta(key);
       });
     });
     $('#lstMete').listview("refresh");
@@ -419,8 +419,8 @@ var pagine = {
       if(value.id == id ){
         if (value.dataora.indexOf(sData) >= 0){
           showAlert("Meta già raggiunta oggi", "Attenzione");
-        } else if( value.dataora.indexOf('0000-00-00')>0){
-          showAlert("Meta già presente", "Attenzione");
+        } else if( value.dataora.indexOf('0000-00-00')>=0){
+          showAlert("Meta già presente. non si può aggiungere", "Attenzione");
         }
         metaOK = false;
         return false;
@@ -429,7 +429,7 @@ var pagine = {
     // dbgMsg("meta ok: " + metaOK);
     if( metaOK){
       // inserisce i dati della meta nell'array delle pagine
-      dbgMsg("id: " + id + " " + mete.elenco[id].meta);
+      dbgMsg("id: " + id + " " + mete.elenco[id].id + " " + mete.elenco[id].meta);
       pagine.lista.push({
           "idMeta": mete.elenco[id].id,
           "meta": mete.elenco[id].meta,
