@@ -33,7 +33,7 @@ var app = {
     // ok, il dispositivo è pronto: configuralo
     // app.checkConnection();
     // app.showAlert("Chiamata alla fine del caricamento","msg");
-    app.getDir();   // memorizza il path della cartella applicazione
+    app.setDir();   // memorizza il path della cartella applicazione
     destinationType=navigator.camera.DestinationType;
     // inizializza l'elenco delle mete e le pagine
     mete.inizializza();
@@ -138,7 +138,7 @@ var app = {
     }
   },
   // memorizza il path della cartella 
-  getDir: function(){
+  setDir: function(){
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,     // accede al file system
       function(fileSys) {                                     // ok accede
         //The folder is created if doesn't exist
@@ -341,6 +341,8 @@ var pagine = {
       $("#tit-interno").html("<h2>Pag. "+ pagine.numPagina + " - " + el.meta + "</h2>");
       // dbgMsg(el.foto);
       $("#lblCoordinate").html(el.lat + " - " + el.lng);
+      var imgMeta = document.getElementById('imgMeta');    
+      imgMeta.src = el.img;
       if(  pagine.arrivato() ){
         $("#lblArrivo").html("Arrivato: "+ el.dataora);
         smallImage.src = el.foto;
@@ -375,6 +377,7 @@ var pagine = {
     $('#lstMete').empty();
     $.each(mete.elenco, function(key, value){
       var testo = '<li id="meta_'+ key +'" ><a href="#" >';
+      testo += '<img src="' + appDir + value.img +'">';
       testo += value.meta ;
       testo += '</a></li>';
       $('#lstMete').append(testo);
