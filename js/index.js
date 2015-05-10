@@ -213,7 +213,10 @@ var mete = {
         $.each(obj, function(i, valore){
           questo.push(valore);
           // scarica l'immagine
-          app.downloadFile(URL_PREFIX + "php/img/" + valore.img, valore.img);
+          var img = valore.img;
+          if(img.length>0){
+            app.downloadFile(URL_PREFIX + "php/img/" + valore.img, valore.img);
+          }
         })
         mete.scriveMete();    // salva i dati nel DB interno
       }).fail(function(){
