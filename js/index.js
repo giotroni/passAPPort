@@ -47,8 +47,8 @@ var app = {
     $("#btnNext").on("click", pagine.nextPage);
     $("#btnPrev").on("click", pagine.prevPage);
     $("#btnCheckPos").on("click", app.checkPos);
-    $("#btnDelete").on("click", function(){showYesNo("Vuoi DAVVERO cancellare questa meta?", pagine.cancellaPagina)} );
-    $("#imgMeta").on("click", pagine.popupNote);
+    //$("#btnDelete").on("click", function(){showYesNo("Vuoi DAVVERO cancellare questa meta?", pagine.cancellaPagina)} );
+    //$("#imgMeta").on("click", pagine.popupNote);
 
 
     //$.event.special.swipe.horizontalDistanceThreshold = 120;
@@ -254,7 +254,7 @@ var mete = {
       value.dist = getDistanceFromLatLng(value.lat, value.lng, pagine.coordinate.lat, pagine.coordinate.lng )
     })
     mete.elenco.sort(mycomparator);    
-  },
+  }
 
 }
 
@@ -565,7 +565,7 @@ var pagine = {
     lista.splice(pagine.numPagina-1, 1);
     pagine.numPagina -= 1;
     pagine.showPage();
-  }
+  },
   // cancella tutto
   reset: function(){
     dbgMsg("Reset");
