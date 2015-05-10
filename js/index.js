@@ -402,7 +402,7 @@ var pagine = {
       testo += '</a></li>';
       $('#lstMete').append(testo);
       $("#lstMete li#meta_"+key).bind("click", function(){
-          dbgMsg("Aggiungi meta: " + key + value.id);
+          dbgMsg("Aggiungi meta - key " + key + " id " + value.id + " meta " + value.meta);
           pagine.nuovaMeta(value.id);
       });
     });
@@ -429,9 +429,9 @@ var pagine = {
     // dbgMsg("meta ok: " + metaOK);
     if( metaOK){
       // inserisce i dati della meta nell'array delle pagine
-      //dbgMsg("Immagine: " + mete.elenco[id].img);
+      dbgMsg("id: " + id + " " + mete.elenco[id].meta);
       pagine.lista.push({
-          "idMeta": id,
+          "idMeta": mete.elenco[id].id,
           "meta": mete.elenco[id].meta,
           "lat": mete.elenco[id].lat,
           "lng": mete.elenco[id].lng,
@@ -562,10 +562,11 @@ var pagine = {
     $( "#popupNote" ).popup( "open" )
   },
   cancellaPagina: function( ind ){
-    dbgMsg("Cancella: " + ind);
-    lista.splice(pagine.numPagina-1, 1);
-    pagine.numPagina -= 1;
-    pagine.showPage();
+    if(ind == 1){
+      pagine.lista.splice(pagine.numPagina-1, 1);
+      pagine.numPagina -= 1;
+      pagine.showPage();
+    }
   },
   // cancella tutto
   reset: function(){
