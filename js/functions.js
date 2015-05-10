@@ -88,3 +88,19 @@ function adesso(){
   // dbgMsg("adesso: " + sGiorno + " " + sOra)
   return (sGiorno + " " + sOra);
 }
+
+// Show a custom confirmation dialog
+//
+function showYesNo( msg, func ) {
+  navigator.notification.confirm(
+    msg, // message
+     func,            // callback to invoke with index of button pressed
+    'ATTENZIONE',           // title
+    ['Si','No']         // buttonLabels
+  );
+}
+
+// funzione per l'ordinamento di una lista di numeri float
+function mycomparator(a,b) {
+    return parseFloat(a.dist) - parseFloat(b.dist) ;
+}

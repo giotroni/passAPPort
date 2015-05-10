@@ -47,6 +47,8 @@ var app = {
     $("#btnNext").on("click", pagine.nextPage);
     $("#btnPrev").on("click", pagine.prevPage);
     $("#btnCheckPos").on("click", app.checkPos);
+    $("#btnDelete").on("click", function(){showYesNo("Vuoi DAVVERO cancellare questa meta?", pagine.cancellaPagina)} );
+    $("#imgMeta").on("click", pagine.popupNote);
 
 
     //$.event.special.swipe.horizontalDistanceThreshold = 120;
@@ -215,11 +217,11 @@ var mete = {
           // scarica l'immagine
           var img = valore.img;
           if(img.length>0){
-            app.downloadFile(URL_PREFIX + "php/img/" + valore.img, valore.img);
+            app.downloadFile(URL_PREFIX + "php/img/" + img, img);
           }
           img = valore.timbro;
           if(img.length>0){
-            app.downloadFile(URL_PREFIX + "php/img/" + valore.img, valore.img);
+            app.downloadFile(URL_PREFIX + "php/img/" + img, img);
           }
         })
         mete.scriveMete();    // salva i dati nel DB interno
@@ -245,7 +247,15 @@ var mete = {
       var valore = JSON.stringify(value);
       app.storage.setItem("meta"+key, valore)  
     })
-  }
+  },
+  // aggiorna la lista dei mappa.luoghi, ordinandola sulla base della distanza
+  sortMete: function(){
+    $.each(mete.elenco, function(key, value){
+      value.dist = getDistanceFromLatLng(value.lat, value.lng, pagine.coordinate.lat, pagine.coordinate.lng )
+    })
+    mete.elenco.sort(mycomparator);    
+  },
+
 }
 
 // classe con le pagine
@@ -276,7 +286,7 @@ var pagine = {
     var pti = 0;
     $.each(this.lista, function(key, value){
       if(value.dataora.indexOf(MAI)>=0){
-        pti += value.punti;
+        pti += (value.punti * 1);
       }
     });
     return pti;
@@ -377,6 +387,7 @@ var pagine = {
         reverse:      true,
         showLoadMsg:  true
     });
+    mete.sortMete();
     pagine.elencaMete();
   },
   // crea l'elenco mete 
@@ -386,10 +397,11 @@ var pagine = {
     $.each(mete.elenco, function(key, value){
       var testo = '<li id="meta_'+ key +'" ><a href="#" >';
       testo += '<img src="' + appDir + value.img +'">';
-      testo += value.meta ;
+      testo += value.meta + ' - ' + value.localita;
+      testo += '<p>'+value.desc + '</p>';
       testo += '</a></li>';
       $('#lstMete').append(testo);
-      $("#lstMete li#meta_"+key).bind("click", function(){
+      $("#lstMete li#meta_"+value.id).bind("click", function(){
           // dbgMsg("Aggiungi meta: " + key);
           pagine.nuovaMeta(key);
       });
@@ -546,6 +558,14 @@ var pagine = {
       })
     }
   },
+  popupNote: function(){
+    $( "#popupNote" ).popup( "open" )
+  },
+  cancellaPagina: function(){
+    lista.splice(pagine.numPagina-1, 1);
+    pagine.numPagina -= 1;
+    pagine.showPage();
+  }
   // cancella tutto
   reset: function(){
     dbgMsg("Reset");
