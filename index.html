@@ -58,10 +58,11 @@
 	    <img style="width:160px;height:120px;" id="imgMeta" src="" />	    
 	    <img style="width:160px;height:120px;" id="smallImage" src="" />
 	    <img style="width:160px;height:120px;" id="imgTimbro" src="" />
-	    <div data-role="popup" id="popupNote">
-		<p>This is a completely basic popup, no options set.</p>
+	    <div data-role="popup" id="popupNote" class="ui-content" style="max-width:280px" data-dismissible="false">
+		<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-left">Close</a>
+	    <p>I have the <code>data-dismissible</code> attribute set to <code>false</code>. I'm not closeable by clicking outside of me.</p>
 	    </div>
-	    <textarea cols="40" rows="8" id="txtNote"></textarea>
+	    <textarea cols="40" rows="8" id="txtNota"></textarea>
         </div>
         <div data-role="footer" data-position="fixed">
             <a href="#" data-role="button" data-icon="arrow-l" id="btnPrev">Prec</a>

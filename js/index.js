@@ -49,6 +49,7 @@ var app = {
     $("#btnCheckPos").on("click", app.checkPos);
     $("#btnDelete").on("click", function(){showYesNo("Vuoi DAVVERO cancellare questa meta?", pagine.cancellaPagina)} );
     $("#imgMeta").on("click", pagine.popupNote);
+    $("#txtNota").on( "change", pagine.memoNota );
 
 
     //$.event.special.swipe.horizontalDistanceThreshold = 120;
@@ -166,10 +167,10 @@ var app = {
         uri,
         dest,
         function(theFile) {
-            dbgMsg("download complete: " + theFile.toURI());
+            // dbgMsg("download complete: " + theFile.toURI());
         },
         function(error) {
-            dbgMsg("download error source " + error.source + "download error target " + error.target + "upload error code: " + error.code);
+            // dbgMsg("download error source " + error.source + "download error target " + error.target + "upload error code: " + error.code);
         }
     );
   }
@@ -284,8 +285,8 @@ var pagine = {
   // conta i punti
   checkPunti: function(){
     var pti = 0;
-    $.each(this.lista, function(key, value){
-      if(value.dataora.indexOf(MAI)>=0){
+    $.each(pagine.lista, function(key, value){
+      if(pagine.arrivato()){
         pti += (value.punti * 1);
       }
     });
@@ -402,7 +403,7 @@ var pagine = {
       testo += '</a></li>';
       $('#lstMete').append(testo);
       $("#lstMete li#meta_"+key).bind("click", function(){
-          dbgMsg("Aggiungi meta - key " + key + " id " + value.id + " meta " + value.meta);
+          // dbgMsg("Aggiungi meta - key " + key + " id " + value.id + " meta " + value.meta);
           pagine.nuovaMeta(key);
       });
     });
@@ -429,7 +430,7 @@ var pagine = {
     // dbgMsg("meta ok: " + metaOK);
     if( metaOK){
       // inserisce i dati della meta nell'array delle pagine
-      dbgMsg("id: " + id + " " + mete.elenco[id].id + " " + mete.elenco[id].meta);
+      // dbgMsg("id: " + id + " " + mete.elenco[id].id + " " + mete.elenco[id].meta);
       pagine.lista.push({
           "idMeta": mete.elenco[id].id,
           "meta": mete.elenco[id].meta,
@@ -572,6 +573,10 @@ var pagine = {
   reset: function(){
     dbgMsg("Reset");
     app.storage.clear();
+  },
+  memoNota: function(){
+    pagine.lista[pagine.numPagina-1].note = $("#txtNota").val();
+    dbgMsg(pagine.lista[pagine.numPagina-1].note);
   }
 }
 
