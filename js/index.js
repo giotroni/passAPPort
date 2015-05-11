@@ -54,15 +54,16 @@ var app = {
     var draggable = document.getElementById('draggable');
     var altezza = $(document).height();
     draggable.addEventListener('touchmove', function(event){
-        var touch = event.targetTouches[0];
-        draggable.style.left = touch.pageX - 25 + 'px';
-        draggable.style.top= touch.pageY - 25 + 'px';
-        $("#btnDownload").html("alt" + (altezza *3 / 4)+"X:"+touch.pageX+" Y:"+touch.pageY  );
-        if(touch.pageY  > (altezza *3 / 4)){
-            alert("Bravo");
-            app.capturePhoto();
-        }
-        event.preventDefault();            
+      // gestisce la timbratura
+      var touch = event.targetTouches[0];
+      draggable.style.left = touch.pageX - 25 + 'px';
+      draggable.style.top= touch.pageY - 25 + 'px';
+      $("#btnDownload").html("alt" + (altezza *3 / 4)+"X:"+touch.pageX+" Y:"+touch.pageY  );
+      if(touch.pageY  > (altezza *3 / 4)){
+          alert("Bravo");
+          app.capturePhoto();
+      }
+      event.preventDefault();            
     }, false);
 
     app.checkPos();
@@ -94,7 +95,17 @@ var app = {
       }
       return false;         
     });
-    
+    $(window).on("navigate", function (event, data) {
+      var direction = data.state.direction;
+      "#page-elencomete"
+      if (direction == 'back' && pagine.paginaMeteVisibile) {
+        // do something
+        pagine.showMete();
+      }
+      //if (direction == 'forward') {
+      //  // do something else
+      //}
+    });
   },
   // chiamata quando la posizione è stata letta
   onSuccessGeo: function(position){
@@ -294,6 +305,7 @@ var mete = {
 // classe con le pagine
 var pagine = {
   numPagina: 0,           // numero pagina attuale
+  paginaMeteVisibile: false,
   saved: true,            // flag che indica se le pagine sono state salvate sul DB internet
   // struttura con le coordinate e le altre info di geolocalizzazione
   coordinate: {
@@ -422,6 +434,7 @@ var pagine = {
         showLoadMsg:  true
     });
     mete.sortMete();
+    paginaMeteVisibile = true;
     pagine.elencaMete();
   },
   // crea l'elenco mete 
@@ -447,6 +460,7 @@ var pagine = {
     var metaOK = true;
     var sData = adesso().substring(0, 10);
     // dbgMsg(sData);
+    paginaMeteVisibile = false;
     $.each(pagine.lista, function(key, value){
       // evita di aggiungere più volte la stessa meta se non è ancora stata raggiunta o se è stata raggiunta oggi
       // dbgMsg(value.arrivato + " " + value.dataora);
@@ -531,6 +545,7 @@ var pagine = {
     smallImage.src = el.foto;
     pagine.saved = false;
     pagine.scrivePagine();
+    pagine.showPage();
   },
   // legge dalla memoria le pagine
   leggePagine: function(){
