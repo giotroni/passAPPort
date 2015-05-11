@@ -44,12 +44,18 @@ var app = {
     $("#btnSave").on("click", pagine.savePagine);
     $("#btnHome").on("click", pagine.home);    
     $("#btnEntra").on("click", pagine.nextPage);
-    $("#btnNext").on("click", pagine.nextPage);
-    $("#btnPrev").on("click", pagine.prevPage);
-    $("#btnCheckPos").on("click", app.checkPos);
-    $("#btnDelete").on("click", function(){showYesNo("Vuoi DAVVERO cancellare questa meta?", pagine.cancellaPagina)} );
-    $("#imgMeta").on("click", pagine.popupNote);
-    $("#txtNota").on( "change", pagine.memoNota );
+    $("#btnNext1").on("click", pagine.nextPage);
+    $("#btnPrev1").on("click", pagine.prevPage);
+    $("#btnCheckPos1").on("click", app.checkPos);
+    $("#btnDelete1").on("click", function(){showYesNo("Vuoi DAVVERO cancellare questa meta?", pagine.cancellaPagina)} );
+    $("#btnNext2").on("click", pagine.nextPage);
+    $("#btnPrev2").on("click", pagine.prevPage);
+    $("#btnCheckPos2").on("click", app.checkPos);
+    $("#btnDelete2").on("click", function(){showYesNo("Vuoi DAVVERO cancellare questa meta?", pagine.cancellaPagina)} );
+    $("#imgMeta1").on("click", pagine.popupNote);
+    $("#imgMeta2").on("click", pagine.popupNote);
+    $("#txtNota1").on( "change", pagine.memoNota );
+    $("#txtNota2").on( "change", pagine.memoNota );
 
     var draggable = document.getElementById('draggable');
     var altezza = $(document).height();
@@ -379,38 +385,42 @@ var pagine = {
   },
   // Mostra la pagina corrente
   showPage: function(){
+    var suffisso = 1;
     if(pagine.numPagina>0){
+      if(pagine.numPagina % 2 == 0){
+        suffisso = 2;
+      }
       // siamo dentro il passAPPort
       // dbgMsg("mostra la pagina interna: ");
-      $.mobile.pageContainer.pagecontainer("change", "#page-interno", {
+      $.mobile.pageContainer.pagecontainer("change", "#page-interno"+suffisso, {
           transition: 'slide',
           changeHash: false,
           reverse: true,
           showLoadMsg: true
       });
 
-      var smallImage = document.getElementById('smallImage');    
+      var smallImage = document.getElementById('smallImage'+suffisso);    
 
       // cancella l'esistente
-      $("#lblDistanza").empty();  
-      $("#lblArrivo").empty();
-      $("#lblCoordinate").empty();
+      $("#lblDistanza"+suffisso).empty();  
+      $("#lblArrivo"+suffisso).empty();
+      $("#lblCoordinate"+suffisso).empty();
       // scrive i nuovi dati
       var el = pagine.lista[pagine.numPagina-1];
-      $("#tit-interno").html("<h2>Pag. "+ pagine.numPagina + " - " + el.meta + "</h2>");
+      $("#tit-interno"+suffisso).html("<h2>Pag. "+ pagine.numPagina + " - " + el.meta + "</h2>");
       // dbgMsg(el.foto);
-      $("#lblCoordinate").html(el.lat + " - " + el.lng);
-      var imgMeta = document.getElementById('imgMeta');    
+      $("#lblCoordinate"+suffisso).html(el.lat + " - " + el.lng);
+      var imgMeta = document.getElementById('imgMeta'+suffisso);    
       imgMeta.src =  appDir + el.img;
-      $("#txtNota").val(el.note);
+      $("#txtNota"+suffisso).val(el.note);
       if(  pagine.arrivato() ){
-        $("#lblArrivo").html("Arrivato: "+ el.dataora);
+        $("#lblArrivo"+suffisso).html("Arrivato: "+ el.dataora);
         smallImage.src = el.foto;
-        $('#imgTimbro').attr('src',appDir + el.timbro);
+        $('#imgTimbro'+suffisso).attr('src',appDir + el.timbro);
       } else {
-        $("#lblArrivo").html("Non ancora arrivato");
+        $("#lblArrivo"+suffisso).html("Non ancora arrivato");
         smallImage.src = "";
-        $('#imgTimbro').attr('src','');
+        $('#imgTimbro'+suffisso).attr('src','');
       }
     } else {
       // mostra la copertina
@@ -509,7 +519,8 @@ var pagine = {
       var el = pagine.lista[pagine.numPagina-1];
       el.dist = getDistanceFromLatLng(pagine.coordinate.lat, pagine.coordinate.lng, el.lat, el.lng);
       var dst = el.dist;
-      $("#lblDistanza").html("Distanza: "+ strDistanza(dst));
+      $("#lblDistanza1").html("Distanza: "+ strDistanza(dst));
+      $("#lblDistanza2").html("Distanza: "+ strDistanza(dst));
       // verifica se sei arrivato
       pagine.checkArrivato();
     }
@@ -614,7 +625,9 @@ var pagine = {
     }
   },
   popupNote: function(){
-    $( "#popupNote" ).popup( "open" )
+    $( "#popupNote1" ).popup( "open" );
+    $( "#popupNote1" ).popup( "open" );
+    
   },
   cancellaPagina: function( ind ){
     if(ind == 1){
@@ -631,7 +644,11 @@ var pagine = {
     app.storage.clear();
   },
   memoNota: function(){
-    pagine.lista[pagine.numPagina-1].note = $("#txtNota").val();
+    var suffisso = 1;
+    if( (pagine.numPagina % 2) == 0){
+      suffisso = 2;
+    }
+    pagine.lista[pagine.numPagina-1].note = $("#txtNota"+suffisso).val();
     // dbgMsg(pagine.lista[pagine.numPagina-1].note);
   }
 }
