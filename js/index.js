@@ -393,7 +393,7 @@ var pagine = {
       // siamo dentro il passAPPort
       // dbgMsg("mostra la pagina interna: ");
       $.mobile.pageContainer.pagecontainer("change", "#page-interno"+suffisso, {
-          transition: 'slide',
+          transition: 'flip',
           changeHash: false,
           reverse: true,
           showLoadMsg: true
