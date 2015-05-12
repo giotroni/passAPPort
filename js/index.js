@@ -389,11 +389,26 @@ var pagine = {
     if(pagine.numPagina>0){
       if(pagine.numPagina % 2 == 0){
         suffisso = 2;
+        // siamo dentro il passAPPort
+        // dbgMsg("mostra la pagina interna: ");
+        $.mobile.pageContainer.pagecontainer("change", "#page-interno1", {
+            transition: 'turn',
+            changeHash: false,
+            reverse: false,
+            showLoadMsg: true
+        });
+      } else {
+        $.mobile.pageContainer.pagecontainer("change", "#page-interno2", {
+            transition: 'turn',
+            changeHash: false,
+            reverse: true,
+            showLoadMsg: true
+        });        
       }
       // siamo dentro il passAPPort
       // dbgMsg("mostra la pagina interna: ");
       $.mobile.pageContainer.pagecontainer("change", "#page-interno"+suffisso, {
-          transition: 'flip',
+          transition: 'turn',
           changeHash: false,
           reverse: true,
           showLoadMsg: true

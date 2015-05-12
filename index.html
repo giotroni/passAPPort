@@ -14,8 +14,18 @@
 	    font-size: xx-large;
 	    }
 	#btnPrev2 {
+	    position: fixed;
+	    top: 50%;
+	    left: 0px;
 	    width: 15px; height: 30px; background-color: #f00; opacity: 0.3; position: absolute; padding: 0.5em; font-weight: bold;
-	    font-size: xx-large; border-radius: 0px 20px 20px 0px; 
+	    font-size: xx-large; border-radius: 0px 20px 20px 0px;
+	    }
+	#btnNext2 {
+	    position: fixed;
+	    top: 50%;
+	    right: 0px;
+	    width: 15px; height: 30px; background-color: #f00; opacity: 0.3; position: absolute; padding: 0.5em; font-weight: bold;
+	    font-size: xx-large; border-radius: 0px 20px 20px 0px;
 	    }
     </style>    
 
@@ -101,11 +111,11 @@
 	    </div>
 	    <textarea cols="40" rows="8" id="txtNota2"></textarea>
             <div id="btnPrev2"><</div>
+            <div id="btnNext2">></div>
         </div>
         <div data-role="footer" data-position="fixed">
             <a href="#" data-role="button" id="btnCheckPos2">Check Pos</a>
             <a href="#" data-role="button" id="btnDelete2">Cancella meta</a>
-            <a href="#" data-role="button" data-icon="arrow-r" id="btnNext2">Next</a>
         </div>
     </div><!-- /page-interno2 -->
     
