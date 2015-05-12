@@ -9,9 +9,19 @@
     <script src="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js"></script>
     <style>
         #draggable { width: 130px; height: 160px; position: absolute; padding: 0.5em; };
-	.btnSx {
-	    font-weight: bold;
-	    font-size: xx-large;
+	#btnPrev1 {
+	    position: fixed;
+	    top: 50%;
+	    left: 0px;
+	    width: 15px; height: 30px; background-color: #f00; opacity: 0.3; position: absolute; padding: 0.5em; font-weight: bold;
+	    font-size: xx-large; border-radius: 0px 20px 20px 0px;
+	    }
+	#btnNext1 {
+	    position: fixed;
+	    top: 50%;
+	    right: 0px;
+	    width: 15px; height: 30px; background-color: #f00; opacity: 0.3; position: absolute; padding: 0.5em; font-weight: bold;
+	    font-size: xx-large; border-radius: 20px 0px 0px 20px;
 	    }
 	#btnPrev2 {
 	    position: fixed;
@@ -27,6 +37,12 @@
 	    width: 15px; height: 30px; background-color: #f00; opacity: 0.3; position: absolute; padding: 0.5em; font-weight: bold;
 	    font-size: xx-large; border-radius: 0px 20px 20px 0px;
 	    }
+	.copertina {
+	    style="background-image: url("img/copertina3.png");"
+	    }
+	.interno {
+	    style="background-image: url("img/interno3.png");"
+	    }
     </style>    
 
     <script type="text/javascript" src="phonegap.js"></script>
@@ -37,7 +53,7 @@
 </head>
 
 <body>
-    <div data-role="page" id="page-home" class="copertina">
+    <div data-role="page" id="page-home" class="copertina" >
         <div data-role="header">
             <h2>passAPPort</h2>
         </div>
@@ -79,17 +95,17 @@
 	    <img style="width:160px;height:120px;" id="imgMeta1" src="" />	    
 	    <img style="width:160px;height:120px;" id="smallImage1" src="" />
 	    <img style="width:160px;height:120px;" id="imgTimbro1" src="" />
+	    <div class="btnSx" id="btnPrev1"><b><</b></div>
+	    <div class="btnDx" id="btnNext1"><b>></b></div>
 	    <div data-role="popup" id="popupNote1" class="ui-content" style="max-width:280px" data-dismissible="false">
 		<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-left">Close</a>
 	    <p>I have the <code>data-dismissible</code> attribute set to <code>false</code>. I'm not closeable by clicking outside of me.</p>
 	    </div>
 	    <textarea cols="40" rows="8" id="txtNota1"></textarea>
-	    <div class="btnSx" id="btnPrev1"><b><</b></div>
         </div>
         <div data-role="footer" data-position="fixed">
             <a href="#" data-role="button" id="btnCheckPos1">Check Pos</a>
             <a href="#" data-role="button" id="btnDelete1">Cancella meta</a>
-            <a href="#" data-role="button" data-icon="arrow-r" id="btnNext1">Next</a>
         </div>
     </div><!-- /page-interno -->
 
@@ -105,13 +121,13 @@
 	    <img style="width:160px;height:120px;" id="imgMeta2" src="" />	    
 	    <img style="width:160px;height:120px;" id="smallImage2" src="" />
 	    <img style="width:160px;height:120px;" id="imgTimbro2" src="" />
+            <div id="btnPrev2"><</div>
+            <div id="btnNext2">></div>
 	    <div data-role="popup" id="popupNote2" class="ui-content" style="max-width:280px" data-dismissible="false">
 		<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-left">Close</a>
 	    <p>I have the <code>data-dismissible</code> attribute set to <code>false</code>. I'm not closeable by clicking outside of me.</p>
 	    </div>
 	    <textarea cols="40" rows="8" id="txtNota2"></textarea>
-            <div id="btnPrev2"><</div>
-            <div id="btnNext2">></div>
         </div>
         <div data-role="footer" data-position="fixed">
             <a href="#" data-role="button" id="btnCheckPos2">Check Pos</a>
