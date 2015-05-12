@@ -8,7 +8,8 @@
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js"></script>
     <style>
-        #draggable { width: 130px; height: 160px; position: absolute; padding: 0.5em; }
+        #draggable { width: 130px; height: 160px; position: absolute; padding: 0.5em; };
+	.btnSx { width: 40px; height: 20px; border-radius: 0px 20px 20px 0px; opacity: 0.6; background-color: #ffffff;}
     </style>    
 
     <script type="text/javascript" src="phonegap.js"></script>
@@ -66,9 +67,9 @@
 	    <p>I have the <code>data-dismissible</code> attribute set to <code>false</code>. I'm not closeable by clicking outside of me.</p>
 	    </div>
 	    <textarea cols="40" rows="8" id="txtNota1"></textarea>
+	    <div class="btnSx" id="btnPrev1"><b><</b></div>
         </div>
         <div data-role="footer" data-position="fixed">
-            <a href="#" data-role="button" data-icon="arrow-l" id="btnPrev1">Prec</a>
             <a href="#" data-role="button" id="btnCheckPos1">Check Pos</a>
             <a href="#" data-role="button" id="btnDelete1">Cancella meta</a>
             <a href="#" data-role="button" data-icon="arrow-r" id="btnNext1">Next</a>
