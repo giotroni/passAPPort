@@ -8,19 +8,19 @@
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js"></script>
     <style>
-        #draggable { width: 130px; height: 160px; position: absolute; padding: 0.5em; };
+        #draggable { width: 130px; height: 160px; position: absolute; padding: 0.5em; }
 	#btnPrev1, #btnPrev2 {
 	    position: fixed;
 	    top: 50%;
 	    left: 0px;
-	    width: 15px; height: 30px; background-color: #f00; opacity: 0.3; position: absolute; padding: 0.5em; font-weight: bold;
+	    width: 5%; height: 10%; background-color: #f00; opacity: 0.3; position: absolute; padding: 0.5em; font-weight: bold;
 	    font-size: xx-large; border-radius: 0px 20px 20px 0px;
 	    }
 	#btnNext1, #btnNext2 {
 	    position: fixed;
 	    top: 50%;
 	    right: 0px;
-	    width: 15px; height: 30px; background-color: #f00; opacity: 0.3; position: absolute; padding: 0.5em; font-weight: bold;
+	    width: 5%; height: 10%; background-color: #f00; opacity: 0.3; position: absolute; padding: 0.5em; font-weight: bold;
 	    font-size: xx-large; border-radius: 20px 0px 0px 20px;
 	    }
 	.copertina {
@@ -28,10 +28,13 @@
 	    background-size:   cover;
 	    }
 	.interno {
-	    background-image: url("img/interno3.png");
-	    background-size:   cover;
+	    background-image: url("img/fetta_interno.png");
+	    background-size: 100% 50px;
+	    background-repeat:   repeat-y;
 	    }
 	.imgSfondo {
+	    background-image: url("img/logo_montagne_1.png");
+	    background-size: cover;
 	    position: fixed;
 	    top: 80%;
 	    width: 100%
@@ -93,7 +96,7 @@
 	    <div id="btnPrev1"><b><</b></div>
 	    <div id="btnNext1"><b>></b></div>
 	    <textarea cols="40" rows="8" id="txtNota1"></textarea>
-	    <img style="width:160px;height:120px;" class"imgSfondo" id="imgSfondo1" src="" />
+	    <div class"imgSfondo" id="imgSfondo1"></div>
         </div>
         <div data-role="footer" data-position="fixed">
             <a href="#" data-role="button" id="btnCheckPos1">Check Pos</a>

@@ -66,7 +66,7 @@ var app = {
       draggable.style.top= touch.pageY - 25 + 'px';
       $("#btnDownload").html("alt" + (altezza *3 / 4)+"X:"+touch.pageX+" Y:"+touch.pageY  );
       if(touch.pageY  > (altezza *3 / 4)){
-          alert("Bravo");
+          showAlert("Bravo", "Messaggio");
           app.capturePhoto();
       }
       event.preventDefault();            
