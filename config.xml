@@ -45,5 +45,6 @@
     <feature name="FileTransfer">
         <param name="android-package" value="org.apache.cordova.filetransfer.FileTransfer" />
     </feature>
+    <gap:plugin name="org.apache.cordova.vibration" />
 
 </widget>

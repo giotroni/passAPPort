@@ -387,6 +387,7 @@ var pagine = {
   showPage: function(){
     var suffisso = 1;
     if(pagine.numPagina>0){
+      navigator.vibrate(500);
       if(pagine.numPagina % 2 == 0){
         suffisso = 2;
         // siamo dentro il passAPPort
