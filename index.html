@@ -27,14 +27,17 @@
 	    background-image: url("img/copertina3.png");
 	    background-size:   cover;
 	    }
-	.interno {
-	    background-image: url("img/fetta_interno.png");
+	.interno1 {
+	    background-image: url("img/fetta_interno1.png");
+	    background-size: 100% 50px;
+	    background-repeat:   repeat-y;
+	    }
+	.interno2 {
+	    background-image: url("img/fetta_interno2.png");
 	    background-size: 100% 50px;
 	    background-repeat:   repeat-y;
 	    }
 	.imgSfondo {
-	    background-image: url("img/logo_montagne_1.png");
-	    background-size: cover;
 	    position: fixed;
 	    top: 80%;
 	    width: 100%
@@ -81,7 +84,7 @@
 
     </div><!-- /page-settings -->
     
-    <div data-role="page" id="page-interno1" data-add-back-btn="false"  class="interno">
+    <div data-role="page" id="page-interno1" data-add-back-btn="false"  class="interno1">
         <div data-role="header" id="tit-interno1">
         </div>
         <div role="main" class="ui-content" id="content-interno">
@@ -96,7 +99,7 @@
 	    <div id="btnPrev1"><b><</b></div>
 	    <div id="btnNext1"><b>></b></div>
 	    <textarea cols="40" rows="8" id="txtNota1"></textarea>
-	    <div class"imgSfondo" id="imgSfondo1"></div>
+	    <img class"imgSfondo" id="imgSfondo1" src="img/logo_montagne_1.png"/>
         </div>
         <div data-role="footer" data-position="fixed">
             <a href="#" data-role="button" id="btnCheckPos1">Check Pos</a>
@@ -104,7 +107,7 @@
         </div>
     </div><!-- /page-interno -->
 
-    <div data-role="page" id="page-interno2" data-add-back-btn="false"  class="interno" style="text-align:right;">
+    <div data-role="page" id="page-interno2" data-add-back-btn="false"  class="interno2" style="text-align:right;">
         <div data-role="header" id="tit-interno2">
         </div>
         <div role="main" class="ui-content" id="content-interno">
@@ -119,7 +122,7 @@
 	    <div id="btnPrev2"><b><</b></div>
 	    <div id="btnNext2"><b>></b></div>
 	    <textarea cols="40" rows="8" id="txtNota2"></textarea>
-	    <img style="width:160px;height:120px;" class"imgSfondo" id="imgSfondo2" src="" />
+	    <img class"imgSfondo" id="imgSfondo1" src="img/logo_montagne_2.png"/>
         </div>
         <div data-role="footer" data-position="fixed">
             <a href="#" data-role="button" id="btnCheckPos2">Check Pos</a>
@@ -141,7 +144,7 @@
 
     </div><!-- /page-arrivo -->
 
-    <div data-role="page" id="page-elencomete" data-add-back-btn="false"  class="interno">
+    <div data-role="page" id="page-elencomete" data-add-back-btn="false"  class="interno1">
         <div data-role="header" id="tit-elencomete">
         </div>
         <div role="main" class="ui-content" id="content-elencomete">
