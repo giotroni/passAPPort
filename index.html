@@ -11,16 +11,18 @@
         #draggable { width: 130px; height: 160px; position: absolute; padding: 0.5em; }
 	#btnPrev1, #btnPrev2 {
 	    position: fixed;
-	    top: 50%;
+	    top: 45%;
 	    left: 0px;
 	    width: 5%; height: 10%; background-color: #f00; opacity: 0.3; position: absolute; padding: 0.5em; font-weight: bold;
+	    vertical-align: middle;
 	    font-size: xx-large; border-radius: 0px 20px 20px 0px;
 	    }
 	#btnNext1, #btnNext2 {
 	    position: fixed;
-	    top: 50%;
+	    top: 45%;
 	    right: 0px;
 	    width: 5%; height: 10%; background-color: #f00; opacity: 0.3; position: absolute; padding: 0.5em; font-weight: bold;
+	    vertical-align: middle;
 	    font-size: xx-large; border-radius: 20px 0px 0px 20px;
 	    }
 	.copertina {
@@ -53,9 +55,6 @@
 
 <body>
     <div data-role="page" id="page-home" class="copertina" >
-        <div data-role="header">
-            <h2>passAPPort</h2>
-        </div>
         <div role="main" class="ui-content" id="content-home">
 	    <span id="lblPunti"></span>
         </div>
@@ -84,7 +83,7 @@
 
     </div><!-- /page-settings -->
     
-    <div data-role="page" id="page-interno1" data-add-back-btn="false"  class="interno1">
+    <div data-role="page" id="page-interno1" data-add-back-btn="false"  class="interno1" style="text-align:right;">
         <div data-role="header" id="tit-interno1">
         </div>
         <div role="main" class="ui-content" id="content-interno">
@@ -99,7 +98,7 @@
 	    <div id="btnPrev1"><b><</b></div>
 	    <div id="btnNext1"><b>></b></div>
 	    <textarea cols="40" rows="8" id="txtNota1"></textarea>
-	    <img class"imgSfondo" id="imgSfondo1" src="img/logo_montagne_1.png"/>
+	    <img style="top: 80%; width:100%;" id="imgSfondo1" src="img/logo_montagne_1.png"/>
         </div>
         <div data-role="footer" data-position="fixed">
             <a href="#" data-role="button" id="btnCheckPos1">Check Pos</a>
@@ -107,7 +106,7 @@
         </div>
     </div><!-- /page-interno -->
 
-    <div data-role="page" id="page-interno2" data-add-back-btn="false"  class="interno2" style="text-align:right;">
+    <div data-role="page" id="page-interno2" data-add-back-btn="false"  class="interno2" >
         <div data-role="header" id="tit-interno2">
         </div>
         <div role="main" class="ui-content" id="content-interno">
