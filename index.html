@@ -9,28 +9,14 @@
     <script src="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js"></script>
     <style>
         #draggable { width: 130px; height: 160px; position: absolute; padding: 0.5em; };
-	#btnPrev1 {
+	#btnPrev1, #btnPrev2 {
 	    position: fixed;
 	    top: 50%;
 	    left: 0px;
 	    width: 15px; height: 30px; background-color: #f00; opacity: 0.3; position: absolute; padding: 0.5em; font-weight: bold;
 	    font-size: xx-large; border-radius: 0px 20px 20px 0px;
 	    }
-	#btnNext1 {
-	    position: fixed;
-	    top: 50%;
-	    right: 0px;
-	    width: 15px; height: 30px; background-color: #f00; opacity: 0.3; position: absolute; padding: 0.5em; font-weight: bold;
-	    font-size: xx-large; border-radius: 20px 0px 0px 20px;
-	    }
-	#btnPrev2 {
-	    position: fixed;
-	    top: 50%;
-	    left: 0px;
-	    width: 15px; height: 30px; background-color: #f00; opacity: 0.3; position: absolute; padding: 0.5em; font-weight: bold;
-	    font-size: xx-large; border-radius: 0px 20px 20px 0px;
-	    }
-	#btnNext2 {
+	#btnNext1, #btnNext2 {
 	    position: fixed;
 	    top: 50%;
 	    right: 0px;
@@ -43,6 +29,12 @@
 	    }
 	.interno {
 	    background-image: url("img/interno3.png");
+	    background-size:   cover;
+	    }
+	.imgSfondo {
+	    position: fixed;
+	    top: 80%;
+	    width: 100%
 	    }
     </style>    
 
@@ -100,11 +92,8 @@
 	    <img style="width:160px;height:120px;" id="imgTimbro1" src="" />
 	    <div id="btnPrev1"><b><</b></div>
 	    <div id="btnNext1"><b>></b></div>
-	    <div data-role="popup" id="popupNote1" class="ui-content" style="max-width:280px" data-dismissible="false">
-		<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-left">Close</a>
-	    <p>I have the <code>data-dismissible</code> attribute set to <code>false</code>. I'm not closeable by clicking outside of me.</p>
-	    </div>
 	    <textarea cols="40" rows="8" id="txtNota1"></textarea>
+	    <img style="width:160px;height:120px;" class"imgSfondo" id="imgSfondo1" src="" />
         </div>
         <div data-role="footer" data-position="fixed">
             <a href="#" data-role="button" id="btnCheckPos1">Check Pos</a>
@@ -124,13 +113,10 @@
 	    <img style="width:160px;height:120px;" id="imgMeta2" src="" />	    
 	    <img style="width:160px;height:120px;" id="smallImage2" src="" />
 	    <img style="width:160px;height:120px;" id="imgTimbro2" src="" />
-            <div id="btnPrev2"><</div>
-            <div id="btnNext2">></div>
-	    <div data-role="popup" id="popupNote2" class="ui-content" style="max-width:280px" data-dismissible="false">
-		<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-left">Close</a>
-	    <p>I have the <code>data-dismissible</code> attribute set to <code>false</code>. I'm not closeable by clicking outside of me.</p>
-	    </div>
+	    <div id="btnPrev2"><b><</b></div>
+	    <div id="btnNext2"><b>></b></div>
 	    <textarea cols="40" rows="8" id="txtNota2"></textarea>
+	    <img style="width:160px;height:120px;" class"imgSfondo" id="imgSfondo2" src="" />
         </div>
         <div data-role="footer" data-position="fixed">
             <a href="#" data-role="button" id="btnCheckPos2">Check Pos</a>
