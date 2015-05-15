@@ -408,12 +408,12 @@ var pagine = {
       }
       // siamo dentro il passAPPort
       // dbgMsg("mostra la pagina interna: ");
-      $.mobile.pageContainer.pagecontainer("change", "#page-interno"+suffisso, {
-          transition: 'turn',
-          changeHash: false,
-          reverse: true,
-          showLoadMsg: true
-      });
+      //$.mobile.pageContainer.pagecontainer("change", "#page-interno"+suffisso, {
+      //    transition: 'turn',
+       //   changeHash: false,
+      //    reverse: true,
+      //    showLoadMsg: true
+      //});
 
       var smallImage = document.getElementById('smallImage'+suffisso);    
 
