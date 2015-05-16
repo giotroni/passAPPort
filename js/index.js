@@ -43,13 +43,13 @@ var app = {
     $("#btnReset").on("click", pagine.reset);
     $("#btnSave").on("click", pagine.savePagine);
     $("#btnHome").on("click", pagine.home);    
-    $("#btnEntra").on("click", pagine.nextPage);
-    $("#btnNext1").on("click", pagine.nextPage);
+    $(".btnDx").on("click", pagine.nextPage);
+    // $("#btnNext1").on("click", pagine.nextPage);
     $("#btnPrev1").on("click", pagine.prevPage);
     $("#btnCheckPos1").on("click", app.checkPos);
     $("#btnDelete1").on("click", function(){showYesNo("Vuoi DAVVERO cancellare questa meta?", pagine.cancellaPagina)} );
-    $("#btnNext2").on("click", pagine.nextPage);
-    $("#btnPrev2").on("click", pagine.prevPage);
+    $(".btnSx").on("click", pagine.nextPage);
+//    $("#btnPrev2").on("click", pagine.prevPage);
     $("#btnCheckPos2").on("click", app.checkPos);
     $("#btnDelete2").on("click", function(){showYesNo("Vuoi DAVVERO cancellare questa meta?", pagine.cancellaPagina)} );
     $("#imgMeta1").on("click", pagine.popupNote);
@@ -73,8 +73,9 @@ var app = {
     }, false);
 
     app.checkPos();
+    var elements = document.getElementsByName("interno"); 
     //$.event.special.swipe.horizontalDistanceThreshold = 120;
-    $(document).on("swiperight", ".interno", function(event){
+    elements.on("swiperight", function(event){
       // dbgMsg("swipe right");
       if( event.handled !== true){
         // dbgMsg("Swipe ok");
@@ -83,7 +84,7 @@ var app = {
       }
       return false;         
     });
-    $(document).on("swipeleft", ".interno", function(event){
+    elements.on("swipeleft", function(event){
       // dbgMsg("swipe left");
       if( event.handled !== true){
         // dbgMsg("Swipe ok");
@@ -151,7 +152,7 @@ var app = {
             msg = "An unknown error, reading position, occurred."
             break;
     }
-    showAlert(msg, "Errore");
+    showAlert(msg + " Verifica se il GPS è abilitato", "Errore");
   },
   // verifica la posizione GPS
   checkPos: function(){
@@ -159,6 +160,7 @@ var app = {
     attesa(true, "cerco la posizione...");
     navigator.geolocation.getCurrentPosition(app.onSuccessGeo, app.onErrorGeo, { maximumAge: GPS_MAXIMUMAGE, timeout: GPS_TIMEOUT });
   },
+  // fa la foto
   capturePhoto: function() {
     navigator.camera.getPicture(
       app.onPhotoFileSuccess,
@@ -170,6 +172,7 @@ var app = {
       }
     );
   },
+  // Foto ok
   onPhotoFileSuccess: function(imageData) {
     // Get image handle
     //var smallImage = document.getElementById('smallImage');    
@@ -178,9 +181,11 @@ var app = {
     // memorizza la foto nell'array delle mete
     pagine.scriviFoto(imageData);
   },
+  // Foto non riuscita
   onFail: function(msg){
     showAlert("Foto non riuscita: " + error.code,"msg");
   },
+  // verifica se il wifi è abilitato O SE è stato autorizzato comunque il trasferimento dati in 3G
   checkWifi: function(){
     var networkState = navigator.network.connection.type;
     if( networkState == Connection.WIFI || (INTERNET_SEMPRE && (networkState !== Connection.NONE) ) ){
@@ -198,7 +203,7 @@ var app = {
           myFolderApp, {create:true, exclusive: false},
           function(directory) {                           // cartella creata
             appDir = directory.toURL();
-            dbgMsg("Cartella della app pronta: " + appDir );
+            //dbgMsg("Cartella della app pronta: " + appDir );
           },
           fail
         );
@@ -243,7 +248,7 @@ var mete = {
     if ("numMete" in localStorage){
       // legge le mete dal DB interno
       var lung = app.storage.getItem("numMete");
-      dbgMsg("Legge mete da DB interno: " + lung);
+      // dbgMsg("Legge mete da DB interno: " + lung);
       for(i=0; i<lung; i++){
         var valore = app.storage.getItem("meta"+i);
         // dbgMsg(valore);
@@ -251,7 +256,7 @@ var mete = {
       }
     } else if( app.checkWifi() ){
       // legge dal sito
-      dbgMsg("Legge mete da internet")
+      // dbgMsg("Legge mete da internet")
       $.ajax({
         type: 'GET',
         url: URL_PREFIX + 'php/leggiMete.php',
@@ -291,6 +296,7 @@ var mete = {
       
     }
   },
+ // Memorizza le mete nel DB interno
   scriveMete: function(){
     app.storage.setItem("numMete", mete.elenco.length);
     $.each(mete.elenco, function(key, value){
@@ -340,6 +346,7 @@ var pagine = {
         pti += (value.punti * 1);
       }
     });
+    dbgMsg("Punti: " + pti);
     return pti;
   },
   // va alla pagina copertina
@@ -385,27 +392,22 @@ var pagine = {
   },
   // Mostra la pagina corrente
   showPage: function(){
-    var suffisso = 1;
     if(pagine.numPagina>0){
-      navigator.vibrate(500);
-      if(pagine.numPagina % 2 == 0){
-        suffisso = 2;
-        // siamo dentro il passAPPort
-        // dbgMsg("mostra la pagina interna: ");
-        $.mobile.pageContainer.pagecontainer("change", "#page-interno1", {
-            transition: 'turn',
-            changeHash: false,
-            reverse: false,
-            showLoadMsg: true
-        });
-      } else {
-        $.mobile.pageContainer.pagecontainer("change", "#page-interno2", {
-            transition: 'turn',
-            changeHash: false,
-            reverse: true,
-            showLoadMsg: true
-        });        
+      // navigator.vibrate(500);
+      var suffisso = 2;
+      var modo = false;
+      dbgMsg(pagine.numPagina  + " " + pagine.numPagina % 2);
+      if(pagine.numPagina % 2 == 1){
+        suffisso = 1;
+        modo = true
+        
       }
+      $.mobile.pageContainer.pagecontainer("change", "#page-interno"+suffisso, {
+          transition: 'turn',
+          changeHash: false,
+          reverse: modo,
+          showLoadMsg: true
+      });        
       // siamo dentro il passAPPort
       // dbgMsg("mostra la pagina interna: ");
       //$.mobile.pageContainer.pagecontainer("change", "#page-interno"+suffisso, {

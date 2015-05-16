@@ -9,7 +9,7 @@
     <script src="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js"></script>
     <style>
         #draggable { width: 130px; height: 160px; position: absolute; padding: 0.5em; }
-	#btnPrev1, #btnPrev2 {
+	-btnSx {
 	    top: 45%;
 	    left: 0px;
 	    width: 5%; height: 10%; background-color: #0000ff; opacity: 0.3; position: absolute; padding: 0.5em; font-weight: bold;
@@ -40,14 +40,14 @@
 	    }
 	.imgSfondo1 {
 	    top: 65%; left: 0px;
-	    width: 100%; height: 120px; position: absolute;
+	    width: 100%; height: 25%; position: absolute;
 	    background-image: url("img/logo_montagne_1.png");
 	    background-size: cover;
 	    }
 	.imgOptions {
 	    top: 90%;
-	    left: 0px;
-	    width: 10%; height: 10%; position: absolute;
+	    position: absolute;
+	    text-align: right;
 	    }
 	}
     </style>    
@@ -89,7 +89,7 @@
 
     </div><!-- /page-settings -->
     
-    <div data-role="page" id="page-interno1" data-add-back-btn="false"  class="interno1" style="text-align:right;">
+    <div data-role="page" id="page-interno1" data-add-back-btn="false"  class="interno1" name="interno" style="text-align:right;">
         <div data-role="header" id="tit-interno1">
         </div>
         <div role="main" class="ui-content" id="content-interno">
@@ -101,15 +101,15 @@
 	    <img style="width:160px;height:120px;" id="imgMeta1" src="" />	    
 	    <img style="width:160px;height:120px;" id="smallImage1" src="" />
 	    <img style="width:160px;height:120px;" id="imgTimbro1" src="" />
-	    <div id="btnPrev1"><b><</b></div>
-	    <div id="btnNext1" class="btnDx"><b>></b></div>
+	    <div class="btnSx" id="btnPrev1"><b><</b></div>
+	    <div class="btnDx" id="btnNext1" ><b>></b></div>
 	    <textarea cols="40" rows="8" id="txtNota1"></textarea>
 	    <div class="imgSfondo1" id="imgSfondo1"></div>
-	    <div class="imgOptions" id="imgOptions"><img src=""/>Options</div>
+	    <div class="imgOptions" id="imgOptions">Options<img src="img/icon_zaino.png"/></div>
         </div>
     </div><!-- /page-interno -->
 
-    <div data-role="page" id="page-interno2" data-add-back-btn="false"  class="interno2" >
+    <div data-role="page" id="page-interno2" data-add-back-btn="false"  class="interno2" name="interno">
         <div data-role="header" id="tit-interno2">
         </div>
         <div role="main" class="ui-content" id="content-interno">
@@ -121,7 +121,7 @@
 	    <img style="width:160px;height:120px;" id="imgMeta2" src="" />	    
 	    <img style="width:160px;height:120px;" id="smallImage2" src="" />
 	    <img style="width:160px;height:120px;" id="imgTimbro2" src="" />
-	    <div id="btnPrev2"><b><</b></div>
+	    <div class="btnDx" id="btnPrev2"><b><</b></div>
 	    <div class="btnDx" id="btnNext2"><b>></b></div>
 	    <textarea cols="40" rows="8" id="txtNota2"></textarea>
 	    <img style="top: 80%; left: 0px; width:100%; height: 20%" id="imgSfondo1" src="img/logo_montagne_2.png"/>
