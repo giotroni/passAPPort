@@ -404,16 +404,10 @@ var pagine = {
         suffisso = 1;
         modo = true        
       }
-      if(direction){
-        $.mobile.pageContainer.pagecontainer("change", "#page-interno"+suffisso, {
-            transition: 'slide'
-        });        
-      } else {
-        $.mobile.pageContainer.pagecontainer("change", "#page-interno"+suffisso, {
-            transition: 'slide',
-            data-direction: 'reverse'
-        });        
-      }
+      $.mobile.pageContainer.pagecontainer("change", "#page-interno"+suffisso, {
+          transition: 'slide',
+          reverse:direction
+      });        
       // siamo dentro il passAPPort
       // dbgMsg("mostra la pagina interna: ");
       //$.mobile.pageContainer.pagecontainer("change", "#page-interno"+suffisso, {
