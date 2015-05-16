@@ -18,6 +18,7 @@ var destinationType; // sets the format of returned value
 
 var id_User = 1;    // id dell'utilizzatore
 
+var direction = true;
 // Funzione che calcola la distanza
 // MAIN
 var app = {
@@ -367,6 +368,7 @@ var pagine = {
   nextPage: function (){
     // dbgMsg("Next page: "+pagine.numPagina + " max page: " + pagine.numMaxPagine());
     // verifica se siamo all'ultima pagina
+    direction = true;
     if( pagine.numPagina >= pagine.lista.length){
       // se si aggiunge una meta?
       pagine.showMete();
@@ -380,6 +382,7 @@ var pagine = {
   prevPage: function (){
     // dbgMsg("Next page: "+pagine.numPagina + " max page: " + pagine.numMaxPagine);
     // se non siamo già alla copertina, va alla pagina precedente
+    direction = false;
     if( pagine.numPagina > 0 ) {
       pagine.numPagina -= 1;
     } else {
@@ -399,12 +402,18 @@ var pagine = {
       // dbgMsg(pagine.numPagina  + " " + pagine.numPagina % 2);
       if(pagine.numPagina % 2 == 1){
         suffisso = 1;
-        modo = true
-        
+        modo = true        
       }
-      $.mobile.pageContainer.pagecontainer("change", "#page-interno"+suffisso, {
-          transition: 'slide'
-      });        
+      if(direction){
+        $.mobile.pageContainer.pagecontainer("change", "#page-interno"+suffisso, {
+            transition: 'slide'
+        });        
+      } else {
+        $.mobile.pageContainer.pagecontainer("change", "#page-interno"+suffisso, {
+            transition: 'slide',
+            data-direction: 'reverse'
+        });        
+      }
       // siamo dentro il passAPPort
       // dbgMsg("mostra la pagina interna: ");
       //$.mobile.pageContainer.pagecontainer("change", "#page-interno"+suffisso, {
