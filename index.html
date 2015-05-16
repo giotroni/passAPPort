@@ -54,7 +54,7 @@
 	    top: 90%;
 	    position: absolute;
 	    width: 25%;
-	    height: 5%;
+	    height: 10%;
 	    text-align: center;
 	    border-radius: 5px;
 	    -moz-border-radius: 5px; 
@@ -64,6 +64,8 @@
 	.ui-input-text {
 	    border: none !important;
 	    border-color: transparent !important;
+	    background-color: #0000ff !important;
+	    opacity: 0.3 !important;
 	}
     </style>    
 
@@ -140,7 +142,16 @@
 	    <div class="btnDx" id="btnNext2"><b>></b></div>
 	    <textarea cols="40" rows="8" id="txtNota2"></textarea>
 	    <div class="imgSfondo2" id="imgSfondo2"></div>
-	    <div class="imgOptions" id="imgOptions"><img style="width:75%;height:75%;" src="img/icon_zaino.png"/></div>
+	    <div class="imgOptions" id="imgOptions" href="#popupMenu" data-rel="popup" data-transition="slideup" ><img style="width:50%;height:50%;" src="img/icon_zaino.png"/></div>
+	    <div data-role="popup" id="popupMenu" data-theme="b">
+	        <ul data-role="listview" data-inset="true" style="min-width:210px;">
+	            <li data-role="list-divider">Choose an action</li>
+	            <li><a href="#">View details</a></li>
+	            <li><a href="#">Edit</a></li>
+	            <li><a href="#">Disable</a></li>
+	            <li><a href="#" id="btnDelete">Cancella pagina</a></li>
+	        </ul>
+	    </div>
         </div>
 <!--
 	    <div data-role="footer" data-position="fixed">

@@ -51,7 +51,7 @@ var app = {
     $(".btnSx").on("click", pagine.nextPage);
 //    $("#btnPrev2").on("click", pagine.prevPage);
     $("#btnCheckPos2").on("click", app.checkPos);
-    $("#btnDelete2").on("click", function(){showYesNo("Vuoi DAVVERO cancellare questa meta?", pagine.cancellaPagina)} );
+    $("#btnDelete").on("click", function(){showYesNo("Vuoi DAVVERO cancellare questa meta?", pagine.cancellaPagina)} );
     $("#imgMeta1").on("click", pagine.popupNote);
     $("#imgMeta2").on("click", pagine.popupNote);
     $("#txtNota1").on( "change", pagine.memoNota );
@@ -396,9 +396,6 @@ var pagine = {
       // navigator.vibrate(500);
       var suffisso = 2;
       var modo = false;
-      var flp = new Array();
-      flp[1] = 'turn';
-      flp[2] = 'slide';
       // dbgMsg(pagine.numPagina  + " " + pagine.numPagina % 2);
       if(pagine.numPagina % 2 == 1){
         suffisso = 1;
@@ -406,8 +403,7 @@ var pagine = {
         
       }
       $.mobile.pageContainer.pagecontainer("change", "#page-interno"+suffisso, {
-          transition: flp[suffisso] ,
-          reverse: modo
+          transition: slide
       });        
       // siamo dentro il passAPPort
       // dbgMsg("mostra la pagina interna: ");
