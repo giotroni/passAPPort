@@ -403,7 +403,7 @@ var pagine = {
         
       }
       $.mobile.pageContainer.pagecontainer("change", "#page-interno"+suffisso, {
-          transition: slide
+          transition: 'slide'
       });        
       // siamo dentro il passAPPort
       // dbgMsg("mostra la pagina interna: ");
