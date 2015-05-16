@@ -43,12 +43,12 @@ var app = {
     $("#btnReset").on("click", pagine.reset);
     $("#btnSave").on("click", pagine.savePagine);
     $("#btnHome").on("click", pagine.home);    
+    $(".btnSx").on("click", pagine.prevPage);
     $(".btnDx").on("click", pagine.nextPage);
     // $("#btnNext1").on("click", pagine.nextPage);
     $("#btnPrev1").on("click", pagine.prevPage);
     $("#btnCheckPos1").on("click", app.checkPos);
     $("#btnDelete1").on("click", function(){showYesNo("Vuoi DAVVERO cancellare questa meta?", pagine.cancellaPagina)} );
-    $(".btnSx").on("click", pagine.nextPage);
 //    $("#btnPrev2").on("click", pagine.prevPage);
     $("#btnCheckPos2").on("click", app.checkPos);
     $("#btnDelete").on("click", function(){showYesNo("Vuoi DAVVERO cancellare questa meta?", pagine.cancellaPagina)} );
