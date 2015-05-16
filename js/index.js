@@ -396,17 +396,18 @@ var pagine = {
       // navigator.vibrate(500);
       var suffisso = 2;
       var modo = false;
-      dbgMsg(pagine.numPagina  + " " + pagine.numPagina % 2);
+      var flp = new Array();
+      flp[1] = 'turn';
+      flp[2] = 'slide';
+      // dbgMsg(pagine.numPagina  + " " + pagine.numPagina % 2);
       if(pagine.numPagina % 2 == 1){
         suffisso = 1;
         modo = true
         
       }
       $.mobile.pageContainer.pagecontainer("change", "#page-interno"+suffisso, {
-          transition: 'turn',
-          changeHash: false,
-          reverse: modo,
-          showLoadMsg: true
+          transition: flp[suffisso] ,
+          reverse: modo
       });        
       // siamo dentro il passAPPort
       // dbgMsg("mostra la pagina interna: ");
@@ -445,9 +446,7 @@ var pagine = {
       // dbgMsg("mostra la copertina");
       $.mobile.pageContainer.pagecontainer("change", "#page-home", {
           transition: 'flip',
-          changeHash: false,
-          reverse: true,
-          showLoadMsg: true
+          reverse: true
       });
       $("#lblPunti").html("Hai " +  pagine.checkPunti() +" punti");
     }
