@@ -9,7 +9,7 @@
     <script src="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js"></script>
     <style>
         #draggable { width: 130px; height: 160px; position: absolute; padding: 0.5em; }
-	-btnSx {
+	.btnSx {
 	    top: 45%;
 	    left: 0px;
 	    width: 5%; height: 10%; background-color: #0000ff; opacity: 0.3; position: absolute; padding: 0.5em; font-weight: bold;
@@ -39,15 +39,21 @@
 	    background-repeat:   repeat-y;
 	    }
 	.imgSfondo1 {
-	    top: 65%; left: 0px;
+	    top: 65%; right: 0px;
 	    width: 100%; height: 25%; position: absolute;
 	    background-image: url("img/logo_montagne_1.png");
+	    background-size: cover;
+	    }
+	.imgSfondo2 {
+	    top: 65%; left: 0px;
+	    width: 100%; height: 25%; position: absolute;
+	    background-image: url("img/logo_montagne_2.png");
 	    background-size: cover;
 	    }
 	.imgOptions {
 	    top: 90%;
 	    position: absolute;
-	    text-align: right;
+	    text-align: center;
 	    }
 	}
     </style>    
@@ -105,7 +111,7 @@
 	    <div class="btnDx" id="btnNext1" ><b>></b></div>
 	    <textarea cols="40" rows="8" id="txtNota1"></textarea>
 	    <div class="imgSfondo1" id="imgSfondo1"></div>
-	    <div class="imgOptions" id="imgOptions">Options<img src="img/icon_zaino.png"/></div>
+	    <div class="imgOptions" id="imgOptions">Options<img style="width:10%;height:10%;" src="img/icon_zaino.png"/></div>
         </div>
     </div><!-- /page-interno -->
 
@@ -121,15 +127,17 @@
 	    <img style="width:160px;height:120px;" id="imgMeta2" src="" />	    
 	    <img style="width:160px;height:120px;" id="smallImage2" src="" />
 	    <img style="width:160px;height:120px;" id="imgTimbro2" src="" />
-	    <div class="btnDx" id="btnPrev2"><b><</b></div>
+	    <div class="btnSx" id="btnPrev2"><b><</b></div>
 	    <div class="btnDx" id="btnNext2"><b>></b></div>
 	    <textarea cols="40" rows="8" id="txtNota2"></textarea>
-	    <img style="top: 80%; left: 0px; width:100%; height: 20%" id="imgSfondo1" src="img/logo_montagne_2.png"/>
+	    <div class="imgSfondo2" id="imgSfondo2"></div>
         </div>
-        <div data-role="footer" data-position="fixed">
+<!--
+	    <div data-role="footer" data-position="fixed">
             <a href="#" data-role="button" id="btnCheckPos2">Check Pos</a>
             <a href="#" data-role="button" id="btnDelete2">Cancella meta</a>
         </div>
+-->
     </div><!-- /page-interno2 -->
     
     <div data-role="page" id="page-arrivo" >
@@ -149,6 +157,7 @@
     <div data-role="page" id="page-elencomete" data-add-back-btn="false"  class="interno1">
         <div data-role="header" id="tit-elencomete">
         </div>
+	<div class="btnSx" id="btnPrev1"><b><</b></div>
         <div role="main" class="ui-content" id="content-elencomete">
 	    <ul data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Scegli la tua meta..."  id="lstMete">
             </ul>
