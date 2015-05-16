@@ -56,16 +56,12 @@
 	    width: 25%;
 	    height: 9%;
 	    text-align: center;
-	    border-radius: 5px;
-	    -moz-border-radius: 5px; 
-	    -webkit-border-radius: 5px; 
-	    border: 2px solid #800000;
 	    }
 	.ui-input-text {
 	    border: none !important;
 	    border-color: transparent !important;
 	    background-color: #0000ff !important;
-	    opacity: 0.3 !important;
+	    opacity: 0.6 !important;
 	}
     </style>    
 
@@ -120,9 +116,9 @@
 	    <img style="width:160px;height:120px;" id="imgTimbro1" src="" />
 	    <div class="btnSx" id="btnPrev1"><b><</b></div>
 	    <div class="btnDx" id="btnNext1" ><b>></b></div>
-	    <textarea cols="40" rows="8" id="txtNota1"></textarea>
+	    <textarea style="top=60%" cols="40" rows="4" id="txtNota1"></textarea>
 	    <div class="imgSfondo1" id="imgSfondo1"></div>
-	    <a href="#popupMenu" data-rel="popup" data-transition="slideup">
+	    <a href="#popupMenu" data-rel="popup" class="imgOptions" data-transition="slideup">
 		    <img style="top: 90%; width:20%;height:10%;" src="img/icon_zaino.png"/>
 	    </a>
         </div>
@@ -137,25 +133,16 @@
 	    </div>
 	    <div  id="lblArrivo2">		
 	    </div>
-	    <img style="width:160px;height:120px;" id="imgMeta2" src="" />	    
-	    <img style="width:160px;height:120px;" id="smallImage2" src="" />
-	    <img style="width:160px;height:120px;" id="imgTimbro2" src="" />
+	    <img style="width:160px;height:120px;border-style=none;" id="smallImage2" src="" />
+	    <img style="width:160px;height:120px; border-style=none;" id="imgTimbro2" src="" />
 	    <div class="btnSx" id="btnPrev2"><b><</b></div>
 	    <div class="btnDx" id="btnNext2"><b>></b></div>
 	    <textarea cols="40" rows="8" id="txtNota2"></textarea>
 	    <div class="imgSfondo2" id="imgSfondo2"></div>
+	    <img style="top=70%;width:160px;height:120px;" id="imgMeta2" src="" />	    
 	    <a href="#popupMenu" data-rel="popup" data-transition="slideup">
-		<div class="imgOptions" id="imgOptions" ><img style="width:50%;height:50%;" src="img/icon_zaino.png"/></div>
+		    <img style="top: 90%; width:20%;height:10%;" src="img/icon_zaino.png"/>
 	    </a>
-	    <div data-role="popup" id="popupMenu" data-theme="b">
-	        <ul data-role="listview" data-inset="true" style="min-width:210px;">
-	            <li data-role="list-divider">Choose an action</li>
-	            <li><a href="#">View details</a></li>
-	            <li><a href="#">Edit</a></li>
-	            <li><a href="#">Disable</a></li>
-	            <li><a href="#" id="btnDelete">Cancella pagina</a></li>
-	        </ul>
-	    </div>
         </div>
 <!--
 	    <div data-role="footer" data-position="fixed">
@@ -188,6 +175,25 @@
             </ul>
         </div>
     </div><!-- /page-elencomete-->
+
+    <div data-role="popup" id="popupMenu" data-theme="b">
+	    <div data-role="collapsibleset" data-theme="b" data-content-theme="a" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" style="margin:0; width:250px;">
+        <div data-role="collapsible" data-inset="false">
+        <h2>Farm animals</h2>
+            <ul data-role="listview">
+                <li><a href="#" data-rel="dialog">Chicken</a></li>
+                <li><a href="#" data-rel="dialog">Cow</a></li>
+                <li><a href="#" data-rel="dialog">Duck</a></li>
+                <li><a href="#" data-rel="dialog">Sheep</a></li>
+            </ul>
+        </div><!-- /collapsible -->
+
+	<ul data-role="listview" data-inset="true" style="min-width:210px;">
+	    <li data-role="list-divider">Choose an action</li>
+	    <li><a href="#" id="btnDelete">Cancella pagina</a></li>
+	    
+	</ul>
+    </div>
     
 </body>
 </html>

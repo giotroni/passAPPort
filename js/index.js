@@ -441,8 +441,7 @@ var pagine = {
       // mostra la copertina
       // dbgMsg("mostra la copertina");
       $.mobile.pageContainer.pagecontainer("change", "#page-home", {
-          transition: 'flip',
-          reverse: true
+          transition: 'flip'
       });
       $("#lblPunti").html("Hai " +  pagine.checkPunti() +" punti");
     }
