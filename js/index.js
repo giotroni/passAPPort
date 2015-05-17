@@ -601,10 +601,26 @@ var pagine = {
       testo += '</a></li>';
       $('#lstPagine').append(testo);
       $("#lstPagine li#pag_"+ii ).bind("click", function(){
-          dbgMsg(ii);
           pagine.numPagina = ii;
           pagine.showPage();
       });  
+  },
+  // resetta la lista pagine
+  resetLstPagine: function(){
+    var lung = pagine.lista.length;
+    // dbgMsg(lung);
+    $('#lstPagine').empty();
+    for(i=0; i<lung; i++){
+      // aggiorna l'elenco delle pagine nel popup
+      var testo = '<li id="pag_'+ i+'" ><a href="#" >';
+      testo += "pag. " + i + " - " + pagine.lista[ii-1].meta;
+      testo += '</a></li>';
+      $('#lstPagine').append(testo);
+      $("#lstPagine li#pag_"+i ).bind("click", function(){
+          pagine.numPagina = i;
+          pagine.showPage();
+      });
+    }
   },
   // scrive in memoria le pagine e le mete
   scrivePagine: function(){
@@ -665,6 +681,7 @@ var pagine = {
       if(pagine.numPagina > pagine.lista.length ){
         pagine.numPagina = pagine.lista.length;
       }
+      pagine.resetLstPagine();
       pagine.showPage();
     }
   },

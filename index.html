@@ -51,8 +51,16 @@
 	    background-size: cover;
 	    }
 	.imgMeta {
-	    top: 80%; left: 0px;
-	    width: 30%; height: 20%; position: absolute;
+	    width: 30%; height: 20%; 
+	    -moz-border-radius: 50px;
+	    -webkit-border-radius: 50px;
+	    border-radius: 50px;
+	    }
+	.imgMeta1{
+	    top: 80%; left: 0px; position: absolute;
+	    }
+	.imgMeta2{
+	    top: 80%; right: 0px; position: absolute;
 	    }
 	.imgMeta img {
 	    width: 100%;
@@ -66,6 +74,9 @@
 	    }
 	.imgOptions1 {
 	    top: 90%; left: 80%; position: absolute;
+	}
+	.imgOptions2 {
+	    top: 90%; right: 80%; position: absolute;
 	}
 	.txtNote {
 	    top: 60%;
@@ -127,15 +138,15 @@
 		<textarea cols="40" rows="4" id="txtNota1"></textarea>
 	    </div>
 	    <div class="imgSfondo1" id="imgSfondo1"></div>
-	    <div class="imgMeta">
+	    <div class="imgMeta imgMeta1">
 		<img id="imgMeta1" src="" />
 	    </div>
-	    <a class="imgOptions imgOptions1" href="#popupMenu" data-rel="popup" data-transition="slideup">
-	    </a>
+	    <a class="imgOptions imgOptions1" href="#popupMenu" data-rel="popup" data-transition="slideup"></a>
 	    <div data-role="popup" id="popupMenu" data-theme="b" data-position-to="window">
 		<ul data-role="listview" data-inset="true" style="min-width:210px;">
-		   <li data-role="list-divider">Choose an action</li>
+		   <li data-role="list-divider">Scegli un azione</li>
 		   <li><a href="#" id="btnDelete" >Elimina pagina</a></li>
+		   <li><a href="#" id="btnHome" >Vai alla copertina</a></li>
 		</ul>
 		<div data-role="collapsibleset" data-theme="b" data-content-theme="a" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" style="margin:0; width:250px;">
 		    <div data-role="collapsible" data-inset="false">
@@ -163,9 +174,8 @@
 	    <div class="btnDx" id="btnNext2"><b>></b></div>
 	    <textarea cols="40" rows="8" id="txtNota2"></textarea>
 	    <div class="imgSfondo2" id="imgSfondo2"></div>
-	    <img style="top:70%;width:160px;height:120px;" id="imgMeta2" src="" />	    
-	    <a class="imgOptions" href="#popupMenu" data-rel="popup" data-transition="slideup">
-	    </a>
+	    <img class="imgMeta imgMeta2" id="imgMeta2" src="" />	    
+	    <a class="imgOptions imgOptions2" href="#popupMenu" data-rel="popup" data-transition="slideup"></a>
         </div>
 <!--
 	    <div data-role="footer" data-position="fixed">
