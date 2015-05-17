@@ -522,16 +522,6 @@ var pagine = {
           });
       pagine.saved = false;
       pagine.scrivePagine();
-      // aggiorna l'elenco delle pagine nel popup
-      var newPg = pagine.numPagina *1 + 1;
-      var testo = '<li id="pag_'+ newPg+'" ><a href="#" >';
-      testo += "pag. " + newPg + " - " + mete.elenco[id].meta;
-      testo += '</a></li>';
-      $('#lstPagine').append(testo);
-      $("#lstMete li#meta_"+newPg ).bind("click", function(){
-          pagine.numPagina = newPg;
-          pagine.showPage();
-      });  
       // mostra la pagina
       pagine.nextPage();
     } else {
@@ -597,9 +587,23 @@ var pagine = {
         var valore = app.storage.getItem("pag"+i);
         // dbgMsg(valore);
         pagine.lista.push(JSON.parse(valore));
+        pagine.aggiornaLstPagine(i);
       }
       attesa("", false);
     }
+  },
+  // aggiorna la lista pagine del popup
+  aggiornaLstPagine: function(ii){
+      // aggiorna l'elenco delle pagine nel popup
+      var testo = '<li id="pag_'+ newPg+'" ><a href="#" >';
+      testo += "pag. " + ii + " - " + pagine.lista[ii-1].meta;
+      testo += '</a></li>';
+      $('#lstPagine').append(testo);
+      $("#lstMete li#meta_"+ii ).bind("click", function(){
+          dbgMsg(ii);
+          pagine.numPagina = ii;
+          pagine.showPage();
+      });  
   },
   // scrive in memoria le pagine e le mete
   scrivePagine: function(){

@@ -59,12 +59,14 @@
 	    height: 100%;
 	    }
 	.imgOptions {
-	    top: 90%; left: 40%; 
-	    width: 20%; height: 10%; position: absolute;
+	    width: 20%; height: 10%; 
 	    background-image: url("img/icon_zaino.png");
 	    background-size: 100% 100%;
 	    background-repeat: no-repeat;
 	    }
+	.imgOptions1 {
+	    top: 90%; left: 80%; position: absolute;
+	}
 	.txtNote {
 	    top: 60%;
 	    position: absolute;
@@ -128,20 +130,20 @@
 	    <div class="imgMeta">
 		<img id="imgMeta1" src="" />
 	    </div>
-	    <a class="imgOptions" href="#popupMenu" data-rel="popup" data-transition="slideup">
+	    <a class="imgOptions imgOptions1" href="#popupMenu" data-rel="popup" data-transition="slideup">
 	    </a>
 	    <div data-role="popup" id="popupMenu" data-theme="b" data-position-to="window">
+		<ul data-role="listview" data-inset="true" style="min-width:210px;">
+		   <li data-role="list-divider">Choose an action</li>
+		   <li><a href="#" id="btnDelete" >Elimina pagina</a></li>
+		</ul>
 		<div data-role="collapsibleset" data-theme="b" data-content-theme="a" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" style="margin:0; width:250px;">
 		    <div data-role="collapsible" data-inset="false">
-		    <h2>Farm animals</h2>
+		    <h2>Vai a pagina:</h2>
 			<ul data-role="listview" id="lstPagine">
 			</ul>
 		    </div><!-- /collapsible -->
 		</div><!-- /collapsibleset -->
-		<ul data-role="listview" data-inset="true" style="min-width:210px;">
-		   <li data-role="list-divider">Choose an action</li>
-		   <li><a href="#" id="btnDelete" >Elimina pagina</a></li>
-	       </ul>
 	    </div><!-- /popupMenu -->
         </div>
     </div><!-- /page-interno -->
