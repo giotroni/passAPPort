@@ -51,10 +51,10 @@ var app = {
     $(".btnDx").on("click", pagine.nextPage);
     // $("#btnNext1").on("click", pagine.nextPage);
     // $("#btnPrev1").on("click", pagine.prevPage);
-    $("#btnCheckPos1").on("click", app.checkPos);
-    $("#btnDelete1").on("click", function(){showYesNo("Vuoi DAVVERO cancellare questa meta?", pagine.cancellaPagina)} );
+    $("#btnCheckPos").on("click", app.checkPos);
+//    $("#btnDelete1").on("click", function(){showYesNo("Vuoi DAVVERO cancellare questa meta?", pagine.cancellaPagina)} );
 //    $("#btnPrev2").on("click", pagine.prevPage);
-    $("#btnCheckPos2").on("click", app.checkPos);
+//    $("#btnCheckPos2").on("click", app.checkPos);
     $("#imgMeta1").on("click", pagine.popupNote);
     $("#imgMeta2").on("click", pagine.popupNote);
     $("#txtNota1").on( "change", pagine.memoNota );
@@ -346,7 +346,7 @@ var pagine = {
     var pti = 0;
     $.each(pagine.lista, function(key, value){
       dbgMsg("Punti "+key);
-      if(pagine.arrivato(key)){
+      if(pagine.arrivato(key+1)){
         pti += (value.punti * 1);
       }
     });
