@@ -330,9 +330,9 @@ var pagine = {
   },
   // elenco dei luoghi
   lista: [],
-  // verifica se già arrivato
-  arrivato: function(){
-    var el  = pagine.lista[pagine.numPagina-1].dataora;
+  // verifica se la pagina i è già arrivata
+  arrivato: function(i){
+    var el  = pagine.lista[i-1].dataora;
     return (el.indexOf(MAI) <0);
   },
   // verifica se in zona VICINA
@@ -345,7 +345,7 @@ var pagine = {
   checkPunti: function(){
     var pti = 0;
     $.each(pagine.lista, function(key, value){
-      if(pagine.arrivato()){
+      if(pagine.arrivato(key)){
         pti += (value.punti * 1);
       }
     });
@@ -431,10 +431,11 @@ var pagine = {
       $("#numPagina"+suffisso).html("<i>pag. "+pagine.numPagina +"</i>")
       // dbgMsg(el.foto);
       $("#lblCoordinate"+suffisso).html(el.lat + " - " + el.lng);
-      var imgMeta = document.getElementById('imgMeta'+suffisso);    
-      imgMeta.src =  appDir + el.img;
+      //var imgMeta = document.getElementById('imgMeta'+suffisso);    
+      //imgMeta.src =  appDir + el.img;
+      $('#imgMeta'+suffisso).css('background-image', appDir + el.img);
       $("#txtNota"+suffisso).val(el.note);
-      if(  pagine.arrivato() ){
+      if(  pagine.arrivato(pagine.numPagina ) ){
         $("#lblArrivo"+suffisso).html("Arrivato: "+ el.dataora);
         smallImage.src = el.foto;
         $('#imgTimbro'+suffisso).attr('src',appDir + el.timbro);
@@ -550,7 +551,7 @@ var pagine = {
     var el = pagine.lista[pagine.numPagina-1];
     // dbgMsg("Check arrivato: " + el.arrivato + " dist " + el.dist );
     // SE non è ancora arrivato a questa meta
-    if(!pagine.arrivato() && pagine.vicino() ){
+    if(!pagine.arrivato(pagine.numPagina) && pagine.vicino() ){
       el.dataora = adesso();
       pagine.saved = false;
       el.saved = false;
