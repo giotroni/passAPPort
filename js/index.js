@@ -70,6 +70,8 @@ var app = {
       $("#btnDownload").html("alt" + (altezza *3 / 4)+"X:"+touch.pageX+" Y:"+touch.pageY  );
       if(touch.pageY  > (altezza *3 / 4)){
           showAlert("Bravo", "Messaggio");
+          draggable.style.left = '45%';
+          draggable.style.top= '1em';
           app.capturePhoto();
       }
       event.preventDefault();            
@@ -345,12 +347,10 @@ var pagine = {
   checkPunti: function(){
     var pti = 0;
     $.each(pagine.lista, function(key, value){
-      dbgMsg("Punti "+key);
       if(pagine.arrivato(key+1)){
         pti += (value.punti * 1);
       }
     });
-    dbgMsg("Punti: " + pti);
     return pti;
   },
   // va alla pagina copertina
@@ -399,7 +399,6 @@ var pagine = {
   // Mostra la pagina corrente
   showPage: function(){
     if(pagine.numPagina>0){
-      // navigator.vibrate(500);
       var suffisso = 2;
       var modo = false;
       // dbgMsg(pagine.numPagina  + " " + pagine.numPagina % 2);
@@ -411,14 +410,6 @@ var pagine = {
           transition: 'slide',
           reverse:direction
       });        
-      // siamo dentro il passAPPort
-      // dbgMsg("mostra la pagina interna: ");
-      //$.mobile.pageContainer.pagecontainer("change", "#page-interno"+suffisso, {
-      //    transition: 'turn',
-       //   changeHash: false,
-      //    reverse: true,
-      //    showLoadMsg: true
-      //});
 
       var smallImage = document.getElementById('smallImage'+suffisso);    
 
@@ -428,12 +419,10 @@ var pagine = {
       $("#lblCoordinate"+suffisso).empty();
       // scrive i nuovi dati
       var el = pagine.lista[pagine.numPagina-1];
-      $("#tit-interno"+suffisso).html(el.meta);
+      $("#tit-interno"+suffisso).html("<b>"+el.meta+"</b");
       $("#numPagina"+suffisso).html("<i>pag. "+pagine.numPagina +"</i>")
       // dbgMsg(el.foto);
       $("#lblCoordinate"+suffisso).html(el.lat + " - " + el.lng);
-      //var imgMeta = document.getElementById('imgMeta'+suffisso);    
-      //imgMeta.src =  appDir + el.img;
       $('#imgMeta'+suffisso).css('background-image', 'url('+appDir + el.img+')');
       $("#txtNota"+suffisso).val(el.note);
       if(  pagine.arrivato(pagine.numPagina ) ){
@@ -451,7 +440,7 @@ var pagine = {
       $.mobile.pageContainer.pagecontainer("change", "#page-home", {
           transition: 'flip'
       });
-      $("#lblPunti").html("Hai " +  pagine.checkPunti() +" punti");
+      $("#lblPunti").html("<b>Hai " +  pagine.checkPunti() +" punti</b>");
     }
   },
   // mostra la pagina con l'elenco delle mete
@@ -560,6 +549,7 @@ var pagine = {
       // var my_media = new Media("audio/audio_suonerie_applauso_01.mp3");
       // my_media.play();
       // showAlertModal("Sei arrivato! Pronto per la foto ricordo?",app.capturePhoto,"BRAVO");
+      navigator.vibrate(500);
       $.mobile.pageContainer.pagecontainer("change", "#page-arrivo", {
           transition: 'slide',
           changeHash: false,
@@ -573,8 +563,7 @@ var pagine = {
     // dbgMsg(tst);
     var el = pagine.lista[pagine.numPagina-1];
     el.foto = tst;
-    var smallImage = document.getElementById('smallImage');    
-    smallImage.src = el.foto;
+    el.saved = false;
     pagine.saved = false;
     pagine.scrivePagine();
     pagine.showPage();
@@ -609,7 +598,7 @@ var pagine = {
         pagine.numPagina = ii;
         pagine.showPage();
     });
-    // $('#lstPagine').listview("refresh");
+    $('#lstPagine').listview("refresh");
   },
   // resetta la lista pagine
   resetLstPagine: function(){
@@ -626,7 +615,7 @@ var pagine = {
           pagine.numPagina = i;
           pagine.showPage();
       });
-    }
+    };
     $('#lstPagine').listview("refresh");
   },
   // scrive in memoria le pagine e le mete
@@ -678,9 +667,7 @@ var pagine = {
     }
   },
   popupNote: function(){
-    $( "#popupNote1" ).popup( "open" );
-    $( "#popupNote1" ).popup( "open" );
-    
+    $( "#popupDesc" ).popup( "open" );
   },
   cancellaPagina: function( ind ){
     if(ind == 1){

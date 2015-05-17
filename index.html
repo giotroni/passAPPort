@@ -56,6 +56,8 @@
 	    -webkit-border-radius: 20%;
 	    border-radius: 20%;
 	    background-color: #0000ff; 
+	    background-size: 100% 100%;
+	    background-repeat: no-repeat;
 	    }
 	.imgMeta1{
 	    top: 80%; right: 0px; position: absolute;
@@ -103,10 +105,23 @@
 	    font-size: 1.5em;
 	}
 	.titolo1 {
-	    left: 0px; position: absolute;
+	    left: 1em; position: absolute;
 	}
 	.titolo2 {
-	    right: 0px; position: absolute;
+	    right: 1em; position: absolute;
+	}
+	.divPunti {
+	    top: 60%; width: 20%;
+	    margin-left: auto; margin-right: auto;
+	    position: absolute;
+	    color: yellow;
+	    font-size: x-large;
+	}
+	.imgFoto {
+	    top:4em;width:95%;height:auto;
+	    margin-left: auto; margin-right: auto;
+	    position: absolute;
+	    border:none;
 	}
     </style>    
 
@@ -120,7 +135,10 @@
 <body>
     <div data-role="page" id="page-home" class="copertina" >
         <div role="main" class="ui-content" id="content-home">
-	    <span id="lblPunti"></span>
+	    <div class="divPunti">
+		<img src="/img/icon_scores.png" />
+		<span id="lblPunti"></span>
+	    </div>
         </div>
 	<a href="whatsapp://send" data-text="Take a look at this awesome website:" data-href="http://www.google.com" >Share</a>
 	<div class="btnDx" id="btnEntra"><b>></b></div>
@@ -155,15 +173,15 @@
 	    </div>
 	    <div  id="lblArrivo1">		
 	    </div>
-	    <img style="top:10%;width:95%;height:auto;" id="smallImage1" src="" />
+	    <img class="imgFoto" id="smallImage1" src="" />
 	    <img style="width:160px;height:120px;" id="imgTimbro1" src="" />
 	    <div class="btnSx" id="btnPrev1"><b><</b></div>
 	    <div class="btnDx" id="btnNext1" ><b>></b></div>
+	    <div class="imgSfondo1" id="imgSfondo1"></div>
+	    <div class="imgMeta imgMeta1" id="imgMeta1"></div>
 	    <div class="txtNote">
 		<textarea cols="40" rows="4" id="txtNota1"></textarea>
 	    </div>
-	    <div class="imgSfondo1" id="imgSfondo1"></div>
-	    <div class="imgMeta imgMeta1" id="imgMeta1"></div>
 	    <a class="imgOptions imgOptions1" href="#popupMenu" data-rel="popup" data-transition="slideup"></a>
 	    <div class="numPagina numPagina1" id="numPagina1"></div>
 	    <div data-role="popup" id="popupMenu" data-theme="b" data-position-to="window">
@@ -219,10 +237,10 @@
         </div>
         <div role="main" class="ui-content" id="content-home">
 	    <h2>Trascina il timbro verso il basso e preparati per la foto ricordo</h2>
+	    <div class="timbroVuoto"></div>
 	    <div id="draggable" class="ui-widget-content">
 	      <img src="img/timbro.png">
 	    </div>
-	    <div class="timbroVuoto"></div>
 	</div>
 
 
@@ -238,5 +256,8 @@
         </div>
     </div><!-- /page-elencomete-->
     
+    <div data-role="popup" id="popupDesc" data-theme="b" data-position-to="window">
+	Eccoci
+    </div><!-- /popupDesc-->
 </body>
 </html>
