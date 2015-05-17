@@ -523,6 +523,7 @@ var pagine = {
       pagine.saved = false;
       pagine.scrivePagine();
       // mostra la pagina
+      pagine.aggiornaLstPagine(pagine.numPagina+1)
       pagine.nextPage();
     } else {
       pagine.showPage();
@@ -587,7 +588,7 @@ var pagine = {
         var valore = app.storage.getItem("pag"+i);
         // dbgMsg(valore);
         pagine.lista.push(JSON.parse(valore));
-        pagine.aggiornaLstPagine(i);
+        pagine.aggiornaLstPagine(i+1);
       }
       attesa("", false);
     }
@@ -595,6 +596,8 @@ var pagine = {
   // aggiorna la lista pagine del popup
   aggiornaLstPagine: function(ii){
       // aggiorna l'elenco delle pagine nel popup
+      dbgMsg(ii);
+      dbgMsg(pagine.lista[ii-1].meta);
       var testo = '<li id="pag_'+ newPg+'" ><a href="#" >';
       testo += "pag. " + ii + " - " + pagine.lista[ii-1].meta;
       testo += '</a></li>';
