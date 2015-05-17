@@ -52,9 +52,9 @@
 	    }
 	.imgMeta {
 	    width: 30%; height: 15%; 
-	    -moz-border-radius: 15%;
-	    -webkit-border-radius: 15%;
-	    border-radius: 15%;
+	    -moz-border-radius: 20%;
+	    -webkit-border-radius: 20%;
+	    border-radius: 20%;
 	    }
 	.imgMeta1{
 	    top: 80%; right: 0px; position: absolute;
@@ -86,6 +86,24 @@
 	    top: 80%; left: 40%; width: 20%; height: 20%; position: absolute;
 	    border-radius: 20px 20px 20px 20px;
 	    background-color: #0000ff; 
+	}
+	.numPagina {
+	    top: 90%; position: absolute;
+	}
+	.numPagina1 {
+	    right: 0px; position: absolute;
+	}
+	.numPagina2 {
+	    left: 0px; position: absolute;
+	}
+	.titolo {
+	    top: 10%; position: absolute;
+	}
+	.titolo1 {
+	    right: 0px; position: absolute;
+	}
+	.titolo2 {
+	    left: 0px; position: absolute;
 	}
     </style>    
 
@@ -127,15 +145,14 @@
     </div><!-- /page-settings -->
     
     <div data-role="page" id="page-interno1" data-add-back-btn="false"  class="interno1" name="interno" style="text-align:right;">
-        <div data-role="header" id="tit-interno1">
-        </div>
         <div role="main" class="ui-content" id="content-interno">
+	    <div class="titolo titolo1" id="tit-interno1"></div>
 	    <div id="lblCoordinate1"></div>
 	    <div  id="lblDistanza1">		
 	    </div>
 	    <div  id="lblArrivo1">		
 	    </div>
-	    <img style="width:80%;height:40%;" id="smallImage1" src="" />
+	    <img style="width:90%;height:45%;text-align:center;" id="smallImage1" src="" />
 	    <img style="width:160px;height:120px;" id="imgTimbro1" src="" />
 	    <div class="btnSx" id="btnPrev1"><b><</b></div>
 	    <div class="btnDx" id="btnNext1" ><b>></b></div>
@@ -147,6 +164,7 @@
 		<img id="imgMeta1" src="" />
 	    </div>
 	    <a class="imgOptions imgOptions1" href="#popupMenu" data-rel="popup" data-transition="slideup"></a>
+	    <div class="numPagina numPagina1" id="numPagina1"></div>
 	    <div data-role="popup" id="popupMenu" data-theme="b" data-position-to="window">
 		<ul data-role="listview" data-inset="true" style="min-width:210px;">
 		   <li data-role="list-divider">Scegli un azione</li>
@@ -166,9 +184,8 @@
     </div><!-- /page-interno -->
 
     <div data-role="page" id="page-interno2" data-add-back-btn="false"  class="interno2" name="interno">
-        <div data-role="header" id="tit-interno2">
-        </div>
         <div role="main" class="ui-content" id="content-interno">
+	    <div class="titolo titolo2" id="tit-interno2"></div>
 	    <div id="lblCoordinate2"></div>
 	    <div  id="lblDistanza2">		
 	    </div>
@@ -182,8 +199,11 @@
 	    <div class="txtNote">
 		<textarea cols="40" rows="4" id="txtNota1"></textarea>
 	    </div>
-	    <img class="imgMeta imgMeta2" id="imgMeta2" src="" />	    
+	    <div class="imgMeta imgMeta2">
+		<img id="imgMeta2" src="" />
+	    </div>
 	    <a class="imgOptions imgOptions2" href="#popupMenu" data-rel="popup" data-transition="slideup"></a>
+	    <div class="numPagina numPagina2" id="numPagina2"></div>
         </div>
 <!--
 	    <div data-role="footer" data-position="fixed">

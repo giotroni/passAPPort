@@ -427,7 +427,8 @@ var pagine = {
       $("#lblCoordinate"+suffisso).empty();
       // scrive i nuovi dati
       var el = pagine.lista[pagine.numPagina-1];
-      $("#tit-interno"+suffisso).html("<h2>Pag. "+ pagine.numPagina + " - " + el.meta + "</h2>");
+      $("#tit-interno"+suffisso).html(el.meta);
+      $("#numPagina"+suffisso).html("<i>pag. "+pagine.numPagina +"</i>")
       // dbgMsg(el.foto);
       $("#lblCoordinate"+suffisso).html(el.lat + " - " + el.lng);
       var imgMeta = document.getElementById('imgMeta'+suffisso);    
