@@ -522,6 +522,16 @@ var pagine = {
           });
       pagine.saved = false;
       pagine.scrivePagine();
+      // aggiorna l'elenco delle pagine nel popup
+      var newPg = pagine.numPagina *1 + 1;
+      var testo = '<li id="pag_'+ newPg+'" ><a href="#" >';
+      testo += "pag. " + newPg + " - " + mete.elenco[id].meta;
+      testo += '</a></li>';
+      $('#lstPagine').append(testo);
+      $("#lstMete li#meta_"+newPg ).bind("click", function(){
+          pagine.numPagina = newPg;
+          pagine.showPage();
+      });  
       // mostra la pagina
       pagine.nextPage();
     } else {
