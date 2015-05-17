@@ -610,8 +610,8 @@ var pagine = {
   },
   // resetta la lista pagine
   resetLstPagine: function(){
-    var lung = pagine.lista.length;
-    // dbgMsg(lung);
+    var lung = pagine.lista.length
+    dbgMsg(lung);
     $('#lstPagine').empty();
     for(i=0; i<lung; i++){
       // aggiorna l'elenco delle pagine nel popup
