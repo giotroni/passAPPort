@@ -597,15 +597,16 @@ var pagine = {
   },
   // aggiorna la lista pagine del popup
   aggiornaLstPagine: function(ii){
-      // aggiorna l'elenco delle pagine nel popup
-      var testo = '<li id="pag_'+ ii+'" ><a href="#" >';
-      testo += "pag. " + ii + " - " + pagine.lista[ii-1].meta;
-      testo += '</a></li>';
-      $('#lstPagine').append(testo);
-      $("#lstPagine li#pag_"+ii ).bind("click", function(){
-          pagine.numPagina = ii;
-          pagine.showPage();
-      });  
+    // aggiorna l'elenco delle pagine nel popup
+    var testo = '<li id="pag_'+ ii+'" ><a href="#" >';
+    testo += "pag. " + ii + " - " + pagine.lista[ii-1].meta;
+    testo += '</a></li>';
+    $('#lstPagine').append(testo);
+    $("#lstPagine li#pag_"+ii ).bind("click", function(){
+        pagine.numPagina = ii;
+        pagine.showPage();
+    });
+    $('#lstPagine').listview("refresh");
   },
   // resetta la lista pagine
   resetLstPagine: function(){
@@ -623,6 +624,7 @@ var pagine = {
           pagine.showPage();
       });
     }
+    $('#lstPagine').listview("refresh");
   },
   // scrive in memoria le pagine e le mete
   scrivePagine: function(){
