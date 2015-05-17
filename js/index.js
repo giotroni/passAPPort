@@ -18,7 +18,7 @@ var destinationType; // sets the format of returned value
 
 var id_User = 1;    // id dell'utilizzatore
 
-var direction = true;
+var direction = false;
 // Funzione che calcola la distanza
 // MAIN
 var app = {
@@ -47,7 +47,7 @@ var app = {
     $(".btnSx").on("click", pagine.prevPage);
     $(".btnDx").on("click", pagine.nextPage);
     // $("#btnNext1").on("click", pagine.nextPage);
-    $("#btnPrev1").on("click", pagine.prevPage);
+    // $("#btnPrev1").on("click", pagine.prevPage);
     $("#btnCheckPos1").on("click", app.checkPos);
     $("#btnDelete1").on("click", function(){showYesNo("Vuoi DAVVERO cancellare questa meta?", pagine.cancellaPagina)} );
 //    $("#btnPrev2").on("click", pagine.prevPage);
@@ -104,9 +104,9 @@ var app = {
       return false;         
     });
     $(window).on("navigate", function (event, data) {
-      var direction = data.state.direction;
+      var direzione = data.state.direction;
       "#page-elencomete"
-      if (direction == 'back' && pagine.paginaMeteVisibile) {
+      if (direzione == 'back' && pagine.paginaMeteVisibile) {
         // do something
         pagine.showMete();
       }
@@ -368,7 +368,7 @@ var pagine = {
   nextPage: function (){
     // dbgMsg("Next page: "+pagine.numPagina + " max page: " + pagine.numMaxPagine());
     // verifica se siamo all'ultima pagina
-    direction = true;
+    direction = false;
     if( pagine.numPagina >= pagine.lista.length){
       // se si aggiunge una meta?
       pagine.showMete();
@@ -382,7 +382,7 @@ var pagine = {
   prevPage: function (){
     // dbgMsg("Next page: "+pagine.numPagina + " max page: " + pagine.numMaxPagine);
     // se non siamo già alla copertina, va alla pagina precedente
-    direction = false;
+    direction = true;
     if( pagine.numPagina > 0 ) {
       pagine.numPagina -= 1;
     } else {

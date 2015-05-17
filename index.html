@@ -51,20 +51,14 @@
 	    background-size: cover;
 	    }
 	.imgOptions {
-	    top: 90%; 
-	    width: 20%; height: 9%; position: absolute;
+	    top: 90%; left: 45%; 
+	    width: 10%; height: 10%; position: absolute;
 	    background-image: url("img/icon_zaino.png");
-	    text-align: center;
+	    background-size: cover;
 	    }
-	.ui-input-text {
-	    border: none !important;
-	    border-color: transparent !important;
-	    background-color: #0000ff !important;
-	    opacity: 0.3 !important;
-	}
 	#txtNota1 {
 	    top: 60%;
-	}
+	    }
     </style>    
 
     <script type="text/javascript" src="phonegap.js"></script>
@@ -120,8 +114,8 @@
 	    <div class="btnDx" id="btnNext1" ><b>></b></div>
 	    <textarea class="txtNote" cols="40" rows="4" id="txtNota1"></textarea>
 	    <div class="imgSfondo1" id="imgSfondo1"></div>
-	    <a href="#popupMenu" data-rel="popup" data-transition="slideup">
-		<div class="imgOptions" id="imgOptions"></div>
+	    <a class="imgOptions" href="#popupMenu" data-rel="popup" data-transition="slideup">
+		<div id="imgOptions"></div>
 	    </a>
 	    <div data-role="popup" id="popupMenu" data-theme="b">
 		<div data-role="collapsibleset" data-theme="b" data-content-theme="a" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" style="margin:0; width:250px;">
