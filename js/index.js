@@ -345,6 +345,7 @@ var pagine = {
   checkPunti: function(){
     var pti = 0;
     $.each(pagine.lista, function(key, value){
+      dbgMsg("Punti "+key);
       if(pagine.arrivato(key)){
         pti += (value.punti * 1);
       }
@@ -433,7 +434,7 @@ var pagine = {
       $("#lblCoordinate"+suffisso).html(el.lat + " - " + el.lng);
       //var imgMeta = document.getElementById('imgMeta'+suffisso);    
       //imgMeta.src =  appDir + el.img;
-      $('#imgMeta'+suffisso).css('background-image', appDir + el.img);
+      $('#imgMeta'+suffisso).css('background-image', 'url('+appDir + el.img+')');
       $("#txtNota"+suffisso).val(el.note);
       if(  pagine.arrivato(pagine.numPagina ) ){
         $("#lblArrivo"+suffisso).html("Arrivato: "+ el.dataora);
