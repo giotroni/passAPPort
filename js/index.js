@@ -597,7 +597,7 @@ var pagine = {
         pagine.numPagina = ii;
         pagine.showPage();
     });
-    $('#lstPagine').listview("refresh");
+    //$('#lstPagine').listview("refresh");
   },
   // resetta la lista pagine
   resetLstPagine: function(){
