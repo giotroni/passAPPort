@@ -117,14 +117,21 @@
 	    position: absolute;
 	    color: yellow;
 	    font-size: x-large;
+	    background-image: url("img/icon_scores.png");
 	}
 	.imgPunti {
-	    background-image: url("img/icon_scores.png");
 	}
 	.imgFoto {
 	    top:4em;width:90%;height:auto; position: absolute;
 	    margin-left: auto; margin-right: auto;
 	    border:none;
+	}
+	.lblArrivo {
+	    top: 75%; width: 30%;
+	    margin-left: auto; margin-right: auto;
+	    position: absolute;
+	    color: red;
+	    font-size: x-large;
 	}
     </style>    
 
@@ -142,14 +149,9 @@
 		<div class="imgPunti"></div>
 		<span id="lblPunti"></span>
 	    </div>
+	    <img src="img/icon_scores.png" />
         </div>
-	<a href="whatsapp://send" data-text="Take a look at this awesome website:" data-href="http://www.google.com" >Share</a>
 	<div class="btnDx" id="btnEntra"><b>></b></div>
-
-        <div data-role="footer" data-position="fixed">
-	    <a href="#" data-role="button" id="btnSettings">Impostazioni</a>
-	    
-        </div>
 
     </div><!-- /page-home -->
 
@@ -174,7 +176,7 @@
 	    <div id="lblCoordinate1"></div>
 	    <div  id="lblDistanza1">		
 	    </div>
-	    <div  id="lblArrivo1">		
+	    <div  class="lblArrivo" id="lblArrivo1">		
 	    </div>
 	    <img class="imgFoto" id="smallImage1" src="" />
 	    <img style="width:160px;height:120px;" id="imgTimbro1" src="" />
@@ -192,7 +194,7 @@
 		   <li data-role="list-divider">Scegli un azione</li>
 		   <li><a href="#" id="btnHome1" >Vai alla copertina</a></li>
 		   <li><a href="#" id="btnCheckPos" >Verifica la posizione</a></li>
-		   <li><a href="#" id="btnSetting1" >Impostazioni</a></li>
+		   <li><a href="#" id="btnSettings1" >Impostazioni</a></li>
 		   <li><a href="#" id="btnDelete" >Elimina pagina</a></li>
 		</ul>
 		<div data-role="collapsibleset" data-theme="b" data-content-theme="a" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" style="margin:0; width:250px;">
@@ -259,8 +261,8 @@
         </div>
     </div><!-- /page-elencomete-->
     
-    <div data-role="popup" id="popupDesc" data-theme="b" data-position-to="window">
-	Eccoci
+    <div data-role="popup" id="popupDesc" >
+	<p>Eccoci</p>
     </div><!-- /popupDesc-->
 </body>
 </html>
