@@ -93,6 +93,7 @@
 	}
 	.numPagina {
 	    top: 95%; position: absolute;
+	    font-size: 1em;
 	}
 	.numPagina1 {
 	    left: 1em; position: absolute;
@@ -117,10 +118,12 @@
 	    color: yellow;
 	    font-size: x-large;
 	}
+	.imgPunti {
+	    background-image: url("img/icon_scores.png");
+	}
 	.imgFoto {
-	    top:4em;width:95%;height:auto;
+	    top:4em;width:90%;height:auto; position: absolute;
 	    margin-left: auto; margin-right: auto;
-	    position: absolute;
 	    border:none;
 	}
     </style>    
@@ -136,7 +139,7 @@
     <div data-role="page" id="page-home" class="copertina" >
         <div role="main" class="ui-content" id="content-home">
 	    <div class="divPunti">
-		<img src="/img/icon_scores.png" />
+		<div class="imgPunti"></div>
 		<span id="lblPunti"></span>
 	    </div>
         </div>

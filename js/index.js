@@ -69,10 +69,9 @@ var app = {
       draggable.style.top= touch.pageY - 25 + 'px';
       $("#btnDownload").html("alt" + (altezza *3 / 4)+"X:"+touch.pageX+" Y:"+touch.pageY  );
       if(touch.pageY  > (altezza *3 / 4)){
-          showAlert("Bravo", "Messaggio");
           draggable.style.left = '45%';
           draggable.style.top= '1em';
-          app.capturePhoto();
+          showAlertModal("Bravo", app.capturePhoto, "Messaggio");
       }
       event.preventDefault();            
     }, false);
@@ -570,7 +569,7 @@ var pagine = {
   },
   // legge dalla memoria le pagine
   leggePagine: function(){
-    dbgMsg("Legge pagine");
+    //dbgMsg("Legge pagine");
     if ("pagineSaved" in localStorage){
       pagine.saved = app.storage.getItem("pagineSaved");
     }
@@ -667,6 +666,7 @@ var pagine = {
     }
   },
   popupNote: function(){
+    dbgMsg("PopUp Note");
     $( "#popupDesc" ).popup( "open" );
   },
   cancellaPagina: function( ind ){
