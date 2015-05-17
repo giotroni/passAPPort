@@ -599,7 +599,7 @@ var pagine = {
       testo += "pag. " + ii + " - " + pagine.lista[ii-1].meta;
       testo += '</a></li>';
       $('#lstPagine').append(testo);
-      $("#lstMete li#meta_"+ii ).bind("click", function(){
+      $("#lstPagine li#pag_"+ii ).bind("click", function(){
           dbgMsg(ii);
           pagine.numPagina = ii;
           pagine.showPage();
