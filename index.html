@@ -51,10 +51,9 @@
 	    background-size: cover;
 	    }
 	.imgOptions {
-	    top: 90%;
-	    position: absolute;
-	    width: 25%;
-	    height: 9%;
+	    top: 90%; 
+	    width: 20%; height: 9%; position: absolute;
+	    background-image: url("img/icon_zaino.png");
 	    text-align: center;
 	    }
 	.ui-input-text {
@@ -62,6 +61,9 @@
 	    border-color: transparent !important;
 	    background-color: #0000ff !important;
 	    opacity: 0.3 !important;
+	}
+	#txtNota1 {
+	    top: 60%;
 	}
     </style>    
 
@@ -116,11 +118,24 @@
 	    <img style="width:160px;height:120px;" id="imgTimbro1" src="" />
 	    <div class="btnSx" id="btnPrev1"><b><</b></div>
 	    <div class="btnDx" id="btnNext1" ><b>></b></div>
-	    <textarea style="top=60%" cols="40" rows="4" id="txtNota1"></textarea>
+	    <textarea class="txtNote" cols="40" rows="4" id="txtNota1"></textarea>
 	    <div class="imgSfondo1" id="imgSfondo1"></div>
-	    <a href="#popupMenu" data-rel="popup" class="imgOptions" data-transition="slideup">
-		    <img src="img/icon_zaino.png"/>
+	    <a href="#popupMenu" data-rel="popup" data-transition="slideup">
+		<div class="imgOptions" id="imgOptions"></div>
 	    </a>
+	    <div data-role="popup" id="popupMenu" data-theme="b">
+		<div data-role="collapsibleset" data-theme="b" data-content-theme="a" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" style="margin:0; width:250px;">
+		    <div data-role="collapsible" data-inset="false">
+		    <h2>Farm animals</h2>
+			<ul data-role="listview">
+			    <li><a href="#" data-rel="dialog">Chicken</a></li>
+			    <li><a href="#" data-rel="dialog">Cow</a></li>
+			    <li><a href="#" data-rel="dialog">Duck</a></li>
+			    <li><a href="#" data-rel="dialog">Sheep</a></li>
+			</ul>
+		    </div><!-- /collapsible -->
+		</div><!-- /collapsibleset -->
+	    </div><!-- /popupMenu -->
         </div>
     </div><!-- /page-interno -->
 
@@ -139,8 +154,8 @@
 	    <div class="btnDx" id="btnNext2"><b>></b></div>
 	    <textarea cols="40" rows="8" id="txtNota2"></textarea>
 	    <div class="imgSfondo2" id="imgSfondo2"></div>
-	    <img style="top=70%;width:160px;height:120px;" id="imgMeta2" src="" />	    
-	    <a href="#popupMenu" data-rel="popup" data-transition="slideup">
+	    <img style="top:70%;width:160px;height:120px;" id="imgMeta2" src="" />	    
+	    <a href="#popupMenu1" data-rel="popup" data-transition="slideup">
 		    <img style="top: 90%; width:20%;height:10%;" src="img/icon_zaino.png"/>
 	    </a>
         </div>
@@ -175,20 +190,6 @@
             </ul>
         </div>
     </div><!-- /page-elencomete-->
-
-    <div data-role="popup" id="popupMenu" data-theme="b">
-	<div data-role="collapsibleset" data-theme="b" data-content-theme="a" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" style="margin:0; width:250px;">
-	    <div data-role="collapsible" data-inset="false">
-	    <h2>Farm animals</h2>
-		<ul data-role="listview">
-		    <li><a href="#" data-rel="dialog">Chicken</a></li>
-		    <li><a href="#" data-rel="dialog">Cow</a></li>
-		    <li><a href="#" data-rel="dialog">Duck</a></li>
-		    <li><a href="#" data-rel="dialog">Sheep</a></li>
-		</ul>
-	    </div><!-- /collapsible -->
-	</div><!-- /collapsibleset -->
-    </div><!-- /popupMenu -->
     
 </body>
 </html>
