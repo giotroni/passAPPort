@@ -50,11 +50,16 @@
 	    background-image: url("img/logo_montagne_2.png");
 	    background-size: cover;
 	    }
+	.imgMeta {
+	    top: 80%; left: 0px;
+	    width: 30%; height: 20%; position: absolute;
+	    }
 	.imgOptions {
 	    top: 90%; left: 45%; 
 	    width: 10%; height: 10%; position: absolute;
 	    background-image: url("img/icon_zaino.png");
-	    background-size: 100%;
+	    background-size: 100% 100%;
+	    background-repeat: no-repeat;
 	    }
 	.txtNote {
 	    top: 60%;
@@ -107,7 +112,6 @@
 	    </div>
 	    <div  id="lblArrivo1">		
 	    </div>
-	    <img style="width:160px;height:120px;" id="imgMeta1" src="" />	    
 	    <img style="width:160px;height:120px;" id="smallImage1" src="" />
 	    <img style="width:160px;height:120px;" id="imgTimbro1" src="" />
 	    <div class="btnSx" id="btnPrev1"><b><</b></div>
@@ -115,9 +119,11 @@
 	    <div class="txtNote">
 		<textarea cols="40" rows="4" id="txtNota1"></textarea>
 	    </div>
+	    <div class="imgMeta">
+		<img id="imgMeta1" src="" />
+	    </div>
 	    <div class="imgSfondo1" id="imgSfondo1"></div>
 	    <a class="imgOptions" href="#popupMenu" data-rel="popup" data-transition="slideup">
-		<div id="imgOptions"></div>
 	    </a>
 	    <div data-role="popup" id="popupMenu" data-theme="b" data-position-to="window">
 		<div data-role="collapsibleset" data-theme="b" data-content-theme="a" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" style="margin:0; width:250px;">
@@ -151,8 +157,7 @@
 	    <textarea cols="40" rows="8" id="txtNota2"></textarea>
 	    <div class="imgSfondo2" id="imgSfondo2"></div>
 	    <img style="top:70%;width:160px;height:120px;" id="imgMeta2" src="" />	    
-	    <a href="#popupMenu1" data-rel="popup" data-transition="slideup">
-		    <img style="top: 90%; width:20%;height:10%;" src="img/icon_zaino.png"/>
+	    <a class="imgOptions" href="#popupMenu" data-rel="popup" data-transition="slideup">
 	    </a>
         </div>
 <!--
