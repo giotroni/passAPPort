@@ -41,9 +41,12 @@ var app = {
     pagine.leggePagine();
     // EVENTI DA LEGARE
     $("#btnSettings").on("click", pagine.settings);    
+    $("#btnSettings1").on("click", pagine.settings);    
     $("#btnReset").on("click", pagine.reset);
     $("#btnSave").on("click", pagine.savePagine);
     $("#btnHome").on("click", pagine.home);    
+    $("#btnHome1").on("click", pagine.home);    
+    $("#btnDelete").on("click", function(){showYesNo("Vuoi DAVVERO cancellare questa meta?", pagine.cancellaPagina)} );
     $(".btnSx").on("click", pagine.prevPage);
     $(".btnDx").on("click", pagine.nextPage);
     // $("#btnNext1").on("click", pagine.nextPage);
@@ -52,7 +55,6 @@ var app = {
     $("#btnDelete1").on("click", function(){showYesNo("Vuoi DAVVERO cancellare questa meta?", pagine.cancellaPagina)} );
 //    $("#btnPrev2").on("click", pagine.prevPage);
     $("#btnCheckPos2").on("click", app.checkPos);
-    $("#btnDelete").on("click", function(){showYesNo("Vuoi DAVVERO cancellare questa meta?", pagine.cancellaPagina)} );
     $("#imgMeta1").on("click", pagine.popupNote);
     $("#imgMeta2").on("click", pagine.popupNote);
     $("#txtNota1").on( "change", pagine.memoNota );
@@ -613,7 +615,7 @@ var pagine = {
     for(i=0; i<lung; i++){
       // aggiorna l'elenco delle pagine nel popup
       var testo = '<li id="pag_'+ i+'" ><a href="#" >';
-      testo += "pag. " + i + " - " + pagine.lista[ii-1].meta;
+      testo += "pag. " + i + " - " + pagine.lista[i-1].meta;
       testo += '</a></li>';
       $('#lstPagine').append(testo);
       $("#lstPagine li#pag_"+i ).bind("click", function(){
@@ -681,8 +683,8 @@ var pagine = {
       if(pagine.numPagina > pagine.lista.length ){
         pagine.numPagina = pagine.lista.length;
       }
-      pagine.resetLstPagine();
       pagine.showPage();
+      pagine.resetLstPagine();
     }
   },
   // cancella tutto
