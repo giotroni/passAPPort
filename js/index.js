@@ -55,8 +55,8 @@ var app = {
 //    $("#btnDelete1").on("click", function(){showYesNo("Vuoi DAVVERO cancellare questa meta?", pagine.cancellaPagina)} );
 //    $("#btnPrev2").on("click", pagine.prevPage);
 //    $("#btnCheckPos2").on("click", app.checkPos);
-    $("#imgMeta1").on("click", pagine.popupNote);
-    $("#imgMeta2").on("click", pagine.popupNote);
+    $(".imgMeta").on("click", pagine.popupNote);
+    //$("#imgMeta2").on("click", pagine.popupNote);
     $("#txtNota1").on( "change", pagine.memoNota );
     $("#txtNota2").on( "change", pagine.memoNota );
 
@@ -426,11 +426,11 @@ var pagine = {
       $("#txtNota"+suffisso).val(el.note);
       if(  pagine.arrivato(pagine.numPagina ) ){
         $("#lblArrivo"+suffisso).html("Arrivato: "+ el.dataora);
-        smallImage.src = el.foto;
+        $('#imgTimbro'+suffisso).show();
         $('#imgTimbro'+suffisso).attr('src',appDir + el.timbro);
       } else {
         $("#lblArrivo"+suffisso).html("Non ancora arrivato");
-        smallImage.src = "";
+        $('#imgTimbro'+suffisso).hide();
         $('#imgTimbro'+suffisso).attr('src','');
       }
     } else {
@@ -581,8 +581,8 @@ var pagine = {
         var valore = app.storage.getItem("pag"+i);
         // dbgMsg(valore);
         pagine.lista.push(JSON.parse(valore));
-        pagine.aggiornaLstPagine(i+1);
       }
+      pagine.resetLstPagine();
       attesa("", false);
     }
   },
@@ -597,7 +597,7 @@ var pagine = {
         pagine.numPagina = ii;
         pagine.showPage();
     });
-    //$('#lstPagine').listview("refresh");
+    $('#lstPagine').listview("refresh");
   },
   // resetta la lista pagine
   resetLstPagine: function(){
@@ -667,7 +667,9 @@ var pagine = {
   },
   popupNote: function(){
     dbgMsg("PopUp Note");
-    $( "#popupDesc" ).popup( "open" );
+    $("#popupDesc" ).on( "popupafteropen", function( event, ui ) {dbgMsg("PopUp Note fatta");} );
+    $("#popupDesc").popup( "open" );
+    
   },
   cancellaPagina: function( ind ){
     if(ind == 1){
