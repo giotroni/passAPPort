@@ -596,9 +596,7 @@ var pagine = {
   // aggiorna la lista pagine del popup
   aggiornaLstPagine: function(ii){
       // aggiorna l'elenco delle pagine nel popup
-      dbgMsg(ii);
-      dbgMsg(pagine.lista[ii-1].meta);
-      var testo = '<li id="pag_'+ newPg+'" ><a href="#" >';
+      var testo = '<li id="pag_'+ ii+'" ><a href="#" >';
       testo += "pag. " + ii + " - " + pagine.lista[ii-1].meta;
       testo += '</a></li>';
       $('#lstPagine').append(testo);
