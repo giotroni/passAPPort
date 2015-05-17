@@ -54,9 +54,9 @@
 	    top: 90%; left: 45%; 
 	    width: 10%; height: 10%; position: absolute;
 	    background-image: url("img/icon_zaino.png");
-	    background-size: cover;
+	    background-size: 100%;
 	    }
-	#txtNota1 {
+	.txtNote {
 	    top: 60%;
 	    }
     </style>    
@@ -112,12 +112,14 @@
 	    <img style="width:160px;height:120px;" id="imgTimbro1" src="" />
 	    <div class="btnSx" id="btnPrev1"><b><</b></div>
 	    <div class="btnDx" id="btnNext1" ><b>></b></div>
-	    <textarea class="txtNote" cols="40" rows="4" id="txtNota1"></textarea>
+	    <div class="txtNote">
+		<textarea cols="40" rows="4" id="txtNota1"></textarea>
+	    </div>
 	    <div class="imgSfondo1" id="imgSfondo1"></div>
 	    <a class="imgOptions" href="#popupMenu" data-rel="popup" data-transition="slideup">
 		<div id="imgOptions"></div>
 	    </a>
-	    <div data-role="popup" id="popupMenu" data-theme="b">
+	    <div data-role="popup" id="popupMenu" data-theme="b" data-position-to="window">
 		<div data-role="collapsibleset" data-theme="b" data-content-theme="a" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" style="margin:0; width:250px;">
 		    <div data-role="collapsible" data-inset="false">
 		    <h2>Farm animals</h2>
