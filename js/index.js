@@ -435,7 +435,7 @@ var pagine = {
       if(  pagine.arrivato(pagine.numPagina ) ){
         $('#smallImage'+suffisso).show();
         $('#smallImage'+suffisso).attr('src',el.foto);
-        $("#lblArrivo"+suffisso).css("color","");
+        $("#lblArrivo"+suffisso).css("color","green");
         $("#lblArrivo"+suffisso).html("Arrivato: "+ el.dataora);
         $('#imgTimbro'+suffisso).show();
         $('#imgTimbro'+suffisso).attr('src',appDir + el.timbro);
@@ -683,7 +683,7 @@ var pagine = {
   popupNote: function(){
     //$("#popupDesc" ).on( "popupafteropen", function( event, ui ) {dbgMsg("PopUp Note fatta");} );
     var el = pagine.lista[pagine.numPagina-1];
-    $("#popupLblDesc"),html(el.meta + "<br>" + el.desc + "<br>lat: " + el.lat + "<br>Long: " + el.lng + "<br>Alt: " + el.alt );
+    $("#popupLblDesc").html(el.meta + "<br>" + el.desc + "<br>lat: " + el.lat + "<br>Long: " + el.lng + "<br>Alt: " + el.alt );
     $("#popupDesc").popup( "open" );
     
   },
