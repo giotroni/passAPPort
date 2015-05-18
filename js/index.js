@@ -437,12 +437,14 @@ var pagine = {
       if(  pagine.arrivato(pagine.numPagina ) ){
         $('#smallImage'+suffisso).show();
         $('#smallImage'+suffisso).attr('src',el.foto);
+        $("#lblArrivo"+suffisso).css("color","green");
         $("#lblArrivo"+suffisso).html("Arrivato: "+ el.dataora);
         $('#imgTimbro'+suffisso).show();
         $('#imgTimbro'+suffisso).attr('src',appDir + el.timbro);
       } else {
         $('#smallImage'+suffisso).hide();
         $('#smallImage'+suffisso).attr('src', '');
+        $("#lblArrivo"+suffisso).css("color","red");
         $("#lblArrivo"+suffisso).html("Non ancora arrivato");
         $('#imgTimbro'+suffisso).hide();
         $('#imgTimbro'+suffisso).attr('src','');
