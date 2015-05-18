@@ -136,6 +136,9 @@
 	.lblArrivo2 {
 	    right: 1em;
 	}
+	.popupDesc {
+	    background-color: white;
+	}
     </style>    
 
     <script type="text/javascript" src="phonegap.js"></script>
@@ -262,8 +265,8 @@
         </div>
     </div><!-- /page-elencomete-->
 
-    <div data-role="popup" id="popupDesc" >
-	<p>Eccoci</p>
+    <div data-role="popup" id="popupDesc" class="ui-corner-all" data-position-to="window" data-overlay-theme="a" data-theme="c">
+	<div id="popupLblDesc"></div>
     </div><!-- /popupDesc-->
     
 </body>

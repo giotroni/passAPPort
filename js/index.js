@@ -411,11 +411,9 @@ var pagine = {
   showPage: function(){
     if(pagine.numPagina>0){
       var suffisso = 2;
-      var modo = false;
       // dbgMsg(pagine.numPagina  + " " + pagine.numPagina % 2);
       if(pagine.numPagina % 2 == 1){
         suffisso = 1;
-        modo = true        
       }
       $.mobile.pageContainer.pagecontainer("change", "#page-interno"+suffisso, {
           transition: 'slide',
@@ -437,7 +435,7 @@ var pagine = {
       if(  pagine.arrivato(pagine.numPagina ) ){
         $('#smallImage'+suffisso).show();
         $('#smallImage'+suffisso).attr('src',el.foto);
-        $("#lblArrivo"+suffisso).css("color","green");
+        $("#lblArrivo"+suffisso).css("color","");
         $("#lblArrivo"+suffisso).html("Arrivato: "+ el.dataora);
         $('#imgTimbro'+suffisso).show();
         $('#imgTimbro'+suffisso).attr('src',appDir + el.timbro);
@@ -683,8 +681,9 @@ var pagine = {
     }
   },
   popupNote: function(){
-    dbgMsg("PopUp Note");
-    $("#popupDesc" ).on( "popupafteropen", function( event, ui ) {dbgMsg("PopUp Note fatta");} );
+    //$("#popupDesc" ).on( "popupafteropen", function( event, ui ) {dbgMsg("PopUp Note fatta");} );
+    var el = pagine.lista[pagine.numPagina-1];
+    $("#popupLblDesc"),html(el.meta + "<br>" + el.desc + "<br>lat: " + el.lat + "<br>Long: " + el.lng + "<br>Alt: " + el.alt );
     $("#popupDesc").popup( "open" );
     
   },
