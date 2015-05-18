@@ -241,6 +241,8 @@ function fail(error){
 var mete = {
   // elenco dei luoghi
   elenco: [],
+  area: 1,
+  versione: 1,
   // inizializza il database interno delle mete
   inizializza: function(){
     var questo = mete.elenco;
@@ -302,6 +304,8 @@ var mete = {
  // Memorizza le mete nel DB interno
   scriveMete: function(){
     app.storage.setItem("numMete", mete.elenco.length);
+    app.storage.setItem("areaMete", mete.area);
+    app.storage.setItem("versioneMete", mete.versione);
     $.each(mete.elenco, function(key, value){
       var valore = JSON.stringify(value);
       app.storage.setItem("meta"+key, valore)  
@@ -581,7 +585,7 @@ var pagine = {
         // dbgMsg(valore);
         pagine.lista.push(JSON.parse(valore));
       }
-      pagine.resetLstPagine();
+      //pagine.resetLstPagine();
       attesa(false, "");
     }
   },
