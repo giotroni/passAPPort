@@ -39,6 +39,7 @@ var app = {
     // inizializza l'elenco delle mete e le pagine
     mete.inizializza();
     pagine.leggePagine();
+    pagine.showPage();
     // EVENTI DA LEGARE
     $("#btnSettings").on("click", pagine.settings);    
     $("#btnSettings1").on("click", pagine.settings);    
@@ -241,8 +242,8 @@ function fail(error){
 var mete = {
   // elenco dei luoghi
   elenco: [],
-  area: 1,
-  versione: 1,
+  areaMete: 1,
+  versioneMete: 1,
   // inizializza il database interno delle mete
   inizializza: function(){
     var questo = mete.elenco;
@@ -253,6 +254,12 @@ var mete = {
     if ("numMete" in localStorage){
       // legge le mete dal DB interno
       var lung = app.storage.getItem("numMete");
+      if ("areaMete" in localStorage){
+        areaMete = app.storage.getItem("areaMete");
+      }
+      if ("versioneMete" in localStorage){
+        versioneMete = app.storage.getItem("versioneMete");
+      }
       // dbgMsg("Legge mete da DB interno: " + lung);
       for(i=0; i<lung; i++){
         var valore = app.storage.getItem("meta"+i);
@@ -266,7 +273,7 @@ var mete = {
         type: 'GET',
         url: URL_PREFIX + 'php/leggiMete.php',
         data: {
-          area: 1
+          area: areaMete
           },
         cache: false
       }).done(function(result) {
@@ -304,8 +311,8 @@ var mete = {
  // Memorizza le mete nel DB interno
   scriveMete: function(){
     app.storage.setItem("numMete", mete.elenco.length);
-    app.storage.setItem("areaMete", mete.area);
-    app.storage.setItem("versioneMete", mete.versione);
+    app.storage.setItem("areaMete", mete.areaMete);
+    app.storage.setItem("versioneMete", mete.versioneMete);
     $.each(mete.elenco, function(key, value){
       var valore = JSON.stringify(value);
       app.storage.setItem("meta"+key, valore)  
