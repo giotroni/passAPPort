@@ -497,7 +497,7 @@ var pagine = {
       // evita di aggiungere più volte la stessa meta se non è ancora stata raggiunta o se è stata raggiunta oggi
       // dbgMsg("value.id " + value.idMeta);
       if(value.idMeta == mete.elenco[id].id ){
-        dbgMsg(value.dataora + " " + value.dataora.indexOf(sData));
+        //dbgMsg(value.dataora + " " + value.dataora.indexOf(sData));
         if (value.dataora.indexOf(sData) >= 0){
           showAlert("Non si può aggiungere: meta raggiunta oggi", "Attenzione");
           pagine.numPagina = key+1;
