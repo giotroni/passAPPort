@@ -492,8 +492,10 @@ var pagine = {
     var sData = adesso().substring(0, 10);
     // dbgMsg(sData);
     paginaMeteVisibile = false;
+    dbgMsg("id " + id);
     $.each(pagine.lista, function(key, value){
       // evita di aggiungere più volte la stessa meta se non è ancora stata raggiunta o se è stata raggiunta oggi
+      dbgMsg("value.id " + value.idMeta);
       if(value.idMeta == id ){
         if (value.dataora.indexOf(sData) >= 0){
           showAlert("Non si può aggiungere: meta raggiunta oggi", "Attenzione");
@@ -681,7 +683,11 @@ var pagine = {
   popupNote: function(){
     //$("#popupDesc" ).on( "popupafteropen", function( event, ui ) {dbgMsg("PopUp Note fatta");} );
     var el = pagine.lista[pagine.numPagina-1];
-    $("#popupLblDesc").html("<b>"+el.meta + "</b><br>" + el.desc + "<br><i>lat:</i> " + el.lat + "<br><i>Long:</i> " + el.lng + "<br><i>Alt:</i> " + el.alt );
+    var txt = "<b>"+el.meta;
+    txt +=  "</b><br>" + el.desc;
+    txt += "<br>Vale: "+ el.punti + " punti";
+    txt +=  "<br><i>lat:</i> " + el.lat + "<br><i>Long:</i> " + el.lng + "<br><i>Alt:</i> " + el.alt;
+    $("#popupLblDesc").html(txt);
     $("#popupDesc").popup( "open" );
     
   },
