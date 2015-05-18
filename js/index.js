@@ -573,7 +573,7 @@ var pagine = {
       pagine.saved = app.storage.getItem("pagineSaved");
     }
     if ("numPagine" in localStorage){
-      attesa("memorizzo", true);
+      attesa(true, "memorizzo");
       var lung = app.storage.getItem("numPagine");
       // dbgMsg(lung);
       for(var i=0; i<lung; i++){
@@ -582,7 +582,7 @@ var pagine = {
         pagine.lista.push(JSON.parse(valore));
       }
       pagine.resetLstPagine();
-      attesa("", false);
+      attesa(false, "");
     }
   },
   // aggiorna la lista pagine del popup
@@ -614,8 +614,8 @@ var pagine = {
           pagine.showPage();
       });
     };
-    dbgMsg("Reset list pagine ok");
     $('#lstPagine').listview("refresh");
+    dbgMsg("Reset list pagine ok");
   },
   // scrive in memoria le pagine e le mete
   scrivePagine: function(){
