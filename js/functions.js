@@ -119,5 +119,5 @@ function txtDataora( dt ){
   month[9] = "ott";
   month[10] = "nov";
   month[11] = "dic";
-  return (dt.substr(7,2) + " " + month[parseInt(dt.substr(5,5))] + " " + dt.substr(0,4) + " alle " + dt.substr(10,5));
+  return (dt.substr(8,2) + " " + parseInt(dt.substr(5,2)) + " " + dt.substr(0,4) + " alle " + dt.substr(11,6));
 }

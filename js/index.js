@@ -427,7 +427,7 @@ var pagine = {
       // scrive i nuovi dati
       var el = pagine.lista[pagine.numPagina-1];
       $("#tit-interno"+suffisso).html("<b>"+el.meta+"</b");
-      $("#numPagina"+suffisso).html("<i>pag. "+pagine.numPagina +"</i>")
+      $("#numPagina"+suffisso).html("<i><b>pag. "+pagine.numPagina +"</b></i>")
       // dbgMsg(el.foto);
       $('#imgMeta'+suffisso).css('background-image', 'url('+appDir + el.img+')');
       $("#txtNota"+suffisso).val(el.note);
@@ -435,7 +435,7 @@ var pagine = {
         $('#smallImage'+suffisso).show();
         $('#smallImage'+suffisso).attr('src',el.foto);
         $("#lblArrivo"+suffisso).css("color","green");
-        $("#lblArrivo"+suffisso).html("Arrivato: "+ txtDataora(el.dataora));
+        $("#lblArrivo"+suffisso).html("Arrivato: "+el.dataora+"<br>"+ txtDataora(el.dataora));
         $('#imgTimbro'+suffisso).show();
         $('#imgTimbro'+suffisso).attr('src',appDir + el.timbro);
       } else {
@@ -687,6 +687,7 @@ var pagine = {
     
   },
   popupMenu: function(){
+    pagine.resetLstPagine();
     $("#popupMenu").popup( "open" );
   },
   cancellaPagina: function( ind ){
@@ -696,7 +697,6 @@ var pagine = {
         pagine.numPagina = pagine.lista.length;
       }
       pagine.showPage();
-      pagine.resetLstPagine();
     }
   },
   // cancella tutto
