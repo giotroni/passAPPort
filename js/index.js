@@ -492,16 +492,15 @@ var pagine = {
     var sData = adesso().substring(0, 10);
     // dbgMsg(sData);
     paginaMeteVisibile = false;
-    dbgMsg("id " + id);
     $.each(pagine.lista, function(key, value){
       // evita di aggiungere più volte la stessa meta se non è ancora stata raggiunta o se è stata raggiunta oggi
-      dbgMsg("val: "+value.id);
-      if(value.id == id ){
+      if(value.idMeta == id ){
         if (value.dataora.indexOf(sData) >= 0){
           showAlert("Non si può aggiungere: meta raggiunta oggi", "Attenzione");
         } else if( value.dataora.indexOf('0000-00-00')>=0){
           showAlert("Non si può aggiungere: meta presente", "Attenzione");
         }
+        pagine.numPagina = key+1;
         metaOK = false;
         return false;
       }
@@ -520,6 +519,7 @@ var pagine = {
           "timbro": mete.elenco[id].timbro,
           "punti": mete.elenco[id].punti,
           "desc": mete.elenco[id].desc,
+          "localita": mete.elenco[id].localita,
           "note": "",
           "dist": -1,
           "saved": true,
