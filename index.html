@@ -112,7 +112,7 @@
 	    right: 1em; position: absolute;
 	}
 	.divPunti {
-	    top: 70%; width: 20%; left: 40%
+	    top: 70%; width: 20%; left: 40%;
 	    position: absolute;
 	    color: blue;
 	    font-size: x-large;
@@ -126,11 +126,16 @@
 	    border:none;
 	}
 	.lblArrivo {
-	    top: 75%; width: 30%;
-	    margin-left: auto; margin-right: auto;
+	    top: 75%; width: 50%;
 	    position: absolute;
 	    color: red;
 	    font-size: x-large;
+	}
+	.lblArrivo1 {
+	    left: 1em;
+	}
+	.lblArrivo2 {
+	    right: 1em;
 	}
     </style>    
 
@@ -142,6 +147,7 @@
 </head>
 
 <body>
+
     <div data-role="page" id="page-home" class="copertina" >
         <div role="main" class="ui-content" id="content-home">
 	    <div class="divPunti">
@@ -174,8 +180,6 @@
 	    <div id="lblCoordinate1"></div>
 	    <div  id="lblDistanza1">		
 	    </div>
-	    <div  class="lblArrivo" id="lblArrivo1">		
-	    </div>
 	    <img class="imgFoto" id="smallImage1" src="" />
 	    <img style="width:160px;height:120px;" id="imgTimbro1" src="" />
 	    <div class="btnSx" id="btnPrev1"><b><</b></div>
@@ -183,8 +187,9 @@
 	    <div class="imgSfondo1" id="imgSfondo1"></div>
 	    <div class="imgMeta imgMeta1" id="imgMeta1"></div>
 	    <div class="txtNote">
-		<textarea cols="40" rows="4" id="txtNota1"></textarea>
+		<textarea cols="40" rows="4" id="txtNota1" placeholder="inserisci una nota"></textarea>
 	    </div>
+	    <div  class="lblArrivo lblArrivo1" id="lblArrivo1"></div>
 	    <a class="imgOptions imgOptions1" href="#popupMenu" data-rel="popup" data-transition="slideup"></a>
 	    <div class="numPagina numPagina1" id="numPagina1"></div>
 	    <div data-role="popup" id="popupMenu" data-theme="b" data-position-to="window">
@@ -212,15 +217,14 @@
 	    <div id="lblCoordinate2"></div>
 	    <div  id="lblDistanza2">		
 	    </div>
-	    <div  id="lblArrivo2">		
-	    </div>
 	    <img style="width:160px;height:120px;border-style=none;" id="smallImage2" src="" />
 	    <img style="width:160px;height:120px; border-style=none;" id="imgTimbro2" src="" />
 	    <div class="btnSx" id="btnPrev2"><b><</b></div>
 	    <div class="btnDx" id="btnNext2"><b>></b></div>
 	    <div class="imgSfondo2" id="imgSfondo2"></div>
+	    <div  class="lblArrivo lblArrivo2" id="lblArrivo2"></div>
 	    <div class="txtNote">
-		<textarea cols="40" rows="4" id="txtNota1"></textarea>
+		<textarea cols="40" rows="4" id="txtNota1" placeholder="inserisci una nota" ></textarea>
 	    </div>
 	    <div class="imgMeta imgMeta2" id="imgMeta2"></div>
 	    <a class="imgOptions imgOptions2" href="#popupMenu" data-rel="popup" data-transition="slideup"></a>
@@ -258,9 +262,10 @@
             </ul>
         </div>
     </div><!-- /page-elencomete-->
-    
-    <div data-role="popup" id="popupDesc" >
+
+    <div id="popupDesc" >
 	<p>Eccoci</p>
     </div><!-- /popupDesc-->
+    
 </body>
 </html>

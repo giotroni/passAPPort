@@ -18,7 +18,7 @@ var destinationType; // sets the format of returned value
 
 var id_User = 1;    // id dell'utilizzatore
 
-var direction = false;
+var direction = false;  // verso della transizione nello scorrimento delle pagine
 // Funzione che calcola la distanza
 // MAIN
 var app = {
@@ -39,6 +39,7 @@ var app = {
     // inizializza l'elenco delle mete e le pagine
     mete.inizializza();
     pagine.leggePagine();
+    //app.checkPos();
     pagine.showPage();
     // EVENTI DA LEGARE
     $("#btnSettings").on("click", pagine.settings);    
@@ -60,6 +61,8 @@ var app = {
     //$("#imgMeta2").on("click", pagine.popupNote);
     $("#txtNota1").on( "change", pagine.memoNota );
     $("#txtNota2").on( "change", pagine.memoNota );
+    
+    $( "#popupDesc" ).enhanceWithin().popup(); // Abilita il pop-up che descrive le immagini per tutte le pagine
 
     var draggable = document.getElementById('draggable');
     var altezza = $(document).height();
@@ -77,7 +80,6 @@ var app = {
       event.preventDefault();            
     }, false);
 
-    app.checkPos();
     var elements = document.getElementsByName("interno"); 
     //$.event.special.swipe.horizontalDistanceThreshold = 120;
     elements.on("swiperight", function(event){
@@ -111,7 +113,7 @@ var app = {
       var direzione = data.state.direction;
       if (direzione == 'back' && pagine.paginaMeteVisibile) {
         // do something
-        pagine.showMete();
+        pagine.showPage();
       }
       //if (direction == 'forward') {
       //  // do something else
@@ -420,8 +422,6 @@ var pagine = {
           reverse:direction
       });        
 
-      var smallImage = document.getElementById('smallImage'+suffisso);    
-
       // cancella l'esistente
       $("#lblDistanza"+suffisso).empty();  
       $("#lblArrivo"+suffisso).empty();
@@ -435,10 +435,14 @@ var pagine = {
       $('#imgMeta'+suffisso).css('background-image', 'url('+appDir + el.img+')');
       $("#txtNota"+suffisso).val(el.note);
       if(  pagine.arrivato(pagine.numPagina ) ){
+        $('#smallImage'+suffisso).show();
+        $('#smallImage'+suffisso).attr('src',el.foto);
         $("#lblArrivo"+suffisso).html("Arrivato: "+ el.dataora);
         $('#imgTimbro'+suffisso).show();
         $('#imgTimbro'+suffisso).attr('src',appDir + el.timbro);
       } else {
+        $('#smallImage'+suffisso).hide();
+        $('#smallImage'+suffisso).attr('src', '');
         $("#lblArrivo"+suffisso).html("Non ancora arrivato");
         $('#imgTimbro'+suffisso).hide();
         $('#imgTimbro'+suffisso).attr('src','');
