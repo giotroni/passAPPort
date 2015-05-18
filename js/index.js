@@ -130,12 +130,12 @@ var app = {
   },
   // memorizza i dati della APP
   salvaDati: function(){
-    attesa("memorizzo", true);
+    attesa(true, "Memorizzo");
     // azzera il database
     app.storage.clear();
     pagine.scrivePagine();
     mete.scriveMete();
-    attesa("", false);
+    attesa(false, "");
   },
   // chiamata quando c'è un errore nella lettura della posizione
   onErrorGeo: function(error) {
