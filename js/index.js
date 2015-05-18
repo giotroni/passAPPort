@@ -108,7 +108,6 @@ var app = {
     });
     $(window).on("navigate", function (event, data) {
       var direzione = data.state.direction;
-      "#page-elencomete"
       if (direzione == 'back' && pagine.paginaMeteVisibile) {
         // do something
         pagine.showMete();
@@ -452,7 +451,7 @@ var pagine = {
         showLoadMsg:  true
     });
     mete.sortMete();
-    paginaMeteVisibile = true;
+    pagine.paginaMeteVisibile = true;
     pagine.elencaMete();
   },
   // crea l'elenco mete 
@@ -602,7 +601,7 @@ var pagine = {
   // resetta la lista pagine
   resetLstPagine: function(){
     var lung = pagine.lista.length
-    dbgMsg(lung);
+    dbgMsg("Num pagine: "+ lung);
     $('#lstPagine').empty();
     for(i=0; i<lung; i++){
       // aggiorna l'elenco delle pagine nel popup
@@ -615,7 +614,7 @@ var pagine = {
           pagine.showPage();
       });
     };
-    $('#lstPagine').listview("refresh");
+    //$('#lstPagine').listview("refresh");
   },
   // scrive in memoria le pagine e le mete
   scrivePagine: function(){
