@@ -124,6 +124,11 @@
 	    top:4em;width:90%; left: 5%; position: absolute;
 	    border:none;
 	}
+	.imgTimbro {
+	    top:50%; left:30%; width:160px; height:120px;; position: absolute;
+	    border:none;
+	}
+
 	.lblArrivo {
 	    top: 80%; width: 50%;
 	    position: absolute;
@@ -178,11 +183,10 @@
     <div data-role="page" id="page-interno1" data-add-back-btn="false"  class="interno1" name="interno" style="text-align:right;">
         <div role="main" class="ui-content" id="content-interno">
 	    <div class="titolo titolo1" id="tit-interno1"></div>
-	    <div id="lblCoordinate1"></div>
 	    <div  id="lblDistanza1">		
 	    </div>
 	    <img class="imgFoto" id="smallImage1" src="" />
-	    <img style="width:160px;height:120px;" id="imgTimbro1" src="" />
+	    <img class= imgTimbro" id="imgTimbro1" src="" />
 	    <div class="btnSx" id="btnPrev1"><b><</b></div>
 	    <div class="btnDx" id="btnNext1" ><b>></b></div>
 	    <div class="imgSfondo1" id="imgSfondo1"></div>
@@ -191,35 +195,18 @@
 		<textarea cols="40" rows="4" id="txtNota1" placeholder="inserisci una nota"></textarea>
 	    </div>
 	    <div  class="lblArrivo lblArrivo1" id="lblArrivo1"></div>
-	    <a class="imgOptions imgOptions1" href="#popupMenu" data-rel="popup" data-transition="slideup"></a>
+	    <a class="imgOptions imgOptions1" href="#" data-rel="popup" data-transition="slideup"></a>
 	    <div class="numPagina numPagina1" id="numPagina1"></div>
-	    <div data-role="popup" id="popupMenu" data-theme="b" data-position-to="window">
-		<ul data-role="listview" data-inset="true" style="min-width:210px;">
-		   <li data-role="list-divider">Scegli un azione</li>
-		   <li><a href="#" id="btnHome1" >Vai alla copertina</a></li>
-		   <li><a href="#" id="btnCheckPos" >Verifica la posizione</a></li>
-		   <li><a href="#" id="btnSettings1" >Impostazioni</a></li>
-		   <li><a href="#" id="btnDelete" >Elimina pagina</a></li>
-		</ul>
-		<div data-role="collapsibleset" data-theme="b" data-content-theme="a" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" style="margin:0; width:250px;">
-		    <div data-role="collapsible" data-inset="false">
-		    <h2>Vai a pagina:</h2>
-			<ul data-role="listview" id="lstPagine">
-			</ul>
-		    </div><!-- /collapsible -->
-		</div><!-- /collapsibleset -->
-	    </div><!-- /popupMenu -->
         </div>
     </div><!-- /page-interno -->
 
     <div data-role="page" id="page-interno2" data-add-back-btn="false"  class="interno2" name="interno">
         <div role="main" class="ui-content" id="content-interno">
 	    <div class="titolo titolo2" id="tit-interno2"></div>
-	    <div id="lblCoordinate2"></div>
 	    <div  id="lblDistanza2">		
 	    </div>
-	    <img style="width:160px;height:120px;border-style=none;" id="smallImage2" src="" />
-	    <img style="width:160px;height:120px; border-style=none;" id="imgTimbro2" src="" />
+	    <img class="imgFoto" id="smallImage2" src="" />
+	    <img class= imgTimbro" id="imgTimbro2" src="" />
 	    <div class="btnSx" id="btnPrev2"><b><</b></div>
 	    <div class="btnDx" id="btnNext2"><b>></b></div>
 	    <div class="imgSfondo2" id="imgSfondo2"></div>
@@ -228,7 +215,7 @@
 		<textarea cols="40" rows="4" id="txtNota1" placeholder="inserisci una nota" ></textarea>
 	    </div>
 	    <div class="imgMeta imgMeta2" id="imgMeta2"></div>
-	    <a class="imgOptions imgOptions2" href="#popupMenu" data-rel="popup" data-transition="slideup"></a>
+	    <a class="imgOptions imgOptions2" href="#" data-rel="popup" data-transition="slideup" ></a>
 	    <div class="numPagina numPagina2" id="numPagina2"></div>
         </div>
 <!--
@@ -264,9 +251,25 @@
         </div>
     </div><!-- /page-elencomete-->
 
-    <div data-role="popup" id="popupDesc" class="ui-corner-all" data-position-to="window" data-overlay-theme="a" data-theme="c">
+    <div data-role="popup" id="popupDesc" class="ui-corner-all" data-position-to="window" data-overlay-theme="a" data-theme="c" style="background-color: white;">
 	<div id="popupLblDesc"></div>
     </div><!-- /popupDesc-->
     
+    <div data-role="popup" id="popupMenu" data-theme="b" data-position-to="window">
+	<ul data-role="listview" data-inset="true" style="min-width:210px;">
+	   <li data-role="list-divider">Scegli un azione</li>
+	   <li><a href="#" id="btnHome1" >Vai alla copertina</a></li>
+	   <li><a href="#" id="btnCheckPos" >Verifica la posizione</a></li>
+	   <li><a href="#" id="btnSettings1" >Impostazioni</a></li>
+	   <li><a href="#" id="btnDelete" >Elimina pagina</a></li>
+	</ul>
+	<div data-role="collapsibleset" data-theme="b" data-content-theme="a" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" style="margin:0; width:250px;">
+	    <div data-role="collapsible" data-inset="false">
+	    <h2>Vai a pagina:</h2>
+		<ul data-role="listview" id="lstPagine">
+		</ul>
+	    </div><!-- /collapsible -->
+	</div><!-- /collapsibleset -->
+    </div><!-- /popupMenu -->
 </body>
 </html>

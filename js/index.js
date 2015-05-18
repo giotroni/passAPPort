@@ -42,6 +42,9 @@ var app = {
     //app.checkPos();
     pagine.showPage();
     // EVENTI DA LEGARE
+    $( "#popupDesc" ).enhanceWithin().popup(); // Abilita il pop-up che descrive le immagini per tutte le pagine
+    $( "#popupMenu" ).enhanceWithin().popup(); // Abilita il pop-up con le opzioni
+
     $("#btnSettings").on("click", pagine.settings);    
     $("#btnSettings1").on("click", pagine.settings);    
     $("#btnReset").on("click", pagine.reset);
@@ -61,9 +64,8 @@ var app = {
     //$("#imgMeta2").on("click", pagine.popupNote);
     $("#txtNota1").on( "change", pagine.memoNota );
     $("#txtNota2").on( "change", pagine.memoNota );
+    $(".imgOptions").on("click", pagine.popupMenu);
     
-    $( "#popupDesc" ).enhanceWithin().popup(); // Abilita il pop-up che descrive le immagini per tutte le pagine
-
     var draggable = document.getElementById('draggable');
     var altezza = $(document).height();
     draggable.addEventListener('touchmove', function(event){
@@ -422,21 +424,18 @@ var pagine = {
 
       // cancella l'esistente
       $("#lblDistanza"+suffisso).empty();  
-      $("#lblArrivo"+suffisso).empty();
-      $("#lblCoordinate"+suffisso).empty();
       // scrive i nuovi dati
       var el = pagine.lista[pagine.numPagina-1];
       $("#tit-interno"+suffisso).html("<b>"+el.meta+"</b");
       $("#numPagina"+suffisso).html("<i>pag. "+pagine.numPagina +"</i>")
       // dbgMsg(el.foto);
-      $("#lblCoordinate"+suffisso).html(el.lat + " - " + el.lng);
       $('#imgMeta'+suffisso).css('background-image', 'url('+appDir + el.img+')');
       $("#txtNota"+suffisso).val(el.note);
       if(  pagine.arrivato(pagine.numPagina ) ){
         $('#smallImage'+suffisso).show();
         $('#smallImage'+suffisso).attr('src',el.foto);
         $("#lblArrivo"+suffisso).css("color","green");
-        $("#lblArrivo"+suffisso).html("Arrivato: "+ el.dataora);
+        $("#lblArrivo"+suffisso).html("Arrivato: "+ txtDataora(el.dataora));
         $('#imgTimbro'+suffisso).show();
         $('#imgTimbro'+suffisso).attr('src',appDir + el.timbro);
       } else {
@@ -683,9 +682,12 @@ var pagine = {
   popupNote: function(){
     //$("#popupDesc" ).on( "popupafteropen", function( event, ui ) {dbgMsg("PopUp Note fatta");} );
     var el = pagine.lista[pagine.numPagina-1];
-    $("#popupLblDesc").html(el.meta + "<br>" + el.desc + "<br>lat: " + el.lat + "<br>Long: " + el.lng + "<br>Alt: " + el.alt );
+    $("#popupLblDesc").html("<b>"+el.meta + "</b><br>" + el.desc + "<br><i>lat:</i> " + el.lat + "<br><i>Long:</i> " + el.lng + "<br><i>Alt:</i> " + el.alt );
     $("#popupDesc").popup( "open" );
     
+  },
+  popupMenu: function(){
+    $("#popupMenu").popup( "open" );
   },
   cancellaPagina: function( ind ){
     if(ind == 1){

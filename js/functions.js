@@ -104,3 +104,20 @@ function showYesNo( msg, func ) {
 function mycomparator(a,b) {
     return parseFloat(a.dist) - parseFloat(b.dist) ;
 }
+// funzione che ritorna il formato data ora in modo "leggibile
+function txtDataora( dt ){
+  var month = new Array();
+  month[0] = "gen";
+  month[1] = "feb";
+  month[2] = "mar";
+  month[3] = "apr";
+  month[4] = "mag";
+  month[5] = "giu";
+  month[6] = "lug";
+  month[7] = "ago";
+  month[8] = "set";
+  month[9] = "ott";
+  month[10] = "nov";
+  month[11] = "dic";
+  return (dt.substr(7,2) + " " + month[parseInt(dt.substr(5,5))] + " " + dt.substr(0,4) + " alle " + dt.substr(10,5));
+}
