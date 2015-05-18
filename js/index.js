@@ -492,11 +492,12 @@ var pagine = {
     var sData = adesso().substring(0, 10);
     // dbgMsg(sData);
     paginaMeteVisibile = false;
-    dbgMsg("id " + mete.elenco[id].id);
+    // dbgMsg("id " + mete.elenco[id].id);
     $.each(pagine.lista, function(key, value){
       // evita di aggiungere più volte la stessa meta se non è ancora stata raggiunta o se è stata raggiunta oggi
-      dbgMsg("value.id " + value.idMeta);
+      // dbgMsg("value.id " + value.idMeta);
       if(value.idMeta == mete.elenco[id].id ){
+        dbgMsg(value.dataora + " " + value.dataora.indexOf(sData));
         if (value.dataora.indexOf(sData) >= 0){
           showAlert("Non si può aggiungere: meta raggiunta oggi", "Attenzione");
         } else if( value.dataora.indexOf('0000-00-00')>=0){
