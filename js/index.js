@@ -576,7 +576,7 @@ var pagine = {
       attesa("memorizzo", true);
       var lung = app.storage.getItem("numPagine");
       // dbgMsg(lung);
-      for(i=0; i<lung; i++){
+      for(var i=0; i<lung; i++){
         var valore = app.storage.getItem("pag"+i);
         // dbgMsg(valore);
         pagine.lista.push(JSON.parse(valore));
@@ -600,10 +600,10 @@ var pagine = {
   },
   // resetta la lista pagine
   resetLstPagine: function(){
-    var lung = pagine.lista.length
+    var lung = pagine.lista.length;
     dbgMsg("Num pagine: "+ lung);
     $('#lstPagine').empty();
-    for(i=0; i<lung; i++){
+    for(var i=1; i<=lung; i++){
       // aggiorna l'elenco delle pagine nel popup
       var testo = '<li id="pag_'+ i+'" ><a href="#" >';
       testo += "pag. " + i + " - " + pagine.lista[i-1].meta;
@@ -614,7 +614,8 @@ var pagine = {
           pagine.showPage();
       });
     };
-    //$('#lstPagine').listview("refresh");
+    dbgMsg("Reset list pagine ok");
+    $('#lstPagine').listview("refresh");
   },
   // scrive in memoria le pagine e le mete
   scrivePagine: function(){
