@@ -500,12 +500,15 @@ var pagine = {
         dbgMsg(value.dataora + " " + value.dataora.indexOf(sData));
         if (value.dataora.indexOf(sData) >= 0){
           showAlert("Non si può aggiungere: meta raggiunta oggi", "Attenzione");
+          pagine.numPagina = key+1;
+          metaOK = false;
+          return false;
         } else if( value.dataora.indexOf('0000-00-00')>=0){
           showAlert("Non si può aggiungere: meta presente", "Attenzione");
+          pagine.numPagina = key+1;
+          metaOK = false;
+          return false;
         }
-        pagine.numPagina = key+1;
-        metaOK = false;
-        return false;
       }
     });
     // dbgMsg("meta ok: " + metaOK);
