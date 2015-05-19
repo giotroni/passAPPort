@@ -44,6 +44,7 @@ function vibra(mm){
 function dbgMsg(msg){
   if(DBG){
     showAlert(msg, "Debug");
+    writeLog(msg);
   }
 }
 // mostra l'icona dell'attesa
@@ -120,4 +121,24 @@ function txtDataora( dt ){
   month[10] = "nov";
   month[11] = "dic";
   return (dt.substr(8,2) + " " + month[parseInt(dt.substr(5,2))-1] + " " + dt.substr(0,4) + " alle " + dt.substr(11,5));
+}
+
+function writeLog(txt){
+  // scrive il testo txt sul file log
+  window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
+    function(fileSystem) {
+      fileSystem.root.getFile("log.txt", {create: true, exclusive: false},
+        function(fileEntry){ // memorizza il testo sul file di log
+          fileEntry.createWriter(function(writer){
+            writer.seek(writer.length);
+            writer.write(adesso() + "," + txt + "\r\n" );
+          }, fail);
+        },
+      fail);
+    },
+  fail);
+}
+
+function fail(error){
+  dbgMsg("Errore: " + error.source + " + " + error.target+ " + " + error.code)
 }

@@ -17,7 +17,7 @@ var appDir = "";
 var destinationType; // sets the format of returned value
 
 var id_User = 1;    // id dell'utilizzatore
-
+var dragga = true;  // abilitato durante il drag
 var direction = false;  // verso della transizione nello scorrimento delle pagine
 // Funzione che calcola la distanza
 // MAIN
@@ -70,16 +70,19 @@ var app = {
     var altezza = $(document).height();
     draggable.addEventListener('touchmove', function(event){
       // gestisce la timbratura
-      var touch = event.targetTouches[0];
-      draggable.style.left = touch.pageX - 25 + 'px';
-      draggable.style.top= touch.pageY - 25 + 'px';
-      $("#btnDownload").html("alt" + (altezza *3 / 4)+"X:"+touch.pageX+" Y:"+touch.pageY  );
-      if(touch.pageY  > (altezza *3 / 4)){
-          draggable.style.left = '45%';
-          draggable.style.top= '1em';
-          showAlertModal("Bravo", app.capturePhoto, "Messaggio");
+      if( dragga ){
+        var touch = event.targetTouches[0];
+        draggable.style.left = touch.pageX - 25 + 'px';
+        draggable.style.top= touch.pageY - 25 + 'px';
+        $("#btnDownload").html("alt" + (altezza *3 / 4)+"X:"+touch.pageX+" Y:"+touch.pageY  );
+        if(touch.pageY  > (altezza *3 / 4)){
+            draggable.style.left = '45%';
+            draggable.style.top= '1em';
+            dragga = false;
+            showAlertModal("Bravo", app.capturePhoto, "Messaggio");
+        }
+        event.preventDefault();            
       }
-      event.preventDefault();            
     }, false);
 
     var elements = document.getElementsByName("interno"); 
@@ -117,10 +120,8 @@ var app = {
         // do something
         pagine.showPage();
       }
-      //if (direction == 'forward') {
-      //  // do something else
-      //}
     });
+    dbgMsg("Partito");
   },
   // chiamata quando la posizione è stata letta
   onSuccessGeo: function(position){
@@ -238,9 +239,6 @@ var app = {
   }
 }
 
-function fail(error){
-  dbgMsg("Errore: " + error.source + " + " + error.target+ " + " + error.code)
-}
 
 // classe con le mete
 var mete = {
@@ -264,7 +262,7 @@ var mete = {
       if ("versioneMete" in localStorage){
         versioneMete = app.storage.getItem("versioneMete");
       }
-      // dbgMsg("Legge mete da DB interno: " + lung);
+      dbgMsg("Legge mete da DB interno: " + lung);
       for(i=0; i<lung; i++){
         var valore = app.storage.getItem("meta"+i);
         // dbgMsg(valore);
@@ -272,7 +270,7 @@ var mete = {
       }
     } else if( app.checkWifi() ){
       // legge dal sito
-      // dbgMsg("Legge mete da internet")
+      dbgMsg("Legge mete da internet")
       $.ajax({
         type: 'GET',
         url: URL_PREFIX + 'php/leggiMete.php',
@@ -411,6 +409,7 @@ var pagine = {
   },
   // Mostra la pagina corrente
   showPage: function(){
+    dragga = true;
     if(pagine.numPagina>0){
       var suffisso = 2;
       // dbgMsg(pagine.numPagina  + " " + pagine.numPagina % 2);
@@ -639,7 +638,7 @@ var pagine = {
   },
   // scrive in memoria le pagine e le mete
   scrivePagine: function(){
-    dbgMsg("Scrive pagine");
+    // dbgMsg("Scrive pagine");
     // salva le pagine
     app.storage.setItem("numPagine", pagine.lista.length);
     app.storage.setItem("pagineSaved", pagine.saved);
