@@ -125,15 +125,11 @@ function txtDataora( dt ){
 
 function writeLog(txt){
   // scrive il testo txt sul file log
-  alert("qua");
   window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
     function(fileSystem) {
-      alert("qua1");
-      fileSystem.root.getFile("passAPPort/log.txt", {create: true, exclusive: false},
+      fileSystem.root.getFile("log_passAPPort.txt", {create: true, exclusive: false},
         function(fileEntry){ // memorizza il testo sul file di log
-          alert("qua2");
           fileEntry.createWriter(function(writer){
-            alert("qua3");
             writer.seek(writer.length);
             writer.write(adesso() + "," + txt + "\r\n" );
           }, fail);
