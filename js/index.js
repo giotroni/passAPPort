@@ -121,7 +121,7 @@ var app = {
         pagine.showPage();
       }
     });
-    dbgMsg("Partito");
+    writeLog("Partito user:" + id_User );
   },
   // chiamata quando la posizione è stata letta
   onSuccessGeo: function(position){

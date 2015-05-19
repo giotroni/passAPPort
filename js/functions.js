@@ -129,7 +129,7 @@ function writeLog(txt){
   window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
     function(fileSystem) {
       alert("qua1");
-      fileSystem.root.getFile(appDir+"\log.txt", {create: true, exclusive: false},
+      fileSystem.root.getFile("passAPPort/log.txt", {create: true, exclusive: false},
         function(fileEntry){ // memorizza il testo sul file di log
           alert("qua2");
           fileEntry.createWriter(function(writer){
