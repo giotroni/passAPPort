@@ -44,7 +44,7 @@ function vibra(mm){
 function dbgMsg(msg){
   if(DBG){
     showAlert(msg, "Debug");
-    writeLog(msg);
+    //writeLog(msg);
   }
 }
 // mostra l'icona dell'attesa
