@@ -85,9 +85,8 @@ var app = {
       }
     }, false);
 
-    var elements = document.getElementsByClassName("interno"); 
     //$.event.special.swipe.horizontalDistanceThreshold = 120;
-    elements.on("swiperight", function(event){
+    $(".interno").on("swiperight", function(event){
       // dbgMsg("swipe right");
       if( event.handled !== true){
         // dbgMsg("Swipe ok");
@@ -96,7 +95,7 @@ var app = {
       }
       return false;         
     });
-    elements.on("swipeleft", function(event){
+    $(".interno").on("swipeleft", function(event){
       // dbgMsg("swipe left");
       if( event.handled !== true){
         // dbgMsg("Swipe ok");
@@ -105,7 +104,7 @@ var app = {
       }
       return false;         
     });
-    $(document).on("swipeleft", ".copertina", function(event){
+    $(".copertina").on("swipeleft", function(event){
       // dbgMsg("swipe left");
       if( event.handled !== true){
         // dbgMsg("Swipe ok");
@@ -121,7 +120,7 @@ var app = {
         pagine.showPage();
       }
     });
-    writeLog("Partito user:" + id_User );
+    dbMsg("Partito user:" + id_User );
   },
   // chiamata quando la posizione è stata letta
   onSuccessGeo: function(position){
