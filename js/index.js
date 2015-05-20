@@ -65,7 +65,7 @@ var app = {
     //$("#imgMeta2").on("click", pagine.popupNote);
     $("#txtNota1").on( "change", pagine.memoNota );
     $("#txtNota2").on( "change", pagine.memoNota );
-    $(".imgOptions").on("click", pagine.popupMenu);
+//    $(".imgOptions").on("click", pagine.popupMenu);
     
     var draggable = document.getElementById('draggable');
     var altezza = $(document).height();
