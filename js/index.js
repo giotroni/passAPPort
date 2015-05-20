@@ -85,7 +85,7 @@ var app = {
       }
     }, false);
 
-    var elements = document.getElementsByName("interno"); 
+    var elements = document.getElementsByClassName("interno"); 
     //$.event.special.swipe.horizontalDistanceThreshold = 120;
     elements.on("swiperight", function(event){
       // dbgMsg("swipe right");

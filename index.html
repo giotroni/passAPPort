@@ -28,15 +28,15 @@
 	    background-image: url("img/copertina3.png");
 	    background-size:   cover;
 	    }
-	.interno1 {
-	    background-image: url("img/fetta_interno1.png");
+	.interno {
 	    background-size: 100% 50px;
 	    background-repeat:   repeat-y;
+	}
+	.interno1 {
+	    background-image: url("img/fetta_interno1.png");
 	    }
 	.interno2 {
 	    background-image: url("img/fetta_interno2.png");
-	    background-size: 100% 50px;
-	    background-repeat:   repeat-y;
 	    }
 	.imgSfondo1 {
 	    top: 75%; right: 0px;
@@ -185,7 +185,7 @@
 
     </div><!-- /page-settings -->
     
-    <div data-role="page" id="page-interno1" data-add-back-btn="false"  class="interno1" name="interno" style="text-align:right;">
+    <div data-role="page" id="page-interno1" data-add-back-btn="false"  class="interno interno1" name="interno" style="text-align:right;">
         <div role="main" class="ui-content" id="content-interno">
 	    <div class="titolo titolo1" id="tit-interno1"></div>
 	    <div  id="lblDistanza1">		
@@ -205,7 +205,7 @@
         </div>
     </div><!-- /page-interno -->
 
-    <div data-role="page" id="page-interno2" data-add-back-btn="false"  class="interno2" name="interno">
+    <div data-role="page" id="page-interno2" data-add-back-btn="false"  class="interno interno2" name="interno">
         <div role="main" class="ui-content" id="content-interno">
 	    <div class="titolo titolo2" id="tit-interno2"></div>
 	    <div  id="lblDistanza2">		
