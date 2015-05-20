@@ -43,7 +43,7 @@ function vibra(mm){
 // messaggi diagnostici
 function dbgMsg(msg){
   if(DBG){
-    showAlert(msg, "Debug");
+    //showAlert(msg, "Debug");
     writeLog(msg);
   }
 }
