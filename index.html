@@ -158,6 +158,13 @@
 </head>
 
 <body>
+    <div data-role="panel" id="leftPanel" data-display="overlay" data-theme="b">
+	    <h3>Left Panel: Overlay</h3>
+	    <p>This panel is positioned on the right with the overlay display mode. The panel markup is <em>after</em> the header, content and footer in the source order.</p>
+	    <p>To close, click off the panel, swipe left or right, hit the Esc key, or use the button below:</p>
+        <a href="#" data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-delete ui-btn-icon-left ui-btn-inline">Close panel</a>
+
+    </div><!-- /leftPanel-->
 
     <div data-role="page" id="page-home" class="copertina" >
         <div role="main" class="ui-content" id="content-home">
@@ -200,7 +207,7 @@
 		<textarea cols="40" rows="4" id="txtNota1" placeholder="inserisci una nota"></textarea>
 	    </div>
 	    <div  class="lblArrivo lblArrivo1" id="lblArrivo1"></div>
-	    <a class="imgOptions imgOptions1" href="#leftPanel" ></a>
+	    <a class="imgOptions imgOptions1" href="#leftPanel" data-rel="main-menu-panel"></a>
 	    <div class="numPagina numPagina1" id="numPagina1"></div>
         </div>
     </div><!-- /page-interno -->
@@ -277,12 +284,5 @@
 	</div><!-- /collapsibleset -->
     </div><!-- /popupMenu -->
 
-    <div data-role="panel" id="leftPanel" data-display="overlay" data-theme="b">
-	    <h3>Left Panel: Overlay</h3>
-	    <p>This panel is positioned on the right with the overlay display mode. The panel markup is <em>after</em> the header, content and footer in the source order.</p>
-	    <p>To close, click off the panel, swipe left or right, hit the Esc key, or use the button below:</p>
-        <a href="#" data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-delete ui-btn-icon-left ui-btn-inline">Close panel</a>
-
-    </div><!-- /leftPanel-->
 </body>
 </html>

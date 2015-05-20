@@ -44,6 +44,7 @@ var app = {
     // EVENTI DA LEGARE
     $( "#popupDesc" ).enhanceWithin().popup(); // Abilita il pop-up che descrive le immagini per tutte le pagine
     $( "#popupMenu" ).enhanceWithin().popup(); // Abilita il pop-up con le opzioni
+    $("div[data-role='panel']").panel().enhanceWithin();
 
     $("#btnSettings").on("click", pagine.settings);    
     $("#btnSettings1").on("click", pagine.settings);    
