@@ -145,15 +145,15 @@ function fail(error){
 
 function sharePhoto() {
  var imageLink;
-        console.log('Calling from CapturePhoto');
+        dbgMsg('Calling from CapturePhoto');
         navigator.screenshot.save(function(error,res){
         if(error){
-        console.error(error);
+        dngMsg(error);
         }else{
-        console.log('ok',res.filePath); //should be path/to/myScreenshot.jpg
+        dbgMsg('ok',res.filePath); //should be path/to/myScreenshot.jpg
         //For android
         imageLink = res.filePath;
-       window.plugins.socialsharing.share(null, null,'file://'+imageLink, null);
+       window.plugins.socialsharing.share("Meta condivisa da passAPPort", "passPPort",'file://'+imageLink, null);
 
        //For iOS
        //window.plugins.socialsharing.share(null,   null,imageLink, null)
