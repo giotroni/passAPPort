@@ -159,9 +159,14 @@
 
 <body>
     <div data-role="panel" id="leftPanel" data-display="overlay" data-theme="b">
-	    <h3>Left Panel: Overlay</h3>
-	    <p>This panel is positioned on the right with the overlay display mode. The panel markup is <em>after</em> the header, content and footer in the source order.</p>
-	    <p>To close, click off the panel, swipe left or right, hit the Esc key, or use the button below:</p>
+	<h3>Scegli un'azione</h3>
+	<ul data-role="listview" data-inset="true" >
+	   <li data-role="list-divider">Scegli un azione</li>
+	   <li><a href="#" id="btnHome1" >Vai alla copertina</a></li>
+	   <li><a href="#" id="btnCheckPos" >Verifica la posizione</a></li>
+	   <li><a href="#" id="btnSettings1" >Impostazioni</a></li>
+	   <li><a href="#" id="btnDelete" >Elimina pagina</a></li>
+	</ul>
         <a href="#" data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-delete ui-btn-icon-left ui-btn-inline">Close panel</a>
 
     </div><!-- /leftPanel-->
@@ -269,11 +274,6 @@
     
     <div data-role="popup" id="popupMenu" data-theme="b" data-position-to="window">
 	<ul data-role="listview" data-inset="true" style="min-width:210px;">
-	   <li data-role="list-divider">Scegli un azione</li>
-	   <li><a href="#" id="btnHome1" >Vai alla copertina</a></li>
-	   <li><a href="#" id="btnCheckPos" >Verifica la posizione</a></li>
-	   <li><a href="#" id="btnSettings1" >Impostazioni</a></li>
-	   <li><a href="#" id="btnDelete" >Elimina pagina</a></li>
 	</ul>
 	<div data-role="collapsibleset" data-theme="b" data-content-theme="a" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" style="margin:0; width:250px;">
 	    <div data-role="collapsible" data-inset="false">
