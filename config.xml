@@ -46,6 +46,8 @@
       <param name="android-package" value="nl.xservices.plugins.SocialSharing" />
     </feature>
 
+    <gap:plugin name="com.darktalker.cordova.screenshot" version="0.1.0" />
+
     <gap:plugin name="org.apache.cordova.file-transfer" />
 
     <feature name="FileTransfer">
