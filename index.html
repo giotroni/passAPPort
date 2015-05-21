@@ -135,7 +135,7 @@
 	    border:none;
 	}
 	.lblArrivo {
-	    top: 83%; width: 50%;
+	    top: 80%; width: 55%;
 	    position: absolute;
 	    font-size: x-large;
 	}
@@ -151,7 +151,7 @@
     </style>    
 
     <script type="text/javascript" src="phonegap.js"></script>
-    
+    <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/functions.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
 
@@ -161,13 +161,13 @@
     <div data-role="panel" id="leftPanel" data-display="overlay" data-theme="b">
 	<h3>Scegli un'azione</h3>
 	<ul data-role="listview" data-inset="true" >
-	   <li data-role="list-divider">Scegli un azione</li>
 	   <li><a href="#" id="btnHome1" >Vai alla copertina</a></li>
 	   <li><a href="#" id="btnCheckPos" >Verifica la posizione</a></li>
 	   <li><a href="#" id="btnSettings1" >Impostazioni</a></li>
 	   <li><a href="#" id="btnDelete" >Elimina pagina</a></li>
 	</ul>
-        <a href="#" data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-delete ui-btn-icon-left ui-btn-inline">Close panel</a>
+	<button onclick="window.plugins.socialsharing.share('Message only')">message only</button>
+	<a href="#" data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-delete ui-btn-icon-left ui-btn-inline">Close panel</a>
 
     </div><!-- /leftPanel-->
 
