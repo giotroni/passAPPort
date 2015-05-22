@@ -160,3 +160,8 @@ function sharePhoto() {
  }
  },'jpg',50,'myScreenShot');
 }
+
+function condividi(){
+  $( "#leftPanel" ).panel( "close" );
+  sharePhoto();
+}

@@ -66,6 +66,7 @@ var app = {
     $("#txtNota1").on( "change", pagine.memoNota );
     $("#txtNota2").on( "change", pagine.memoNota );
 //    $(".imgOptions").on("click", pagine.popupMenu);
+    $("#pnlClose").on( "click", condividi );
     
     var draggable = document.getElementById('draggable');
     var altezza = $(document).height();
