@@ -144,6 +144,7 @@ function fail(error){
 }
 
 function sharePhoto() {
+  showAlert("Pronto a vondividere?", "Attenzione");
  var imageLink;
         dbgMsg('Calling from CapturePhoto');
         navigator.screenshot.save(function(error,res){

@@ -67,7 +67,7 @@ var app = {
     $("#txtNota2").on( "change", pagine.memoNota );
 //    $(".imgOptions").on("click", pagine.popupMenu);
     $("#pnlClose").on( "click", condividi );
-    $("#btnShare").on( "click", sharePhoto );
+    $(".btnShare").on( "click", sharePhoto );
     
     var draggable = document.getElementById('draggable');
     var altezza = $(document).height();
@@ -433,6 +433,7 @@ var pagine = {
       $('#imgMeta'+suffisso).css('background-image', 'url('+appDir + el.img+')');
       $("#txtNota"+suffisso).val(el.note);
       if(  pagine.arrivato(pagine.numPagina ) ){
+        $('.btnShare').show();
         $('#smallImage'+suffisso).show();
         $('#smallImage'+suffisso).attr('src',el.foto);
         $("#lblArrivo"+suffisso).css("color","green");
@@ -440,6 +441,7 @@ var pagine = {
         $('#imgTimbro'+suffisso).show();
         $('#imgTimbro'+suffisso).attr('src',appDir + el.timbro);
       } else {
+        $('.btnShare').hide();
         $('#smallImage'+suffisso).hide();
         $('#smallImage'+suffisso).attr('src', '');
         $("#lblArrivo"+suffisso).css("color","red");
