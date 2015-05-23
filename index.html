@@ -172,12 +172,12 @@
 
 <body>
     <div data-role="panel" id="leftPanel" data-display="overlay" data-theme="b">
-	<a href="#" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-mini ui-btn-inline ui-icon-delete ui-btn-icon-left ui-btn-right">Close</a>
-	<h3>Vai a...</h3>
+	<a href="#" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-mini ui-btn-inline ui-icon-delete ui-btn-icon-right ui-btn-right">Close</a>
+	<h3>Vai a:</h3>
 	<ul data-role="listview" data-inset="true" >
+	   <li><a href="#" id="btnPagine" >Pagina...</a></li>
 	   <li><a href="#" id="btnHome1" >Copertina</a></li>
 	   <li><a href="#" id="btnLastPage" >Ultima pagina</a></li>
-	   <li><a href="#" id="btnPagine" >Pagina...</a></li>
 	   <li><a href="#" id="btnNuovaMeta" >Nuova Meta</a></li>
 
 	</ul>
@@ -226,7 +226,7 @@
 	    <div class="imgSfondo2" id="imgSfondo1"></div>
 	    <div class="imgMeta imgMeta2" id="imgMeta1"></div>
 	    <div class="txtNote">
-		<textarea cols="40" rows="4" id="txtNota1" placeholder="inserisci una nota"></textarea>
+		<textarea cols="40" rows="3" id="txtNota1" placeholder="inserisci una nota"></textarea>
 	    </div>
 	    <div  class="lblArrivo lblArrivo2" id="lblArrivo1"></div>
 	    <a class="imgOptions imgOptions2" href="#leftPanel" data-rel="main-menu-panel"></a>
@@ -247,7 +247,7 @@
 	    <div class="imgSfondo2" id="imgSfondo2"></div>
 	    <div  class="lblArrivo lblArrivo2" id="lblArrivo2"></div>
 	    <div class="txtNote">
-		<textarea cols="40" rows="4" id="txtNota2" placeholder="inserisci una nota" ></textarea>
+		<textarea cols="40" rows="3" id="txtNota2" placeholder="inserisci una nota" ></textarea>
 	    </div>
 	    <div class="imgMeta imgMeta2" id="imgMeta2"></div>
 	    <a class="imgOptions imgOptions2" href="#leftPanel" data-rel="main-menu-panel" ></a>
@@ -266,28 +266,26 @@
 	      <img src="img/timbro.png">
 	    </div>
 	</div>
-
-
     </div><!-- /page-arrivo -->
     
     <div data-role="page" id="page-elencopagine" data-add-back-btn="true"  class="interno1">
         <div data-role="header" id="tit-elencoPagine">
         </div>
-	<div class="btnSx" ><b><</b></div>
         <div role="main" class="ui-content" id="content-elencoPagine">
 	    <ul data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Vai a pagina ..."  id="lstPagine">
             </ul>
         </div>
+	<div class="btnSx" ><b><</b></div>
     </div><!-- /page-elencopagine-->
 
     <div data-role="page" id="page-elencomete" data-add-back-btn="false"  class="interno1">
         <div data-role="header" id="tit-elencomete">
         </div>
-	<div class="btnSx"><b><</b></div>
         <div role="main" class="ui-content" id="content-elencoMete">
 	    <ul data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Scegli la tua meta..."  id="lstMete">
             </ul>
         </div>
+	<div class="btnSx" ><b><</b></div>
     </div><!-- /page-elencomete-->
 
     <div data-role="popup" id="popupDesc" class="ui-corner-all" data-position-to="window" data-overlay-theme="a" data-theme="c" style="background-color: white;">

@@ -15,7 +15,7 @@ var URL_PREFIX = "http://www.troni.it/passapport/";
 var myFolderApp = "passAPPort";
 var appDir = "";
 var destinationType; // sets the format of returned value
-
+var suffisso = 1;
 var id_User = 1;    // id dell'utilizzatore
 var dragga = true;  // abilitato durante il drag
 var direction = false;  // verso della transizione nello scorrimento delle pagine
@@ -414,11 +414,17 @@ var pagine = {
   showPage: function(){
     dragga = true;
     if(pagine.numPagina>0){
-      var suffisso = 2;
-      // dbgMsg(pagine.numPagina  + " " + pagine.numPagina % 2);
-      if(pagine.numPagina % 2 == 1){
-        suffisso = 1;
-      }
+      //if( suffisso == 1) {
+      //  suffisso = 2;
+      //} else {
+      //  suffisso = 1;
+      //}
+      suffisso = suffisso % 2 +1;
+      dbgMsg("suffisso: " + suffisso);
+      //// dbgMsg(pagine.numPagina  + " " + pagine.numPagina % 2);
+      //if(pagine.numPagina % 2 == 1){
+      //  suffisso = 1;
+      //}
       $.mobile.pageContainer.pagecontainer("change", "#page-interno"+suffisso, {
           transition: 'slide',
           reverse:direction
@@ -641,14 +647,21 @@ var pagine = {
     $('#lstPagine').empty();
     for(var i=1; i<=lung; i++){
       // aggiorna l'elenco delle pagine nel popup
+      var el = pagine.lista[i];
       var testo = '<li id="pag_'+ i+'" ><a href="#" >';
-      testo += "pag. " + i + " - " + pagine.lista[i-1].meta;
+      testo += '<img src="' + appDir + el.img +'">';
+      testo += "pag. " + i + " - " + el.meta;
+      if(  pagine.arrivato( i ) ){
+        testo += "<p>Arrivato il:<br>"+txtDataora(el.dataora)+"</p>";
+      } else {
+        testo += "<p>Non Arrivato</p>"
+      }
       testo += '</a></li>';
       $('#lstPagine').append(testo);
       $("#lstPagine li#pag_"+i ).bind("click", function(){
-        dbgMsg(i);
-          pagine.numPagina = i;
-          pagine.showPage();
+        dbgMsg("Vai a pagina: " + i);
+        pagine.numPagina = i;
+        pagine.showPage();
       });
     };
     $('#lstPagine').listview("refresh");

@@ -131,7 +131,7 @@ function writeLog(txt){
         function(fileEntry){ // memorizza il testo sul file di log
           fileEntry.createWriter(function(writer){
             writer.seek(writer.length);
-            writer.write(adesso() + "," + txt + "\r\n" );
+            writer.write(adesso() + "> " + txt + "\r\n" );
           }, fail);
         },
       fail);
