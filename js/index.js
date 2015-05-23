@@ -51,7 +51,9 @@ var app = {
     $("#btnReset").on("click", pagine.reset);
     $("#btnSave").on("click", pagine.savePagine);
     $("#btnHome").on("click", pagine.home);    
-    $("#btnHome1").on("click", pagine.home);    
+    $("#btnHome1").on("click", pagine.home);
+    $("#btnNuovaMeta").on("click", pagine.showMete);
+    
     $("#btnDelete").on("click", function(){showYesNo("Vuoi DAVVERO cancellare questa meta?", pagine.cancellaPagina)} );
     $(".btnSx").on("click", pagine.prevPage);
     $(".btnDx").on("click", pagine.nextPage);
@@ -516,6 +518,7 @@ var pagine = {
     });
     // dbgMsg("meta ok: " + metaOK);
     if( metaOK){
+      numPagina = pagine.lista.length;
       // inserisce i dati della meta nell'array delle pagine
       // dbgMsg("id: " + id + " " + mete.elenco[id].id + " " + mete.elenco[id].meta);
       pagine.lista.push({

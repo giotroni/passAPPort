@@ -83,7 +83,7 @@
 	    right: 80%; position: absolute;
 	}
 	.txtNote {
-	    top: 70%; width: 90%;
+	    top: 65%; width: 90%;
 	    position: absolute;
 	    }
 	.timbroVuoto {
@@ -132,8 +132,8 @@
 
 	}
 	.imgShare {
-	    top:4em; width:6em; height: 3em; right: 5%; position: absolute;
-	    circle(6em);
+	    top:4em; width:3em; height: 1.5em; right: 5%; position: absolute;
+	    shape-outside: circle(1.5em);
 	    background-image: url("img/icon_share.png");
 	    background-size: 100% 100%;
 	    background-repeat: no-repeat;
@@ -171,13 +171,11 @@
 	<h3>Scegli un'azione</h3>
 	<ul data-role="listview" data-inset="true" >
 	   <li><a href="#" id="btnHome1" >Vai alla copertina</a></li>
+	   <li><a href="#" id="btnNuovaMeta" >Aggiungi Meta</a></li>
 	   <li><a href="#" id="btnCheckPos" >Verifica la posizione</a></li>
 	   <li><a href="#" id="btnSettings1" >Impostazioni</a></li>
 	   <li><a href="#" id="btnDelete" >Elimina pagina</a></li>
 	</ul>
-	<button onclick="window.plugins.socialsharing.share('Message only')">message only</button>
-	<button onclick='<script>$( "#leftPanel" ).panel( "close" );sharePhoto();</script>'>Share Screenshot</button>
-	<a href="#" id="pnlClose"><img src="img/icon_share.jpg"/>Share</a>
 	<a href="#"  data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-delete ui-btn-icon-left ui-btn-inline">Close panel</a>
 
     </div><!-- /leftPanel-->
@@ -227,7 +225,7 @@
 	    <a class="imgOptions imgOptions2" href="#leftPanel" data-rel="main-menu-panel"></a>
 	    <div class="numPagina numPagina2" id="numPagina1"></div>
         </div>
-    </div><!-- /page-interno -->
+    </div><!-- /page-interno1 -->
 
     <div data-role="page" id="page-interno2" data-add-back-btn="false"  class="interno interno2" name="interno">
         <div role="main" class="ui-content" id="content-interno">
@@ -248,12 +246,6 @@
 	    <a class="imgOptions imgOptions2" href="#" data-rel="popup" data-transition="slideup" ></a>
 	    <div class="numPagina numPagina2" id="numPagina2"></div>
         </div>
-<!--
-	    <div data-role="footer" data-position="fixed">
-            <a href="#" data-role="button" id="btnCheckPos2">Check Pos</a>
-            <a href="#" data-role="button" id="btnDelete2">Cancella meta</a>
-        </div>
--->
     </div><!-- /page-interno2 -->
     
     <div data-role="page" id="page-arrivo" >
