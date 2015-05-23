@@ -54,7 +54,7 @@ var app = {
     $("#btnHome1").on("click", pagine.home);
     $("#btnNuovaMeta").on("click", pagine.showMete);
     $("#btnLastPage").on("click", pagine.lastPage);
-    $("#btnPagine").on("click", pagine.popupMenu);
+    $("#btnPagine").on("click", pagine.showElencoPagine);
     
     $("#btnDelete").on("click", function(){showYesNo("Vuoi DAVVERO cancellare questa meta?", pagine.cancellaPagina)} );
     $(".btnSx").on("click", pagine.prevPage);
@@ -476,6 +476,16 @@ var pagine = {
     mete.sortMete();
     pagine.paginaMeteVisibile = true;
     pagine.elencaMete();
+  },
+  // fa venir fuori il popup con le info sulla meta
+  showElencoPagine: function(){
+    $.mobile.pageContainer.pagecontainer("change", "#page-elencopagine", {
+        transition:   'flip',
+        changeHash:   false,
+        reverse:      true,
+        showLoadMsg:  true
+    });
+    pagine.resetLstPagine();
   },
   // crea l'elenco mete 
   elencaMete: function() {
