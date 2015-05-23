@@ -72,11 +72,6 @@ var app = {
 //    $(".imgOptions").on("click", pagine.popupMenu);
     $(".imgShare").on( "click", sharePhoto );
     
-    $( "#leftPanel" ).panel({
-      beforeopen: function( event, ui ) {
-        pagine.resetLstPagine();        
-      }
-    });
     var draggable = document.getElementById('draggable');
     var altezza = $(document).height();
     draggable.addEventListener('touchmove', function(event){
