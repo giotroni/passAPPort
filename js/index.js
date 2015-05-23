@@ -43,7 +43,7 @@ var app = {
     pagine.showPage();
     // EVENTI DA LEGARE
     $( "#popupDesc" ).enhanceWithin().popup(); // Abilita il pop-up che descrive le immagini per tutte le pagine
-    // $( "#popupMenu" ).enhanceWithin().popup(); // Abilita il pop-up con le opzioni
+    $( "#popupMenu" ).enhanceWithin().popup(); // Abilita il pop-up con le opzioni
     $("div[data-role='panel']").panel().enhanceWithin();
 
     $("#btnSettings").on("click", pagine.settings);    
@@ -54,6 +54,7 @@ var app = {
     $("#btnHome1").on("click", pagine.home);
     $("#btnNuovaMeta").on("click", pagine.showMete);
     $("#btnLastPage").on("click", pagine.lastPage);
+    $("#btnLastPage").on("click", pagine.popupMenu);
     
     $("#btnDelete").on("click", function(){showYesNo("Vuoi DAVVERO cancellare questa meta?", pagine.cancellaPagina)} );
     $(".btnSx").on("click", pagine.prevPage);
@@ -706,6 +707,11 @@ var pagine = {
     $("#popupLblDesc").html(txt);
     $("#popupDesc").popup( "open" );
     
+  },
+  // fa venir fuori il popup con le info sulla meta
+  popupMenu: function(){
+    pagine.resetLstPagine();
+    $("#popupMenu").popup( "open" );  
   },
   // elimina una pagina 
   cancellaPagina: function( ind ){
