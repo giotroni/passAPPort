@@ -53,6 +53,7 @@ var app = {
     $("#btnHome").on("click", pagine.home);    
     $("#btnHome1").on("click", pagine.home);
     $("#btnNuovaMeta").on("click", pagine.showMete);
+    $("#btnLastPage").on("click", function(){pagine.numPagina=pagine.lista.length; pagine.showPage();});
     
     $("#btnDelete").on("click", function(){showYesNo("Vuoi DAVVERO cancellare questa meta?", pagine.cancellaPagina)} );
     $(".btnSx").on("click", pagine.prevPage);

@@ -132,7 +132,7 @@
 
 	}
 	.imgShare {
-	    top:4em; width:3em; height: 1.5em; right: 5%; position: absolute;
+	    top:4em; width:2em; height: 1.5em; right: 5%; position: absolute;
 	    background-color: white;
 	    opacity: 0.7;
 	    shape-outside: circle(1.5em);
@@ -170,14 +170,16 @@
 
 <body>
     <div data-role="panel" id="leftPanel" data-display="overlay" data-theme="b">
-	<h3>Scegli un'azione</h3>
+	<h3>Vai a...</h3>
 	<ul data-role="listview" data-inset="true" >
-	   <li><a href="#" id="btnHome1" >Vai alla copertina</a></li>
-	   <li><a href="#" id="btnNuovaMeta" >Aggiungi Meta</a></li>
-	   <li><a href="#" id="btnCheckPos" >Verifica la posizione</a></li>
-	   <li><a href="#" id="btnSettings1" >Impostazioni</a></li>
-	   <li><a href="#" id="btnDelete" >Elimina pagina</a></li>
+	   <li><a href="#" id="btnHome1" >Copertina</a></li>
+	   <li><a href="#" id="btnLastPage" >Ultima pagina</a></li>
+	   <li><a href="#" id="btnNuovaMeta" >Nuova Meta</a></li>
+	   <li><a href="#" id="btnCheckPos" ></a></li>
 	</ul>
+	<a href="#" id="btnCheckPos"  data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-star ui-btn-icon-left">Verifica la posizione</a>
+	<a href="#" id="btnSettings1"  data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-gear ui-btn-icon-left">Impostazioni</a>
+	<a href="#" id="btnDelete"  data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-minus ui-btn-icon-left">Elimina pagina</a>
 	<a href="#"  data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-delete ui-btn-icon-left ui-btn-inline">Close panel</a>
 
     </div><!-- /leftPanel-->
@@ -214,7 +216,7 @@
 	    <div  id="lblDistanza1">		
 	    </div>
 	    <img class="imgFoto" id="smallImage1" src="" />
-	    <a class= "imgShare" href="#" id="btnShare1" >Share</a>
+	    <a class= "imgShare" href="#" id="btnShare1" ></a>
 	    <img class="imgTimbro" id="imgTimbro1" src="" />
 	    <div class="btnSx" id="btnPrev1"><b><</b></div>
 	    <div class="btnDx" id="btnNext1" ><b>></b></div>
@@ -235,7 +237,7 @@
 	    <div  id="lblDistanza2">		
 	    </div>
 	    <img class="imgFoto" id="smallImage2" src="" />
-	    <a class= "imgShare" href="#" id="btnShare2" >Share</a>
+	    <a class= "imgShare" href="#" id="btnShare2" ></a>
 	    <img class="imgTimbro" id="imgTimbro2" src="" />
 	    <div class="btnSx" id="btnPrev2"><b><</b></div>
 	    <div class="btnDx" id="btnNext2"><b>></b></div>
