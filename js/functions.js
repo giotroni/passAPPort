@@ -145,24 +145,19 @@ function fail(error){
 
 function sharePhoto() {
   showAlert("Pronto a vondividere?", "Attenzione");
- var imageLink;
-        dbgMsg('Calling from CapturePhoto');
-        navigator.screenshot.save(function(error,res){
-        if(error){
-        dngMsg(error);
-        }else{
-        dbgMsg('ok',res.filePath); //should be path/to/myScreenshot.jpg
-        //For android
-        imageLink = res.filePath;
-       window.plugins.socialsharing.share("Meta condivisa da passAPPort", "passPPort",'file://'+imageLink, null);
-
-       //For iOS
-       //window.plugins.socialsharing.share(null,   null,imageLink, null)
+  var imageLink;
+  dbgMsg('Calling from CapturePhoto');
+  navigator.screenshot.save(function(error,res){
+  if(error){
+    dngMsg(error);
+  }else{
+    dbgMsg('ok',res.filePath); //should be path/to/myScreenshot.jpg
+  //For android
+    imageLink = res.filePath;
+   window.plugins.socialsharing.share("Meta condivisa da passAPPort", "passPPort",'file://'+imageLink, null);
+   //For iOS
+   //window.plugins.socialsharing.share(null,   null,imageLink, null)
  }
  },'jpg',50,'myScreenShot');
 }
 
-function condividi(){
-  $( "#leftPanel" ).panel( "close" );
-  sharePhoto();
-}

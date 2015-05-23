@@ -104,10 +104,12 @@
 	}
 	.numPagina2 {
 	    right: 1em; position: absolute;
+	    text-align: left;
 	}
 	.titolo {
 	    top: 1em; position: absolute;
 	    font-size: 1.5em;
+	    text-align: left;
 	}
 	.titolo1 {
 	    left: 1em; position: absolute;
@@ -135,7 +137,7 @@
 	    top:4em; width:2em; height: 1.5em; right: 5%; position: absolute;
 	    background-color: white;
 	    opacity: 0.7;
-	    shape-outside: circle(1.5em);
+	    border-radius:50%;
 	    background-image: url("img/icon_share.png");
 	    background-size: 100% 100%;
 	    background-repeat: no-repeat;
@@ -175,12 +177,19 @@
 	   <li><a href="#" id="btnHome1" >Copertina</a></li>
 	   <li><a href="#" id="btnLastPage" >Ultima pagina</a></li>
 	   <li><a href="#" id="btnNuovaMeta" >Nuova Meta</a></li>
-	   <li><a href="#" id="btnCheckPos" ></a></li>
+
 	</ul>
+	<div data-role="collapsibleset" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+	    <div data-role="collapsible" data-inset="false">
+	    <h2>Pagina</h2>
+		<ul data-role="listview" id="lstPagine">
+		</ul>
+	    </div><!-- /collapsible -->
+	</div><!-- /collapsibleset -->
 	<a href="#" id="btnCheckPos"  data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-star ui-btn-icon-left">Verifica la posizione</a>
 	<a href="#" id="btnSettings1"  data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-gear ui-btn-icon-left">Impostazioni</a>
 	<a href="#" id="btnDelete"  data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-minus ui-btn-icon-left">Elimina pagina</a>
-	<a href="#"  data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-delete ui-btn-icon-left ui-btn-inline">Close panel</a>
+	<a href="#"  data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-delete ui-btn-icon-left">Close panel</a>
 
     </div><!-- /leftPanel-->
 
@@ -247,7 +256,7 @@
 		<textarea cols="40" rows="4" id="txtNota2" placeholder="inserisci una nota" ></textarea>
 	    </div>
 	    <div class="imgMeta imgMeta2" id="imgMeta2"></div>
-	    <a class="imgOptions imgOptions2" href="#" data-rel="popup" data-transition="slideup" ></a>
+	    <a class="imgOptions imgOptions2" href="#leftPanel" data-rel="main-menu-panel" ></a>
 	    <div class="numPagina numPagina2" id="numPagina2"></div>
         </div>
     </div><!-- /page-interno2 -->

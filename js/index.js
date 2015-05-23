@@ -43,7 +43,7 @@ var app = {
     pagine.showPage();
     // EVENTI DA LEGARE
     $( "#popupDesc" ).enhanceWithin().popup(); // Abilita il pop-up che descrive le immagini per tutte le pagine
-    $( "#popupMenu" ).enhanceWithin().popup(); // Abilita il pop-up con le opzioni
+    // $( "#popupMenu" ).enhanceWithin().popup(); // Abilita il pop-up con le opzioni
     $("div[data-role='panel']").panel().enhanceWithin();
 
     $("#btnSettings").on("click", pagine.settings);    
@@ -53,7 +53,7 @@ var app = {
     $("#btnHome").on("click", pagine.home);    
     $("#btnHome1").on("click", pagine.home);
     $("#btnNuovaMeta").on("click", pagine.showMete);
-    $("#btnLastPage").on("click", function(){pagine.numPagina=pagine.lista.length; pagine.showPage();});
+    $("#btnLastPage").on("click", pagine.lastPage);
     
     $("#btnDelete").on("click", function(){showYesNo("Vuoi DAVVERO cancellare questa meta?", pagine.cancellaPagina)} );
     $(".btnSx").on("click", pagine.prevPage);
@@ -69,9 +69,13 @@ var app = {
     $("#txtNota1").on( "change", pagine.memoNota );
     $("#txtNota2").on( "change", pagine.memoNota );
 //    $(".imgOptions").on("click", pagine.popupMenu);
-    $("#pnlClose").on( "click", condividi );
     $(".imgShare").on( "click", sharePhoto );
     
+    $( "#leftPanel" ).panel({
+      beforeopen: function( event, ui ) {
+        pagine.resetLstPagine();        
+      }
+    });
     var draggable = document.getElementById('draggable');
     var altezza = $(document).height();
     draggable.addEventListener('touchmove', function(event){
@@ -154,16 +158,16 @@ var app = {
     attesa(false,"");
     switch(error.code) {
         case error.PERMISSION_DENIED:
-            msg = "User denied the request for Geolocation."
+            msg = "E' stata disabilitata la geolocalizzazione."
             break;
         case error.POSITION_UNAVAILABLE:
-            msg = "Location information is unavailable."
+            msg = "La localizzazione non è disponibile."
             break;
         case error.TIMEOUT:
-            msg = "The request to get user location timed out."
+            msg = "Tempo scaduto nella localizzazione."
             break;
         case error.UNKNOWN_ERROR:
-            msg = "An unknown error, reading position, occurred."
+            msg = "Errore sconosciuto, cercando la posizione."
             break;
     }
     showAlert(msg + " Verifica se il GPS è abilitato", "Errore");
@@ -178,7 +182,7 @@ var app = {
   capturePhoto: function() {
     navigator.camera.getPicture(
       app.onPhotoFileSuccess,
-      app.onFail,
+      fail,
       {
         quality: 50,
         destinationType: Camera.DestinationType.FILE_URI,
@@ -194,10 +198,6 @@ var app = {
     //smallImage.src = imageData;
     // memorizza la foto nell'array delle mete
     pagine.scriviFoto(imageData);
-  },
-  // Foto non riuscita
-  onFail: function(msg){
-    showAlert("Foto non riuscita: " + error.code,"msg");
   },
   // verifica se il wifi è abilitato O SE è stato autorizzato comunque il trasferimento dati in 3G
   checkWifi: function(){
@@ -237,13 +237,10 @@ var app = {
         function(theFile) {
             // dbgMsg("download complete: " + theFile.toURI());
         },
-        function(error) {
-            // dbgMsg("download error source " + error.source + "download error target " + error.target + "upload error code: " + error.code);
-        }
+        fail
     );
   }
 }
-
 
 // classe con le mete
 var mete = {
@@ -372,6 +369,11 @@ var pagine = {
   // va alla pagina copertina
   home: function (){
     pagine.numPagina = 0;
+    pagine.showPage();
+  },
+  // va all'ultima pagina
+  lastPage: function(){
+    pagine.numPagina=pagine.lista.length;
     pagine.showPage();
   },
   // va alla pagina dei settings
@@ -549,6 +551,7 @@ var pagine = {
       pagine.showPage();
     }
   },
+  // aggiorna i dati sulla distanza
   aggiornaDistanza: function(){
     // dbgMsg("Aggiorna Distanza");
     if( pagine.numPagina>0){
@@ -692,6 +695,7 @@ var pagine = {
       })
     }
   },
+  // fa venir fuori il popup con le info sulla meta
   popupNote: function(){
     //$("#popupDesc" ).on( "popupafteropen", function( event, ui ) {dbgMsg("PopUp Note fatta");} );
     var el = pagine.lista[pagine.numPagina-1];
@@ -703,10 +707,7 @@ var pagine = {
     $("#popupDesc").popup( "open" );
     
   },
-  popupMenu: function(){
-    pagine.resetLstPagine();
-    $("#popupMenu").popup( "open" );
-  },
+  // elimina una pagina 
   cancellaPagina: function( ind ){
     if(ind == 1){
       pagine.lista.splice(pagine.numPagina-1, 1);
@@ -721,6 +722,7 @@ var pagine = {
     dbgMsg("Reset");
     app.storage.clear();
   },
+  // memorizza la nota
   memoNota: function(){
     var suffisso = 1;
     if( (pagine.numPagina % 2) == 0){
