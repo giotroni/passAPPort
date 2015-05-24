@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.css">
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js"></script>
+    <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBH7uaEdJNrfDU4RHjgtPg971Fm8pHzZ3o">
+    </script>
+
     <style>
         #draggable { width: 130px; height: 160px; position: absolute; padding: 0.5em; }
 	.btnSx {
@@ -182,6 +186,7 @@
 	   <li><a href="#" id="btnHome1" >Copertina</a></li>
 	   <li><a href="#" id="btnLastPage" >Ultima pagina</a></li>
 	   <li><a href="#" id="btnNuovaMeta" >Nuova Meta</a></li>
+	   <li><a href="#" id="btnShowMap" >Mappa</a></li>
 
 	</ul>
 	<a href="#" id="btnCheckPos"  data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-star ui-btn-icon-left">Verifica la posizione</a>
@@ -271,6 +276,18 @@
 	    </div>
 	</div>
     </div><!-- /page-arrivo -->
+
+    <div data-role="page" id="page-mappa" >
+        <div data-role="header">
+            <h2>Mappa</h2>
+	    <a href="#" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-mini ui-btn-inline ui-icon-delete ui-btn-icon-right ui-btn-right">Close</a>
+        </div>
+        <div role="main" class="ui-content" id="content-home">
+	    <div id="map-canvas">
+		<!-- map loads here... -->
+	    </div>
+	</div>
+    </div><!-- /page-mappa -->
     
     <div data-role="page" id="page-elencopagine" data-add-back-btn="true"  class="interno1">
         <div data-role="header" id="tit-elencoPagine">

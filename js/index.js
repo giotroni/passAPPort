@@ -56,6 +56,7 @@ var app = {
     $("#btnNuovaMeta").on("click", pagine.showMete);
     $("#btnLastPage").on("click", pagine.lastPage);
     $("#btnPagine").on("click", pagine.showElencoPagine);
+    $("#btnShowMap").on("click", pagine.showMap);
     $(".numPagina").on("click", pagine.showElencoPagine);
     
     $("#btnDelete").on("click", function(){showYesNo("Vuoi DAVVERO cancellare questa meta?", pagine.cancellaPagina)} );
@@ -477,6 +478,23 @@ var pagine = {
       });
       $("#lblPunti").html("<b>Hai " +  pagine.checkPunti() +" punti</b>");
     }
+  },
+  // mostra la pagina con la mappa
+  showMap: function(){
+    // dbgMsg("mostra l'elenco delle mete");
+    $.mobile.pageContainer.pagecontainer("change", "#page-mappa", {
+        transition:   'flip',
+        changeHash:   false,
+        reverse:      true,
+        showLoadMsg:  true
+    });
+    var latlng = new google.maps.LatLng(pagine.coordinate.lat, pagine.coordinate.lng)
+    var myOptions = {
+      zoom: 15,
+      center: latlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
   },
   // mostra la pagina con l'elenco delle mete
   showMete: function (){
