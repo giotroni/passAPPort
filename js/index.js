@@ -227,12 +227,10 @@ var app = {
     var uri = encodeURI(origine);
     var dest = appDir + nome;
     var ft = new FileTransfer();
-    dbgMsg("Scarica file: " + uri  + " a " + dest);
     ft.download(
         uri,
         dest,
         function(theFile) {
-            dbgMsg("File scaricato: " + theFile.toURI());
         },
         fail
     );
@@ -279,8 +277,8 @@ var mete = {
           },
         cache: false
       }).done(function(result) {
-        var obj = $.parseJSON(result);
         dbgMsg("Lette le mete: " + result)
+        var obj = $.parseJSON(result);
         $.each(obj, function(i, valore){
           questo.push(valore);
           // scarica l'immagine
@@ -506,7 +504,6 @@ var pagine = {
   },
   // crea l'elenco pagine
   elencaPagine: function(){
-    var lung = pagine.lista.length;
     $('#lstPagine').empty();
     $.each(pagine.lista, function(key, value){
       var nPag = key*1+1;
@@ -519,6 +516,7 @@ var pagine = {
         testo += "<p>Non Arrivato</p>";
       }
       testo += '</a></li>';
+      dbgMsg("testo: " + testo);
       $('#lstPagine').append(testo);
       $("#lstPagine li#pag_"+nPag).bind("click", function(){
         dbgMsg("Vai a pagina: " + nPag);
@@ -581,7 +579,6 @@ var pagine = {
       pagine.saved = false;
       pagine.scrivePagine();
       // mostra la pagina
-      pagine.aggiornaLstPagine(pagine.numPagina+1)
       pagine.nextPage();
     } else {
       pagine.showPage();
@@ -651,19 +648,6 @@ var pagine = {
       //pagine.resetLstPagine();
       attesa(false, "");
     }
-  },
-  // aggiorna la lista pagine del popup
-  aggiornaLstPagine: function(ii){
-    // aggiorna l'elenco delle pagine nel popup
-    var testo = '<li id="pag_'+ ii+'" ><a href="#" >';
-    testo += "pag. " + ii + " - " + pagine.lista[ii-1].meta;
-    testo += '</a></li>';
-    $('#lstPagine').append(testo);
-    $("#lstPagine li#pag_"+ii ).bind("click", function(){
-        pagine.numPagina = ii;
-        pagine.showPage();
-    });
-    //$('#lstPagine').listview("refresh");
   },
   // scrive in memoria locale le pagine e le mete
   scrivePagine: function(){
