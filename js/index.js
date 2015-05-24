@@ -55,6 +55,7 @@ var app = {
     $("#btnNuovaMeta").on("click", pagine.showMete);
     $("#btnLastPage").on("click", pagine.lastPage);
     $("#btnPagine").on("click", pagine.showElencoPagine);
+    $(".numPagina").on("click", pagine.showElencoPagine);
     
     $("#btnDelete").on("click", function(){showYesNo("Vuoi DAVVERO cancellare questa meta?", pagine.cancellaPagina)} );
     $(".btnSx").on("click", pagine.prevPage);
@@ -268,6 +269,7 @@ var mete = {
       }
     } else if( app.checkWifi() ){
       // legge dal sito
+      attesa(true, "Attendere: aggiorno l'elenco delle mete");
       dbgMsg("Legge mete da internet, area:  " + mete.areaMete);
       $.ajax({
         type: 'GET',
@@ -292,6 +294,7 @@ var mete = {
           }
         })
         mete.scriveMete();    // salva i dati nel DB interno
+        attesa(false, "");
       }).fail(function(){
         showAlert("Problemi di conessione", "Attenzione!");
       })
@@ -414,29 +417,17 @@ var pagine = {
   showPage: function(){
     dragga = true;
     if(pagine.numPagina>0){
-      //if( suffisso == 1) {
-      //  suffisso = 2;
-      //} else {
-      //  suffisso = 1;
-      //}
-      suffisso = suffisso % 2 +1;
-      dbgMsg("suffisso: " + suffisso);
-      //// dbgMsg(pagine.numPagina  + " " + pagine.numPagina % 2);
-      //if(pagine.numPagina % 2 == 1){
-      //  suffisso = 1;
-      //}
+      suffisso = suffisso % 2 +1; // alterna le pagine per geenrare l'effetto dello scorrimento
       $.mobile.pageContainer.pagecontainer("change", "#page-interno"+suffisso, {
           transition: 'slide',
           reverse:direction
-      });        
-
+      });
       // cancella l'esistente
       $("#lblDistanza"+suffisso).empty();  
       // scrive i nuovi dati
       var el = pagine.lista[pagine.numPagina-1];
       $("#tit-interno"+suffisso).html("<b>"+el.meta+"</b");
       $("#numPagina"+suffisso).html("<i><b>pag. "+pagine.numPagina +"</b></i>")
-      // dbgMsg(el.foto);
       $('#imgMeta'+suffisso).css('background-image', 'url('+appDir + el.img+')');
       $("#txtNota"+suffisso).val(el.note);
       if(  pagine.arrivato(pagine.numPagina ) ){
@@ -447,7 +438,15 @@ var pagine = {
         $("#lblArrivo"+suffisso).html("Arrivato il:<br>"+txtDataora(el.dataora));
         $('#imgTimbro'+suffisso).show();
         $('#imgTimbro'+suffisso).attr('src',appDir + el.timbro);
+        var sData = adesso().substring(0, 10);
+        if (el.dataora.indexOf(sData) >= 0){ // è oggi!!
+          $("#txtNota"+suffisso).attr("disabled", false);  
+        } else {
+          // dal giorno successivo all'arrivo, le note non sono più modificabili
+          $("#txtNota"+suffisso).attr("disabled", true);  
+        }
       } else {
+        $("#txtNota"+suffisso).attr("disabled", false);  
         $('.imgShare').hide();
         $('#smallImage'+suffisso).hide();
         $('#smallImage'+suffisso).attr('src', '');
@@ -458,7 +457,6 @@ var pagine = {
       }
     } else {
       // mostra la copertina
-      // dbgMsg("mostra la copertina");
       $.mobile.pageContainer.pagecontainer("change", "#page-home", {
           transition: 'flip'
       });
@@ -478,7 +476,7 @@ var pagine = {
     pagine.paginaMeteVisibile = true;
     pagine.elencaMete();
   },
-  // fa venir fuori il popup con le info sulla meta
+  // mostra la pagina con l'elenco delle pagine
   showElencoPagine: function(){
     $.mobile.pageContainer.pagecontainer("change", "#page-elencopagine", {
         transition:   'flip',
@@ -486,7 +484,7 @@ var pagine = {
         reverse:      true,
         showLoadMsg:  true
     });
-    pagine.resetLstPagine();
+    pagine.elencaPagine();
   },
   // crea l'elenco mete 
   elencaMete: function() {
@@ -500,11 +498,35 @@ var pagine = {
       testo += '</a></li>';
       $('#lstMete').append(testo);
       $("#lstMete li#meta_"+key).bind("click", function(){
-          // dbgMsg("Aggiungi meta - key " + key + " id " + value.id + " meta " + value.meta);
+          dbgMsg("Aggiungi meta - key " + key + " id " + value.id + " meta " + value.meta);
           pagine.nuovaMeta(key);
       });
     });
     $('#lstMete').listview("refresh");
+  },
+  // crea l'elenco pagine
+  elencaPagine: function(){
+    var lung = pagine.lista.length;
+    $('#lstPagine').empty();
+    $.each(pagine.lista, function(key, value){
+      var nPag = key*1+1;
+      var testo = '<li id="pag_'+ nPag+'" ><a href="#" >';
+      testo += '<img src="' + appDir + value.img +'">';
+      testo += "pag. " + nPag + " - " + value.meta;
+      if(  pagine.arrivato( key ) ){
+        testo += "<p>Arrivato il:<br>"+txtDataora(value.dataora)+"</p>";
+      } else {
+        testo += "<p>Non Arrivato</p>";
+      }
+      testo += '</a></li>';
+      $('#lstPagine').append(testo);
+      $("#lstPagine li#pag_"+nPag).bind("click", function(){
+        dbgMsg("Vai a pagina: " + nPag);
+        pagine.numPagina = nPag;
+        pagine.showPage();
+      });
+    })
+    $('#lstPagine').listview("refresh");
   },
   // aggiunge una meta al database
   nuovaMeta: function (id){
@@ -643,32 +665,7 @@ var pagine = {
     });
     //$('#lstPagine').listview("refresh");
   },
-  // resetta la lista pagine
-  resetLstPagine: function(){
-    var lung = pagine.lista.length;
-    $('#lstPagine').empty();
-    for(var i=1; i<=lung; i++){
-      // aggiorna l'elenco delle pagine nel popup
-      var el = pagine.lista[i];
-      var testo = '<li id="pag_'+ i+'" ><a href="#" >';
-      testo += '<img src="' + appDir + el.img +'">';
-      testo += "pag. " + i + " - " + el.meta;
-      if(  pagine.arrivato( i ) ){
-        testo += "<p>Arrivato il:<br>"+txtDataora(el.dataora)+"</p>";
-      } else {
-        testo += "<p>Non Arrivato</p>";
-      }
-      testo += '</a></li>';
-      $('#lstPagine').append(testo);
-      $("#lstPagine li#pag_"+i ).bind("click", function(){
-        dbgMsg("Vai a pagina: " + i);
-        pagine.numPagina = i;
-        pagine.showPage();
-      });
-    };
-    $('#lstPagine').listview("refresh");
-  },
-  // scrive in memoria le pagine e le mete
+  // scrive in memoria locale le pagine e le mete
   scrivePagine: function(){
     // dbgMsg("Scrive pagine");
     // salva le pagine
@@ -728,12 +725,7 @@ var pagine = {
     $("#popupDesc").popup( "open" );
     
   },
-  // fa venir fuori il popup con le info sulla meta
-  popupMenu: function(){
-    pagine.resetLstPagine();
-    $("#popupMenu").popup( "open" );  
-  },
-  // elimina una pagina 
+  // elimina una pagina ind
   cancellaPagina: function( ind ){
     if(ind == 1){
       pagine.lista.splice(pagine.numPagina-1, 1);
@@ -750,10 +742,6 @@ var pagine = {
   },
   // memorizza la nota
   memoNota: function(){
-    var suffisso = 1;
-    if( (pagine.numPagina % 2) == 0){
-      suffisso = 2;
-    }
     pagine.lista[pagine.numPagina-1].note = $("#txtNota"+suffisso).val();
     // dbgMsg(pagine.lista[pagine.numPagina-1].note);
   }
