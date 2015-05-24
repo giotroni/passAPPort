@@ -273,14 +273,14 @@ var mete = {
         type: 'GET',
         url: URL_PREFIX + 'php/leggiMete.php',
         data: {
-          area: mete.areaMete
+          area: areaMete
           },
         cache: false
       }).done(function(result) {
-        dbgMsg("Lette le mete: " + result)
         var obj = $.parseJSON(result);
+        dbgMsg("Lette le mete: " + result)
         $.each(obj, function(i, valore){
-          questo.push(JSON.parse(valore));
+          questo.push(valore);
           // scarica l'immagine
           var img = valore.img;
           if(img.length>0){
