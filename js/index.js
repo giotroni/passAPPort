@@ -255,7 +255,7 @@ var mete = {
       // legge le mete dal DB interno
       var lung = app.storage.getItem("numMete");
       if ("areaMete" in localStorage){
-        areaMete = app.storage.getItem("areaMete");
+        mete.areaMete = app.storage.getItem("areaMete");
       }
       if ("versioneMete" in localStorage){
         versioneMete = app.storage.getItem("versioneMete");
@@ -268,12 +268,12 @@ var mete = {
       }
     } else if( app.checkWifi() ){
       // legge dal sito
-      dbgMsg("Legge mete da internet, area:  " + areaMete);
+      dbgMsg("Legge mete da internet, area:  " + mete.areaMete);
       $.ajax({
         type: 'GET',
         url: URL_PREFIX + 'php/leggiMete.php',
         data: {
-          area: areaMete
+          area: mete.areaMete
           },
         cache: false
       }).done(function(result) {
