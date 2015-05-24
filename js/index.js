@@ -15,7 +15,7 @@ var URL_PREFIX = "http://www.troni.it/passapport/";
 var myFolderApp = "passAPPort";
 var appDir = "";
 var destinationType; // sets the format of returned value
-var suffisso = 1;
+var suffisso = 1;     // serve ad alternare le pagine in lettura
 var id_User = 1;    // id dell'utilizzatore
 var dragga = true;  // abilitato durante il drag
 var direction = false;  // verso della transizione nello scorrimento delle pagine
@@ -226,12 +226,12 @@ var app = {
     var uri = encodeURI(origine);
     var dest = appDir + nome;
     var ft = new FileTransfer();
-    // dbgMsg("Pronto al download: " + uri  + " " + dest);
+    dbgMsg("Scarica file: " + uri  + " a " + dest);
     ft.download(
         uri,
         dest,
         function(theFile) {
-            // dbgMsg("download complete: " + theFile.toURI());
+            dbgMsg("File scaricato: " + theFile.toURI());
         },
         fail
     );
@@ -268,7 +268,7 @@ var mete = {
       }
     } else if( app.checkWifi() ){
       // legge dal sito
-      dbgMsg("Legge mete da internet")
+      dbgMsg("Legge mete da internet, area:  " + areaMete);
       $.ajax({
         type: 'GET',
         url: URL_PREFIX + 'php/leggiMete.php',
@@ -277,10 +277,10 @@ var mete = {
           },
         cache: false
       }).done(function(result) {
-        dbgMsg(result)
+        dbgMsg("Lette le mete: " + result)
         var obj = $.parseJSON(result);
         $.each(obj, function(i, valore){
-          questo.push(valore);
+          questo.push(JSON.parse(valore));
           // scarica l'immagine
           var img = valore.img;
           if(img.length>0){
@@ -547,12 +547,14 @@ var pagine = {
           "punti": mete.elenco[id].punti,
           "desc": mete.elenco[id].desc,
           "localita": mete.elenco[id].localita,
+          "area": mete.area,
           "note": "",
           "dist": -1,
           "saved": true,
           // "arrivato":"0",
           "dataora": MAI,
-          "foto": ""
+          "foto": "",
+          "altro": ""
           });
       pagine.saved = false;
       pagine.scrivePagine();
@@ -654,7 +656,7 @@ var pagine = {
       if(  pagine.arrivato( i ) ){
         testo += "<p>Arrivato il:<br>"+txtDataora(el.dataora)+"</p>";
       } else {
-        testo += "<p>Non Arrivato</p>"
+        testo += "<p>Non Arrivato</p>";
       }
       testo += '</a></li>';
       $('#lstPagine').append(testo);
