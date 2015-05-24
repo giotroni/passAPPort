@@ -488,7 +488,8 @@ var pagine = {
         reverse:      true,
         showLoadMsg:  true
     });
-    var latlng = new google.maps.LatLng(pagine.coordinate.lat, pagine.coordinate.lng)
+    var latlng = new google.maps.LatLng(pagine.coordinate.lat, pagine.coordinate.lng);
+    dbgMsg("Show map");
     var myOptions = {
       zoom: 15,
       center: latlng,
