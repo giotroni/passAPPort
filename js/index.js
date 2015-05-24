@@ -273,7 +273,7 @@ var mete = {
         type: 'GET',
         url: URL_PREFIX + 'php/leggiMete.php',
         data: {
-          area: areaMete
+          area: mete.areaMete
           },
         cache: false
       }).done(function(result) {
