@@ -49,6 +49,7 @@ var app = {
     $("#btnSettings").on("click", pagine.settings);    
     $("#btnSettings1").on("click", pagine.settings);    
     $("#btnReset").on("click", pagine.reset);
+    $("#btnUpdate").on("click", pagine.updateMete);
     $("#btnSave").on("click", pagine.savePagine);
     $("#btnHome").on("click", pagine.home);    
     $("#btnHome1").on("click", pagine.home);
@@ -242,22 +243,26 @@ var mete = {
   // elenco dei luoghi
   elenco: [],
   areaMete: 1,
+  localitaMete: "Falcade",
   versioneMete: 1,
   // inizializza il database interno delle mete
   inizializza: function(){
-    var questo = mete.elenco;
-    while(questo.length > 0) { // svuota l'array esistente
-      questo.pop();
-    };
     // aggiorna elenco mete
     if ("numMete" in localStorage){
       // legge le mete dal DB interno
+      var questo = mete.elenco;
+      while(questo.length > 0) { // svuota l'array esistente
+        questo.pop();
+      };
       var lung = app.storage.getItem("numMete");
       if ("areaMete" in localStorage){
         mete.areaMete = app.storage.getItem("areaMete");
       }
       if ("versioneMete" in localStorage){
         versioneMete = app.storage.getItem("versioneMete");
+      }
+      if ("localitaMete" in localStorage){
+        versioneMete = app.storage.getItem("localitaMete");
       }
       dbgMsg("Legge mete da DB interno: " + lung);
       for(i=0; i<lung; i++){
@@ -266,36 +271,7 @@ var mete = {
         questo.push(JSON.parse(valore));
       }
     } else if( app.checkWifi() ){
-      // legge dal sito
-      attesa(true, "Attendere: aggiorno l'elenco delle mete");
-      dbgMsg("Legge mete da internet, area:  " + mete.areaMete);
-      $.ajax({
-        type: 'GET',
-        url: URL_PREFIX + 'php/leggiMete.php',
-        data: {
-          area: mete.areaMete
-          },
-        cache: false
-      }).done(function(result) {
-        dbgMsg("Lette le mete: " + result)
-        var obj = $.parseJSON(result);
-        $.each(obj, function(i, valore){
-          questo.push(valore);
-          // scarica l'immagine
-          var img = valore.img;
-          if(img.length>0){
-            app.downloadFile(URL_PREFIX + "php/img/" + img, img);
-          }
-          img = valore.timbro;
-          if(img.length>0){
-            app.downloadFile(URL_PREFIX + "php/img/" + img, img);
-          }
-        })
-        mete.scriveMete();    // salva i dati nel DB interno
-        attesa(false, "");
-      }).fail(function(){
-        showAlert("Problemi di conessione", "Attenzione!");
-      })
+      mete.updateMete();
     } else {
       // niente da fare
       showAlert("Non c'è la rete", "Attenzione!");
@@ -309,10 +285,48 @@ var mete = {
       
     }
   },
+  // aggiorna l'elenco delle mete
+  updateMete: function(){
+    // legge dal sito
+    attesa(true, "Attendere: aggiorno l'elenco delle mete");
+    var questo = mete.elenco;
+    while(questo.length > 0) { // svuota l'array esistente
+      questo.pop();
+    };
+    dbgMsg("Legge mete da internet, area:  " + mete.areaMete);
+    $.ajax({
+      type: 'GET',
+      url: URL_PREFIX + 'php/leggiMete.php',
+      data: {
+        area: mete.areaMete
+        },
+      cache: false
+    }).done(function(result) {
+      dbgMsg("Lette le mete: " + result)
+      var obj = $.parseJSON(result);
+      $.each(obj, function(i, valore){
+        questo.push(valore);
+        // scarica l'immagine
+        var img = valore.img;
+        if(img.length>0){
+          app.downloadFile(URL_PREFIX + "php/img/" + img, img);
+        }
+        img = valore.timbro;
+        if(img.length>0){
+          app.downloadFile(URL_PREFIX + "php/img/" + img, img);
+        }
+      })
+      mete.scriveMete();    // salva i dati nel DB interno
+      attesa(false, "");
+    }).fail(function(){
+      showAlert("Problemi di conessione", "Attenzione!");
+    })
+  },
  // Memorizza le mete nel DB interno
   scriveMete: function(){
     app.storage.setItem("numMete", mete.elenco.length);
     app.storage.setItem("areaMete", mete.areaMete);
+    app.storage.setItem("localitaMete", mete.localitaMete);
     app.storage.setItem("versioneMete", mete.versioneMete);
     $.each(mete.elenco, function(key, value){
       var valore = JSON.stringify(value);
@@ -493,7 +507,7 @@ var pagine = {
     
     $.each(mete.elenco, function(key, value){
       var testo = '<li id="meta_'+ key +'" ><a href="#" >';
-      testo += '<img src="' + appDir + value.img +'" style="width: 80px; height: 80px;">';
+      testo += '<img src="' + appDir + value.img +'" style="width: 80px; height: 60px;">';
       testo += value.meta + ' - ' + value.localita;
       testo += '<p>'+value.desc + '</p>';
       testo += '</a></li>';
@@ -511,9 +525,9 @@ var pagine = {
     $.each(pagine.lista, function(key, value){
       var nPag = key*1+1;
       var testo = '<li id="pag_'+ nPag+'" ><a href="#" >';
-      testo += '<img src="' + appDir + value.img +'">';
+      testo += '<img src="' + appDir + value.img +'" style="width: 80px; height: 60px;">';
       testo += "pag. " + nPag + " - " + value.meta;
-      if(  pagine.arrivato( key ) ){
+      if(  pagine.arrivato( nPag) ){
         testo += "<p>Arrivato il:<br>"+txtDataora(value.dataora)+"</p>";
       } else {
         testo += "<p>Non Arrivato</p>";

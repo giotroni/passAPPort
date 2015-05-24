@@ -37,6 +37,7 @@
 	    }
 	.interno2 {
 	    background-image: url("img/fetta_interno2.png");
+	    text-align:right;
 	    }
 	.imgSfondo1 {
 	    top: 75%; right: 0px;
@@ -154,9 +155,11 @@
 	}
 	.lblArrivo1 {
 	    left: 1em;
+	    text-align: right !important;
 	}
 	.lblArrivo2 {
 	    right: 1em;
+	    text-align: left !important;
 	}
 	.popupDesc {
 	    background-color: white;
@@ -203,6 +206,7 @@
             <h2>passAPPort - Impostazioni</h2>
         </div>
         <div role="main" class="ui-content" id="content-home">
+	    <a href="#" data-role="button" id="btnUpdate">Aggiorna mete</a>
 	    <a href="#" data-role="button" id="btnSave">Save</a>
 	    <a href="#" data-role="button" id="btnReset">Reset</a>
         </div>
@@ -213,7 +217,7 @@
 
     </div><!-- /page-settings -->
     
-    <div data-role="page" id="page-interno1" data-add-back-btn="false"  class="interno interno2" name="interno" style="text-align:right;">
+    <div data-role="page" id="page-interno1" data-add-back-btn="false"  class="interno interno2" name="interno">
         <div role="main" class="ui-content" id="content-interno">
 	    <div class="titolo titolo2" id="tit-interno1"></div>
 	    <div  id="lblDistanza1">		
@@ -270,6 +274,8 @@
     
     <div data-role="page" id="page-elencopagine" data-add-back-btn="true"  class="interno1">
         <div data-role="header" id="tit-elencoPagine">
+	    Pagine
+	    <a href="#" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-mini ui-btn-inline ui-icon-delete ui-btn-icon-right ui-btn-right">Close</a>
         </div>
         <div role="main" class="ui-content" id="content-elencoPagine">
 	    <ul data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Vai a pagina ..."  id="lstPagine">
@@ -280,6 +286,8 @@
 
     <div data-role="page" id="page-elencomete" data-add-back-btn="false"  class="interno1">
         <div data-role="header" id="tit-elencomete">
+	    Mete
+	    <a href="#" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-mini ui-btn-inline ui-icon-delete ui-btn-icon-right ui-btn-right">Close</a>
         </div>
         <div role="main" class="ui-content" id="content-elencoMete">
 	    <ul data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Scegli la tua meta..."  id="lstMete">
