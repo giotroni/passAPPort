@@ -493,7 +493,7 @@ var pagine = {
     
     $.each(mete.elenco, function(key, value){
       var testo = '<li id="meta_'+ key +'" ><a href="#" >';
-      testo += '<img src="' + appDir + value.img +'">';
+      testo += '<img src="' + appDir + value.img +'" style="width: 80px; height: 80px;">';
       testo += value.meta + ' - ' + value.localita;
       testo += '<p>'+value.desc + '</p>';
       testo += '</a></li>';
