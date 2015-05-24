@@ -344,8 +344,11 @@ var pagine = {
   lista: [],
   // verifica se la pagina i è già arrivata
   arrivato: function(i){
-    var el  = pagine.lista[i-1].dataora;
-    return (el.indexOf(MAI) <0);
+    var retVal = false;
+    if(i>0 && i<= pagine.lista.length){
+      retVal = pagine.lista[i-1].dataora.indexOf(MAI) <0;
+    }
+    return retVal 
   },
   // verifica se in zona VICINA
   vicino: function(){
