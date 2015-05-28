@@ -75,6 +75,9 @@ var app = {
 //    $(".imgOptions").on("click", pagine.popupMenu);
     $(".imgShare").on( "click", sharePhoto );
     
+     $.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyBH7uaEdJNrfDU4RHjgtPg971Fm8pHzZ3o&callback=onMapsApiLoaded');
+    dbMsg("mappa letta");
+
     var draggable = document.getElementById('draggable');
     var altezza = $(document).height();
     draggable.addEventListener('touchmove', function(event){
@@ -246,6 +249,7 @@ function onMapsApiLoaded() {
             zoom: 8,
             center: new google.maps.LatLng(-34.397, 150.644)
         });
+        dbgMsg("mappa OK");
 };
 
 // classe con le mete
