@@ -194,6 +194,8 @@
 
     <div data-role="page" id="page-home" class="copertina" >
         <div role="main" class="ui-content" id="content-home">
+	    <div id="map-canvas" style="width: 100%;">
+	    </div>
 	    <div class="divPunti">
 		<div class="imgPunti"></div>
 		<span id="lblPunti"></span>
@@ -260,29 +262,28 @@
 	    <div class="numPagina numPagina2" id="numPagina2"></div>
         </div>
     </div><!-- /page-interno2 -->
-    
+     
     <div data-role="page" id="page-arrivo" >
-        <div data-role="header">
-            <h2>passAPPort - SEI ARRIVATO ALLA META!</h2>
-        </div>
-        <div role="main" class="ui-content" id="content-home">
+	<div data-role="header">
+	    <h2>passAPPort - SEI ARRIVATO ALLA META!</h2>
+	</div>
+	<div role="main" class="ui-content" id="content-arrivo">
 	    <h2>Trascina il timbro verso il basso e preparati per la foto ricordo</h2>
-	    <div class="timbroVuoto"></div>
-	    <div id="draggable" class="ui-widget-content">
-	      <img src="img/timbro.png">
+	    <div class="timbroVuoto">
+	    </div>
+	    <div id="draggable" class=="ui-widget-content">
+		<img src="img/timbro.png" />
 	    </div>
 	</div>
-    </div><!-- /page-arrivo -->
-
+    </div> <!-- /page-arrivo -->
+    
     <div data-role="page" id="page-mappa" >
         <div data-role="header">
             <h2>Mappa</h2>
 	    <a href="#" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-mini ui-btn-inline ui-icon-delete ui-btn-icon-right ui-btn-right">Close</a>
         </div>
         <div role="main" class="ui-content" id="content-home">
-	    <div id="map-canvas">
-		<!-- map loads here... -->
-	    </div>
+
 	</div>
     </div><!-- /page-mappa -->
     

@@ -75,8 +75,8 @@ var app = {
 //    $(".imgOptions").on("click", pagine.popupMenu);
     $(".imgShare").on( "click", sharePhoto );
     
-     $.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyBH7uaEdJNrfDU4RHjgtPg971Fm8pHzZ3o&callback=onMapsApiLoaded');
-    dbMsg("mappa letta");
+    $.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyBH7uaEdJNrfDU4RHjgtPg971Fm8pHzZ3o&callback=onMapsApiLoaded');
+    dbgMsg("mappa letta");
 
     var draggable = document.getElementById('draggable');
     var altezza = $(document).height();
@@ -565,7 +565,6 @@ var pagine = {
         testo += "<p>Non Arrivato</p>";
       }
       testo += '</a></li>';
-      dbgMsg("testo: " + testo);
       $('#lstPagine').append(testo);
       $("#lstPagine li#pag_"+nPag).bind("click", function(){
         dbgMsg("Vai a pagina: " + nPag);
