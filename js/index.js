@@ -38,6 +38,7 @@ var app = {
     // app.checkConnection();
     // app.showAlert("Chiamata alla fine del caricamento","msg");
     $.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyBH7uaEdJNrfDU4RHjgtPg971Fm8pHzZ3o&callback=onMapLoaded');
+    
     dbgMsg("Lettura mappa");
     app.setDir();   // memorizza il path della cartella applicazione
     destinationType=navigator.camera.DestinationType;
