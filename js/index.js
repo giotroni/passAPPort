@@ -20,7 +20,7 @@ var id_User = 1;    // id dell'utilizzatore
 var dragga = true;  // abilitato durante il drag
 var direction = false;  // verso della transizione nello scorrimento delle pagine
 
-var map;
+var mappa;
 
 // Funzione che calcola la distanza
 // MAIN
