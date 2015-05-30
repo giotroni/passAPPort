@@ -19,6 +19,9 @@ var suffisso = 1;     // serve ad alternare le pagine in lettura
 var id_User = 1;    // id dell'utilizzatore
 var dragga = true;  // abilitato durante il drag
 var direction = false;  // verso della transizione nello scorrimento delle pagine
+
+var map;
+
 // Funzione che calcola la distanza
 // MAIN
 var app = {
@@ -75,7 +78,7 @@ var app = {
 //    $(".imgOptions").on("click", pagine.popupMenu);
     $(".imgShare").on( "click", sharePhoto );
     
-    $.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyBH7uaEdJNrfDU4RHjgtPg971Fm8pHzZ3o&callback=onMapsApiLoaded');
+    $.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyBH7uaEdJNrfDU4RHjgtPg971Fm8pHzZ3o&callback=onMapLoaded');
     dbgMsg("mappa letta");
 
     var draggable = document.getElementById('draggable');
@@ -243,14 +246,16 @@ var app = {
   }
 }
 
-function onMapsApiLoaded() {
-        // Maps API loaded and ready to be used.
-        var map = new google.maps.Map(document.getElementById("map-canvas"), {
-            zoom: 8,
-            center: new google.maps.LatLng(-34.397, 150.644)
-        });
-        dbgMsg("mappa OK");
-};
+function onMapLoaded(){
+    alert("on load");
+    var mapOptions = {
+      zoom: 8,
+      center: new google.maps.LatLng(-34.397, 150.644),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    mappa = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+    alert("on map... fatto");
+}
 
 // classe con le mete
 var mete = {
