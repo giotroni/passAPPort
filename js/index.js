@@ -37,6 +37,8 @@ var app = {
     // ok, il dispositivo è pronto: configuralo
     // app.checkConnection();
     // app.showAlert("Chiamata alla fine del caricamento","msg");
+    $.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyBH7uaEdJNrfDU4RHjgtPg971Fm8pHzZ3o&callback=onMapLoaded');
+    dbgMsg("Lettura mappa");
     app.setDir();   // memorizza il path della cartella applicazione
     destinationType=navigator.camera.DestinationType;
     // inizializza l'elenco delle mete e le pagine
@@ -78,9 +80,6 @@ var app = {
 //    $(".imgOptions").on("click", pagine.popupMenu);
     $(".imgShare").on( "click", sharePhoto );
     
-    $.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyBH7uaEdJNrfDU4RHjgtPg971Fm8pHzZ3o&callback=onMapLoaded');
-    dbgMsg("mappa letta");
-
     var draggable = document.getElementById('draggable');
     var altezza = $(document).height();
     draggable.addEventListener('touchmove', function(event){
@@ -248,8 +247,14 @@ var app = {
 
 function onMapLoaded(){
     alert("on load");
+    var mapOptions = {
+      zoom: 8,
+      center: new google.maps.LatLng(-34.397, 150.644),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+    alert("fatto");
 }
-
 // classe con le mete
 var mete = {
   // elenco dei luoghi
