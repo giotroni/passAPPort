@@ -41,6 +41,17 @@ var app = {
     
     dbgMsg("Lettura mappa");
   },
+  // chiamata quando la posizione è stata letta
+  onSuccessGeo: function(position){
+    // aggiorna le coordinate
+    attesa(false,"");
+    pagine.coordinate.lat = position.coords.latitude;
+    pagine.coordinate.lng = position.coords.longitude;
+    pagine.coordinate.alt = position.coords.altitude;
+    // dbgMsg(pagine.coordinate.lat  + " " + pagine.coordinate.lng );
+    // aggiorna la distanza dalla meta corrente
+    pagine.aggiornaDistanza();
+  },
   // memorizza i dati della APP
   salvaDati: function(){
     attesa(true, "Memorizzo");
@@ -145,7 +156,7 @@ function onMapLoaded(){
       center: new google.maps.LatLng(-34.397, 150.644),
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-    map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+    mappa = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
     alert("fatto");
 }
 // classe con le mete
