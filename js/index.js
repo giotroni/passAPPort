@@ -135,7 +135,7 @@ var app = {
         pagine.showPage();
       }
     });
-    dbMsg("Partito user:" + id_User );
+    dbgMsg("Partito user:" + id_User );
   },
   // chiamata quando la posizione è stata letta
   onSuccessGeo: function(position){
@@ -504,14 +504,7 @@ var pagine = {
         reverse:      true,
         showLoadMsg:  true
     });
-    var latlng = new google.maps.LatLng(pagine.coordinate.lat, pagine.coordinate.lng);
     dbgMsg("Show map");
-    var myOptions = {
-      zoom: 15,
-      center: latlng,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    var map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
   },
   // mostra la pagina con l'elenco delle mete
   showMete: function (){
