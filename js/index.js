@@ -372,10 +372,20 @@ function onMapLoaded(){
   mappa = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
   // inserisce i marker delle mete presenti
   $.each(mete.elenco, function(key, value){
-    var newMarker = new google.maps.Marker({
-      position: new google.maps.LatLng(value.lat,value.lng),
-      map: mappa,
-      title: value.meta
+    var newMarker  =new google.maps.Marker({
+      position: new google.maps.LatLng(value.lat,value.lng)
+      });    
+    newMarker.setMap(mappa);
+    //var newMarker = new google.maps.Marker({
+    //  position: new google.maps.LatLng(value.lat,value.lng),
+    //  map: mappa,
+    //  title: value.meta
+    //});
+    var infowindow = new google.maps.InfoWindow({
+      content: value.meta
+    });
+    google.maps.event.addListener(newMarker, 'click', function() {
+      infowindow.open(mappa,newMarker);
     });
   });
   // marker will be displayed on the lat long position
