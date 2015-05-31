@@ -97,7 +97,7 @@ var app = {
       }
     }, false);
 
-    //$.event.special.swipe.horizontalDistanceThreshold = 120;
+
     $(".interno").on("swiperight", function(event){
       // dbgMsg("swipe right");
       if( event.handled !== true){
@@ -132,6 +132,7 @@ var app = {
         pagine.showPage();
       }
     });
+    alert("Partito user:" + id_User );
     dbgMsg("Partito user:" + id_User );
   },
   // chiamata quando la posizione è stata letta
@@ -205,6 +206,7 @@ var app = {
   checkWifi: function(){
     var networkState = navigator.network.connection.type;
     var options = $( "#flip-wifi" ).flipswitch( "option" );
+    alert(networkState);
     dbgMsg("Connessione: " + networkState + " Opzione: " + options);
     if( networkState == Connection.WIFI || (INTERNET_SEMPRE && (networkState !== Connection.NONE) ) ){
       return true;
@@ -273,7 +275,6 @@ var mete = {
       dbgMsg("Legge mete da DB interno: " + lung);
       for(i=0; i<lung; i++){
         var valore = app.storage.getItem("meta"+i);
-        // dbgMsg(valore);
         questo.push(JSON.parse(valore));
       }
     } else if( app.checkWifi() ){
@@ -497,7 +498,7 @@ var pagine = {
   },
   // mostra la pagina con la mappa
   showMap: function(){
-    // dbgMsg("mostra l'elenco delle mete");
+    dbgMsg("Mostra la mappa");
     if( app.checkWifi()){
       $.mobile.pageContainer.pagecontainer("change", "#page-mappa", {
           transition:   'flip',
@@ -505,8 +506,8 @@ var pagine = {
           reverse:      true,
           showLoadMsg:  true
       });
+      alert("Carica la mappa");
       attesa(true, "Sto scaricando la mappa...");
-      dbgMsg("Show map");
       $.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyBH7uaEdJNrfDU4RHjgtPg971Fm8pHzZ3o&callback=onMapLoaded');
     } else {
       showAlert("Attenzione: manca la connessione WiFi, controllate le impostazioni");
