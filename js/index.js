@@ -372,26 +372,31 @@ function onMapLoaded(){
   mappa = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
   // inserisce i marker delle mete presenti
   $.each(mete.elenco, function(key, value){
-    // cerca l'elemento nella lista delle pagine
     var txtArrivato = "";
+    var icn = 'img/icon_red-dot.png';
     $.each( pagine.lista, function(i, el){
-      alert(el.idMeta  + " " + value.id)
+      alert(el.meta  + " " + value.meta)
       if( el.idMeta == value.id){
         if(  pagine.arrivato( i*1+1 ) ){
-          txtArrivato = "Arrivato il: "+txtDataora(value.dataora);
+          txtArrivato = "Arrivato il: " + txtDataora(value.dataora);
+          icn = 'img/icon_blue-dot.png';
         }
         return false;
       }
     });
+    // cerca l'elemento nella lista delle pagine
     var newMarker  =new google.maps.Marker({
-      position: new google.maps.LatLng(value.lat,value.lng)
+      position: new google.maps.LatLng(value.lat,value.lng),
+      icon: icn,
+      map: mappa
       });    
-    newMarker.setMap(mappa);
+    var txtContent = value.meta + " alt: " + value.alt + " mt. <br>" + txtArrivato;
+    alert(value.meta + " alt: " + value.alt + " mt. <br>" + txtArrivato);
     var infowindow = new google.maps.InfoWindow({
-      content: value.meta + " alt: " + value.alt + " mt. <br>" + txtArrivato
+      content: txtContent
     });
     google.maps.event.addListener(newMarker, 'click', function() {
-      mappa.setZoom(18);
+      // mappa.setZoom(18);
       infowindow.open(mappa,newMarker);
     });
   });
