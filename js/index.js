@@ -365,13 +365,23 @@ var mete = {
 function onMapLoaded(){
   var latlng = new google.maps.LatLng(app.coordinate.lat, app.coordinate.lng);
   var mapOptions = {
-    zoom: 15,
+    zoom: 11,
     center: latlng,
     mapTypeId: google.maps.MapTypeId.TERRAIN 
   };
   mappa = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
   // inserisce i marker delle mete presenti
   $.each(mete.elenco, function(key, value){
+    // cerca l'elemento nella lista delle pagine
+    var txtArrivato = "";
+    $.each( pagine.lista , function(i, el){
+      if( el.idMeta == value.id){
+        if(  pagine.arrivato( i*1+1 ) ){
+          txtArrivato = "Arrivato il: "+txtDataora(value.dataora);
+        }
+        return;
+      }
+    });
     var newMarker  =new google.maps.Marker({
       position: new google.maps.LatLng(value.lat,value.lng)
       });    
@@ -382,9 +392,10 @@ function onMapLoaded(){
     //  title: value.meta
     //});
     var infowindow = new google.maps.InfoWindow({
-      content: value.meta
+      content: value.meta + " <br>alt: " + value.alt + " mt." + txtArrivato
     });
     google.maps.event.addListener(newMarker, 'click', function() {
+      mappa.setZoom(18);
       infowindow.open(mappa,newMarker);
     });
   });
