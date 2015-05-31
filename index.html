@@ -223,10 +223,7 @@
         <div role="main" class="ui-content" id="content-home">	
 	    <div class="ui-field-contain">
 		<label for="flip-wifi">Connessione ad internet</label>
-		<select name="flip-wifi" id="flip-wifi" data-role="slider">
-		    <option value="wifi">Solo WiFi</option>
-		    <option value="no">Sempre</option>
-		</select>
+		<input data-role="flipswitch" name="flip-wifi" id="flip-wifi" data-on-text="Solo WiFi" data-off-text="Sempre" data-wrapper-class="custom-size-flipswitch" type="checkbox">
 		<label for="button-update">Verifica la presenza di nuove mete</label>
 		<button id="btnUpdate">Aggiorna</button>
 	    </div>

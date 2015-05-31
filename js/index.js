@@ -132,7 +132,6 @@ var app = {
         pagine.showPage();
       }
     });
-    alert("Partito user:" + id_User );
     dbgMsg("Partito user:" + id_User );
   },
   // chiamata quando la posizione è stata letta
@@ -205,9 +204,9 @@ var app = {
   // verifica se il wifi è abilitato O SE è stato autorizzato comunque il trasferimento dati in 3G
   checkWifi: function(){
     var networkState = navigator.network.connection.type;
-    var options = $( "#flip-wifi" ).flipswitch( "option" );
+    var wf = $( "#flip-wifi" ).prop("checked");
     alert(networkState);
-    dbgMsg("Connessione: " + networkState + " Opzione: " + options);
+    dbgMsg("Connessione: " + networkState + " Opzione: " + wf);
     if( networkState == Connection.WIFI || (INTERNET_SEMPRE && (networkState !== Connection.NONE) ) ){
       return true;
     } else {
