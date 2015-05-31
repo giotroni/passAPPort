@@ -162,6 +162,7 @@ var app = {
   leggiDati: function(){
     if ("INTERNET_SEMPRE" in localStorage){
       INTERNET_SEMPRE = app.storage.getItem("INTERNET_SEMPRE");
+      $( "#flip-wifi" ).prop("checked", INTERNET_SEMPRE );
     }
     if ("coordinate" in localStorage){
       app.coordinate = JSON.parse(app.storage.getItem("coordinate"));
@@ -375,10 +376,9 @@ function onMapLoaded(){
     var txtArrivato = "";
     var icn = 'img/icon_red-dot.png';
     $.each( pagine.lista, function(i, el){
-      alert(el.meta  + " " + value.meta)
       if( el.idMeta == value.id){
         if(  pagine.arrivato( i*1+1 ) ){
-          txtArrivato = "Arrivato il: " + txtDataora(el.dataora);
+          txtArrivato = "<br>Arrivato il: " + txtDataora(el.dataora);
           icn = 'img/icon_blue-dot.png';
         }
         return false;
@@ -390,13 +390,12 @@ function onMapLoaded(){
       icon: icn,
       map: mappa
       });    
-    var txtContent = value.meta + " alt: " + value.alt + " mt. <br>" + txtArrivato;
-    alert(value.meta + " alt: " + value.alt + " mt. <br>" + txtArrivato);
+    var txtContent = value.meta + "<br>alt: " + value.alt + " mt. " + value.punti + " punti" + txtArrivato;
     var infowindow = new google.maps.InfoWindow({
       content: txtContent
     });
     google.maps.event.addListener(newMarker, 'click', function() {
-      // mappa.setZoom(18);
+      mappa.setZoom(18);
       infowindow.open(mappa,newMarker);
     });
   });
@@ -804,6 +803,7 @@ var pagine = {
     txt +=  "</b><br>" + el.desc;
     txt += "<br>Vale: "+ el.punti + " punti";
     txt +=  "<br><i>lat:</i> " + el.lat + "<br><i>Long:</i> " + el.lng + "<br><i>Alt:</i> " + el.alt;
+    alert(txt);
     $("#popupLblDesc").html(txt);
     $("#popupDesc").popup( "open" );
     
