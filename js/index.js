@@ -375,6 +375,15 @@ function onMapLoaded(){
   $.each(mete.elenco, function(key, value){
     var txtArrivato = "";
     var icn = 'img/icon_red-dot.png';
+    var arr = jQuery.grep(pagine.lista, function(el){
+        return el.idMeta == value.id;
+      });
+    alert("lenght " + arr.lenght);
+    if( arr.lenght>0){
+      alert("meta " + value.meta + " " + arr[0].dataora);
+    } else {
+      alert("no " + value.meta)
+    }
     $.each( pagine.lista, function(i, el){
       if( el.idMeta == value.id){
         if(  pagine.arrivato( i*1+1 ) ){
@@ -395,7 +404,8 @@ function onMapLoaded(){
       content: txtContent
     });
     google.maps.event.addListener(newMarker, 'click', function() {
-      mappa.setZoom(18);
+      //mappa.setZoom(16);
+      mappa.setCenter(new google.maps.LatLng(value.lat, value.lng));
       infowindow.open(mappa,newMarker);
     });
   });
