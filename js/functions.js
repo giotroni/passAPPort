@@ -91,7 +91,6 @@ function adesso(){
 }
 
 // Show a custom confirmation dialog
-//
 function showYesNo( msg, func ) {
   navigator.notification.confirm(
     msg, // message
@@ -123,8 +122,8 @@ function txtDataora( dt ){
   return (dt.substr(8,2) + " " + month[parseInt(dt.substr(5,2))-1] + " " + dt.substr(0,4) + " alle " + dt.substr(11,5));
 }
 
+// scrive il testo txt sul file log
 function writeLog(txt){
-  // scrive il testo txt sul file log
   window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
     function(fileSystem) {
       fileSystem.root.getFile("log_passAPPort.txt", {create: true, exclusive: false},
@@ -139,25 +138,29 @@ function writeLog(txt){
   fail);
 }
 
+// Chiamata in caso di errori
 function fail(error){
   dbgMsg("Errore: " + error.source + " + " + error.target+ " + " + error.code)
 }
 
+// condivide la foto
 function sharePhoto() {
-  showAlert("Pronto a vondividere?", "Attenzione");
+  showAlert("Pronto a condividere?", "Attenzione");
   var imageLink;
   dbgMsg('Calling from CapturePhoto');
   navigator.screenshot.save(function(error,res){
-  if(error){
-    dngMsg(error);
-  }else{
-    dbgMsg('ok',res.filePath); //should be path/to/myScreenshot.jpg
-  //For android
-    imageLink = res.filePath;
-   window.plugins.socialsharing.share("Meta condivisa da passAPPort", "passPPort",'file://'+imageLink, null);
-   //For iOS
-   //window.plugins.socialsharing.share(null,   null,imageLink, null)
- }
- },'jpg',50,'myScreenShot');
+    if(error){
+      dngMsg(error);
+    }else{
+      dbgMsg('ok',res.filePath); //should be path/to/myScreenshot.jpg
+    //For android
+      imageLink = res.filePath;
+     window.plugins.socialsharing.share("Meta condivisa da passAPPort", "passPPort",'file://'+imageLink, null);
+     //For iOS
+     //window.plugins.socialsharing.share(null,   null,imageLink, null)
+    }
+  },
+  'jpg',50,'myScreenShot'
+  );
 }
 

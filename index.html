@@ -192,14 +192,14 @@
 	<h3>Vai a:</h3>
 	<ul data-role="listview" data-inset="true" >
 	   <li><a href="#" id="btnPagine" >Pagina...</a></li>
-	   <li><a href="#" id="btnHome1" >Copertina</a></li>
+	   <li><a href="#" id="btnHome" >Copertina</a></li>
 	   <li><a href="#" id="btnLastPage" >Ultima pagina</a></li>
 	   <li><a href="#" id="btnNuovaMeta" >Nuova Meta</a></li>
 	   <li><a href="#" id="btnShowMap" >Mappa</a></li>
-
+	   <li><a href="#" id="btnSettings1" >Impostazioni</a></li>
 	</ul>
 	<a href="#" id="btnCheckPos"  data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-star ui-btn-icon-left">Verifica la posizione</a>
-	<a href="#" id="btnSettings1"  data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-gear ui-btn-icon-left">Impostazioni</a>
+	<!-- <a href="#" id="btnSettings1"  data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-gear ui-btn-icon-left">Impostazioni</a> -->
 	<a href="#" id="btnDelete"  data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-minus ui-btn-icon-left">Elimina pagina</a>
 
     </div><!-- /leftPanel-->
@@ -217,18 +217,23 @@
 
     <div data-role="page" id="page-settings" >
         <div data-role="header">
-            <h2>passAPPort - Impostazioni</h2>
+            <h2>Impostazioni</h2>
+	    <a href="#" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-mini ui-btn-inline ui-icon-delete ui-btn-icon-right ui-btn-right btnBack" >Close</a>
         </div>
-        <div role="main" class="ui-content" id="content-home">
-	    <a href="#" data-role="button" id="btnUpdate">Aggiorna mete</a>
+        <div role="main" class="ui-content" id="content-home">	
+	    <div class="ui-field-contain">
+		<label for="flip-wifi">Connessione ad internet</label>
+		<select name="flip-wifi" id="flip-wifi" data-role="slider">
+		    <option value="wifi">Solo WiFi</option>
+		    <option value="no">Sempre</option>
+		</select>
+		<label for="button-update">Verifica la presenza di nuove mete</label>
+		<button id="btnUpdate">Aggiorna</button>
+	    </div>
 	    <a href="#" data-role="button" id="btnSave">Save</a>
 	    <a href="#" data-role="button" id="btnReset">Reset</a>
-        </div>
-        <div data-role="footer" data-position="fixed">
-	    <a href="#" data-role="button" id="btnHome">back</a>
 	    
         </div>
-
     </div><!-- /page-settings -->
     
     <div data-role="page" id="page-interno1" data-add-back-btn="false"  class="interno interno2" name="interno">
@@ -290,7 +295,7 @@
     <div data-role="page" id="page-mappa" >
         <div data-role="header">
             <h2>Mappa</h2>
-	    <a href="#" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-mini ui-btn-inline ui-icon-delete ui-btn-icon-right ui-btn-right">Close</a>
+	    <a href="#" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-mini ui-btn-inline ui-icon-delete ui-btn-icon-right ui-btn-right btnBack" >Close</a>
         </div>
         <div role="main" class="ui-content" id="content-map">
 	    <div id="map_canvas" style="height:100%;"></div>
@@ -299,8 +304,8 @@
     
     <div data-role="page" id="page-elencopagine" data-add-back-btn="true"  class="interno1">
         <div data-role="header" id="tit-elencoPagine">
-	    Pagine
-	    <a href="#" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-mini ui-btn-inline ui-icon-delete ui-btn-icon-right ui-btn-right">Close</a>
+	    <h2>Pagine</h2>
+	    <a href="#" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-mini ui-btn-inline ui-icon-delete ui-btn-icon-right ui-btn-right btnBack" >Close</a>
         </div>
         <div role="main" class="ui-content" id="content-elencoPagine">
 	    <ul data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Vai a pagina ..."  id="lstPagine">
@@ -311,8 +316,8 @@
 
     <div data-role="page" id="page-elencomete" data-add-back-btn="false"  class="interno1">
         <div data-role="header" id="tit-elencomete">
-	    Mete
-	    <a href="#" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-mini ui-btn-inline ui-icon-delete ui-btn-icon-right ui-btn-right">Close</a>
+	    <h2>Mete</h2>
+	    <a href="#" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-mini ui-btn-inline ui-icon-delete ui-btn-icon-right ui-btn-right btnBack" >Close</a>
         </div>
         <div role="main" class="ui-content" id="content-elencoMete">
 	    <ul data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Scegli la tua meta..."  id="lstMete">

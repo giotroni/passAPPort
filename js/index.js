@@ -37,8 +37,6 @@ var app = {
     // ok, il dispositivo è pronto: configuralo
     // app.checkConnection();
     // app.showAlert("Chiamata alla fine del caricamento","msg");
-    
-    dbgMsg("Lettura mappa");
     app.setDir();   // memorizza il path della cartella applicazione
     destinationType=navigator.camera.DestinationType;
     // inizializza l'elenco delle mete e le pagine
@@ -57,12 +55,12 @@ var app = {
     $("#btnUpdate").on("click", pagine.updateMete);
     $("#btnSave").on("click", pagine.savePagine);
     $("#btnHome").on("click", pagine.home);    
-    $("#btnHome1").on("click", pagine.home);
     $("#btnNuovaMeta").on("click", pagine.showMete);
     $("#btnLastPage").on("click", pagine.lastPage);
     $("#btnPagine").on("click", pagine.showElencoPagine);
     $("#btnShowMap").on("click", pagine.showMap);
     $(".numPagina").on("click", pagine.showElencoPagine);
+    $(".btnBack").on("click", pagine.prevPage);
     
     $("#btnDelete").on("click", function(){showYesNo("Vuoi DAVVERO cancellare questa meta?", pagine.cancellaPagina)} );
     $(".btnSx").on("click", pagine.prevPage);
@@ -206,6 +204,8 @@ var app = {
   // verifica se il wifi è abilitato O SE è stato autorizzato comunque il trasferimento dati in 3G
   checkWifi: function(){
     var networkState = navigator.network.connection.type;
+    var options = $( "#flip-wifi" ).flipswitch( "option" );
+    dbgMsg("Connessione: " + networkState + " Opzione: " + options);
     if( networkState == Connection.WIFI || (INTERNET_SEMPRE && (networkState !== Connection.NONE) ) ){
       return true;
     } else {
@@ -350,14 +350,14 @@ var mete = {
 }
 // chiamata al caricamento della mappa
 function onMapLoaded(){
-    dbgMsg("on load");
     var mapOptions = {
       zoom: 8,
       center: new google.maps.LatLng(pagine.coordinate.lat, pagine.coordinate.lng),
       mapTypeId: google.maps.MapTypeId.TERRAIN 
     };
     mappa = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
-    dbgMsg("fatto");
+    attesa(false,"");
+    dbgMsg("Mappa caricata");
 }
 // classe con le pagine
 var pagine = {
@@ -446,6 +446,7 @@ var pagine = {
   },
   // Mostra la pagina corrente
   showPage: function(){
+    attesa(false,"");
     dragga = true;
     if(pagine.numPagina>0){
       suffisso = suffisso % 2 +1; // alterna le pagine per geenrare l'effetto dello scorrimento
@@ -497,14 +498,20 @@ var pagine = {
   // mostra la pagina con la mappa
   showMap: function(){
     // dbgMsg("mostra l'elenco delle mete");
-    $.mobile.pageContainer.pagecontainer("change", "#page-mappa", {
-        transition:   'flip',
-        changeHash:   false,
-        reverse:      true,
-        showLoadMsg:  true
-    });
-    dbgMsg("Show map");
-    $.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyBH7uaEdJNrfDU4RHjgtPg971Fm8pHzZ3o&callback=onMapLoaded');
+    if( app.checkWifi()){
+      $.mobile.pageContainer.pagecontainer("change", "#page-mappa", {
+          transition:   'flip',
+          changeHash:   false,
+          reverse:      true,
+          showLoadMsg:  true
+      });
+      attesa(true, "Sto scaricando la mappa...");
+      dbgMsg("Show map");
+      $.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyBH7uaEdJNrfDU4RHjgtPg971Fm8pHzZ3o&callback=onMapLoaded');
+    } else {
+      showAlert("Attenzione: manca la connessione WiFi, controllate le impostazioni");
+    }
+    
   },
   // mostra la pagina con l'elenco delle mete
   showMete: function (){
