@@ -10,7 +10,7 @@
 
     <style>
         #draggable { width: 130px; height: 160px; position: absolute; padding: 0.5em; }
-	#content-home {
+	#content-map {
 	    padding: 0;
 	    position : absolute !important; 
 	    top : 2em !important;  
@@ -205,8 +205,7 @@
     </div><!-- /leftPanel-->
 
     <div data-role="page" id="page-home" class="copertina" >
-        <div role="main" class="ui-content" id="content-home">
-	    <div id="map_canvas" style="height:100%;"></div>
+        <div role="main" class="ui-content" >
 	    <div class="divPunti">
 		<div class="imgPunti"></div>
 		<span id="lblPunti"></span>
@@ -293,7 +292,8 @@
             <h2>Mappa</h2>
 	    <a href="#" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-mini ui-btn-inline ui-icon-delete ui-btn-icon-right ui-btn-right">Close</a>
         </div>
-        <div role="main" class="ui-content" >
+        <div role="main" class="ui-content" id="content-map">
+	    <div id="map_canvas" style="height:100%;"></div>
 	</div>
     </div><!-- /page-mappa -->
     
