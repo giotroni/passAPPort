@@ -162,7 +162,7 @@ var app = {
   leggiDati: function(){
     if ("INTERNET_SEMPRE" in localStorage){
       INTERNET_SEMPRE = app.storage.getItem("INTERNET_SEMPRE");
-      $( "#flip-wifi" ).prop("checked", INTERNET_SEMPRE );
+      $( "#flip-wifi" ).prop("checked", !INTERNET_SEMPRE );
     }
     if ("coordinate" in localStorage){
       app.coordinate = JSON.parse(app.storage.getItem("coordinate"));
@@ -218,7 +218,7 @@ var app = {
   // verifica se il wifi è abilitato O SE è stato autorizzato comunque il trasferimento dati in 3G
   checkWifi: function(){
     var networkState = navigator.network.connection.type;
-    INTERNET_SEMPRE = $( "#flip-wifi" ).prop("checked");
+    INTERNET_SEMPRE = !($( "#flip-wifi" ).prop("checked"));
     app.salvaDati();
     dbgMsg("Connessione: " + networkState + " Opzione: " + INTERNET_SEMPRE);
     if( networkState == Connection.WIFI || (INTERNET_SEMPRE && (networkState !== Connection.NONE) ) ){
@@ -375,15 +375,6 @@ function onMapLoaded(){
   $.each(mete.elenco, function(key, value){
     var txtArrivato = "";
     var icn = 'img/icon_red-dot.png';
-    var arr = jQuery.grep(pagine.lista, function(el){
-        return el.idMeta == value.id;
-      });
-    alert("lenght " + arr.lenght);
-    if( arr.lenght>0){
-      alert("meta " + value.meta + " " + arr[0].dataora);
-    } else {
-      alert("no " + value.meta)
-    }
     $.each( pagine.lista, function(i, el){
       if( el.idMeta == value.id){
         if(  pagine.arrivato( i*1+1 ) ){
