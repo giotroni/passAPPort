@@ -374,25 +374,21 @@ function onMapLoaded(){
   $.each(mete.elenco, function(key, value){
     // cerca l'elemento nella lista delle pagine
     var txtArrivato = "";
-    $.each( pagine.lista , function(i, el){
+    $.each( pagine.lista, function(i, el){
+      alert(el.idMeta  + " " + value.id)
       if( el.idMeta == value.id){
         if(  pagine.arrivato( i*1+1 ) ){
           txtArrivato = "Arrivato il: "+txtDataora(value.dataora);
         }
-        return;
+        return false;
       }
     });
     var newMarker  =new google.maps.Marker({
       position: new google.maps.LatLng(value.lat,value.lng)
       });    
     newMarker.setMap(mappa);
-    //var newMarker = new google.maps.Marker({
-    //  position: new google.maps.LatLng(value.lat,value.lng),
-    //  map: mappa,
-    //  title: value.meta
-    //});
     var infowindow = new google.maps.InfoWindow({
-      content: value.meta + " <br>alt: " + value.alt + " mt." + txtArrivato
+      content: value.meta + " alt: " + value.alt + " mt. <br>" + txtArrivato
     });
     google.maps.event.addListener(newMarker, 'click', function() {
       mappa.setZoom(18);
