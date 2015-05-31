@@ -16,7 +16,7 @@ var myFolderApp = "passAPPort";
 var appDir = "";
 var destinationType; // sets the format of returned value
 var suffisso = 1;     // serve ad alternare le pagine in lettura
-var id_User = 1;    // id dell'utilizzatore
+var id_User = -1;    // id dell'utilizzatore
 var dragga = true;  // abilitato durante il drag
 var direction = false;  // verso della transizione nello scorrimento delle pagine
 
@@ -46,10 +46,10 @@ var app = {
     // app.showAlert("Chiamata alla fine del caricamento","msg");
     app.setDir();   // memorizza il path della cartella applicazione
     destinationType=navigator.camera.DestinationType;
+    app.getUser();
     app.leggiDati();
     // inizializza l'elenco delle mete e le pagine
     mete.inizializza();
-    app.leggiDati();
     pagine.leggePagine();
     //app.checkPos();
     pagine.showPage();
@@ -103,8 +103,6 @@ var app = {
         event.preventDefault();            
       }
     }, false);
-
-
     $(".interno").on("swiperight", function(event){
       // dbgMsg("swipe right");
       if( event.handled !== true){
@@ -166,6 +164,28 @@ var app = {
     }
     if ("coordinate" in localStorage){
       app.coordinate = JSON.parse(app.storage.getItem("coordinate"));
+    }
+  },
+  // legge lo user
+  getUser: function(){
+    if ("id_User" in localStorage){
+      id_User= app.storage.getItem("id_User");
+    }
+    if( id_User<0 ){
+      // inizializza lo user
+      $.ajax({
+         type: 'GET',
+         url: URL_PREFIX + 'php/getUser.php',
+         data: {
+           nome:  device.uuid
+           },
+         cache: false
+       }).done(function(result) {
+        id_User = result;
+        app.storage.setItem("user", id_User);
+       }).fail(function(){
+         showAlert("Problemi di conessione", "Attenzione!");
+       })
     }
   },
   // chiamata quando c'è un errore nella lettura della posizione
@@ -318,6 +338,7 @@ var mete = {
       type: 'GET',
       url: URL_PREFIX + 'php/leggiMete.php',
       data: {
+        user: id_User,
         area: mete.areaMete
         },
       cache: false
@@ -804,9 +825,9 @@ var pagine = {
     txt +=  "</b><br>" + el.desc;
     txt += "<br>Vale: "+ el.punti + " punti";
     txt +=  "<br><i>lat:</i> " + el.lat + "<br><i>Long:</i> " + el.lng + "<br><i>Alt:</i> " + el.alt;
-    alert(txt);
-    $("#popupLblDesc").html(txt);
-    $("#popupDesc").popup( "open" );
+    showAlert(txt, "Info");
+    //$("#popupLblDesc").html(txt);
+    //$("#popupDesc").popup( "open" );
     
   },
   // elimina una pagina ind
