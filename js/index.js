@@ -378,7 +378,7 @@ function onMapLoaded(){
       alert(el.meta  + " " + value.meta)
       if( el.idMeta == value.id){
         if(  pagine.arrivato( i*1+1 ) ){
-          txtArrivato = "Arrivato il: " + txtDataora(value.dataora);
+          txtArrivato = "Arrivato il: " + txtDataora(el.dataora);
           icn = 'img/icon_blue-dot.png';
         }
         return false;
