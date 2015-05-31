@@ -39,8 +39,10 @@ var app = {
     // app.showAlert("Chiamata alla fine del caricamento","msg");
     app.setDir();   // memorizza il path della cartella applicazione
     destinationType=navigator.camera.DestinationType;
+    app.leggiDati();
     // inizializza l'elenco delle mete e le pagine
     mete.inizializza();
+    app.leggiDati();
     pagine.leggePagine();
     //app.checkPos();
     pagine.showPage();
@@ -147,12 +149,13 @@ var app = {
   },
   // memorizza i dati della APP
   salvaDati: function(){
-    attesa(true, "Memorizzo");
-    // azzera il database
-    app.storage.clear();
-    pagine.scrivePagine();
-    mete.scriveMete();
-    attesa(false, "");
+    app.storage.setItem("INTERNET_SEMPRE", INTERNET_SEMPRE);
+  },
+  // legge i parametri della App
+  leggiDati: function(){
+    if ("INTERNET_SEMPRE" in localStorage){
+      INTERNET_SEMPRE = app.storage.getItem("INTERNET_SEMPRE");
+    }
   },
   // chiamata quando c'è un errore nella lettura della posizione
   onErrorGeo: function(error) {
@@ -204,9 +207,9 @@ var app = {
   // verifica se il wifi è abilitato O SE è stato autorizzato comunque il trasferimento dati in 3G
   checkWifi: function(){
     var networkState = navigator.network.connection.type;
-    var wf = $( "#flip-wifi" ).prop("checked");
-    alert(networkState);
-    dbgMsg("Connessione: " + networkState + " Opzione: " + wf);
+    INTERNET_SEMPRE = $( "#flip-wifi" ).prop("checked");
+    app.salvaDati();
+    dbgMsg("Connessione: " + networkState + " Opzione: " + INTERNET_SEMPRE);
     if( networkState == Connection.WIFI || (INTERNET_SEMPRE && (networkState !== Connection.NONE) ) ){
       return true;
     } else {
@@ -351,7 +354,7 @@ var mete = {
 // chiamata al caricamento della mappa
 function onMapLoaded(){
     var mapOptions = {
-      zoom: 8,
+      zoom: 15,
       center: new google.maps.LatLng(pagine.coordinate.lat, pagine.coordinate.lng),
       mapTypeId: google.maps.MapTypeId.TERRAIN 
     };
@@ -366,9 +369,9 @@ var pagine = {
   saved: true,            // flag che indica se le pagine sono state salvate sul DB internet
   // struttura con le coordinate e le altre info di geolocalizzazione
   coordinate: {
-    lat: 0,
-    lng: 0,
-    alt: 0
+    lat: 46.145597,
+    lng: 12.215403,
+    alt: 390
   },
   // elenco dei luoghi
   lista: [],
@@ -505,7 +508,6 @@ var pagine = {
           reverse:      true,
           showLoadMsg:  true
       });
-      alert("Carica la mappa");
       attesa(true, "Sto scaricando la mappa...");
       $.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyBH7uaEdJNrfDU4RHjgtPg971Fm8pHzZ3o&callback=onMapLoaded');
     } else {
