@@ -9,6 +9,9 @@
     <script src="lib/jquery.mobile-1.4.5.min.js"></script>
 
     <style>
+	.ui-icon-loading {
+	    background: url(img/icon_ajax-loader.gif);
+	}
         #draggable { width: 130px; height: 160px; position: absolute; padding: 0.5em; }
 	#content-map {
 	    padding: 0;
@@ -84,7 +87,7 @@
 	    }
 	.imgOptions {
 	    top: 0.1em; position: absolute;
-	    width: 20%; height: 10%; 
+	    width: 2.75em; height: 2.75em; 
 	    background-image: url("img/icon_zaino.png");
 	    background-size: 100% 100%;
 	    background-repeat: no-repeat;
@@ -323,21 +326,13 @@
 	<div class="btnSx" ><b><</b></div>
     </div><!-- /page-elencomete-->
 
-    <div data-role="popup" id="popupDesc" class="ui-corner-all" data-position-to="window" data-overlay-theme="a" data-theme="c" style="background-color: white;">
+    <div data-role="popup" id="popupMenu" class="ui-corner-all" data-position-to="window" data-overlay-theme="a" data-theme="c" style="background-color: white;">
 	<div id="popupLblDesc"></div>
-    </div><!-- /popupDesc-->
+    </div><!-- /popupMenu-->
     
-    <div data-role="popup" id="popupMenu" data-theme="b" data-position-to="window">
-	<ul data-role="listview" data-inset="true" style="min-width:210px;">
-	</ul>
-	<div data-role="collapsibleset" data-theme="b" data-content-theme="a" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" style="margin:0; width:250px;">
-	    <div data-role="collapsible" data-inset="false">
-	    <h2>Vai a pagina:</h2>
-		<ul data-role="listview"">
-		</ul>
-	    </div><!-- /collapsible -->
-	</div><!-- /collapsibleset -->
-    </div><!-- /popupMenu -->
+    <div data-role="popup" id="popupDesc" data-theme="b" data-position-to="window">
+	<div id="popupLblDesc"></div>
+    </div><!-- /popupDesc -->
 
 </body>
 </html>

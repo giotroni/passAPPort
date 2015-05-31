@@ -21,10 +21,17 @@ var dragga = true;  // abilitato durante il drag
 var direction = false;  // verso della transizione nello scorrimento delle pagine
 
 var mappa;
+var mappaShown = false;
 
 // Funzione che calcola la distanza
 // MAIN
 var app = {
+  // struttura con le coordinate e le altre info di geolocalizzazione
+  coordinate: {
+    lat: 46.145597,
+    lng: 12.215403,
+    alt: 390
+  },
   storage: window.localStorage,   // per il salvataggio locale delle info
   // inixzializzazione di phonegap
   initialize: function() {
@@ -48,7 +55,6 @@ var app = {
     pagine.showPage();
     // EVENTI DA LEGARE
     $( "#popupDesc" ).enhanceWithin().popup(); // Abilita il pop-up che descrive le immagini per tutte le pagine
-    $( "#popupMenu" ).enhanceWithin().popup(); // Abilita il pop-up con le opzioni
     $("div[data-role='panel']").panel().enhanceWithin();
 
     $("#btnSettings").on("click", pagine.settings);    
@@ -62,7 +68,7 @@ var app = {
     $("#btnPagine").on("click", pagine.showElencoPagine);
     $("#btnShowMap").on("click", pagine.showMap);
     $(".numPagina").on("click", pagine.showElencoPagine);
-    $(".btnBack").on("click", pagine.prevPage);
+    $(".btnBack").on("click", pagine.showPage);
     
     $("#btnDelete").on("click", function(){showYesNo("Vuoi DAVVERO cancellare questa meta?", pagine.cancellaPagina)} );
     $(".btnSx").on("click", pagine.prevPage);
@@ -77,7 +83,6 @@ var app = {
     //$("#imgMeta2").on("click", pagine.popupNote);
     $("#txtNota1").on( "change", pagine.memoNota );
     $("#txtNota2").on( "change", pagine.memoNota );
-//    $(".imgOptions").on("click", pagine.popupMenu);
     $(".imgShare").on( "click", sharePhoto );
     
     var draggable = document.getElementById('draggable');
@@ -140,21 +145,26 @@ var app = {
   onSuccessGeo: function(position){
     // aggiorna le coordinate
     attesa(false,"");
-    pagine.coordinate.lat = position.coords.latitude;
-    pagine.coordinate.lng = position.coords.longitude;
-    pagine.coordinate.alt = position.coords.altitude;
-    // dbgMsg(pagine.coordinate.lat  + " " + pagine.coordinate.lng );
+    app.coordinate.lat = position.coords.latitude;
+    app.coordinate.lng = position.coords.longitude;
+    app.coordinate.alt = position.coords.altitude;
+    app.salvaDati();
+    // dbgMsg(app.coordinate.lat  + " " + app.coordinate.lng );
     // aggiorna la distanza dalla meta corrente
     pagine.aggiornaDistanza();
   },
   // memorizza i dati della APP
   salvaDati: function(){
     app.storage.setItem("INTERNET_SEMPRE", INTERNET_SEMPRE);
+    app.storage.setItem("coordinate", JSON.stringify(app.coordinate))
   },
   // legge i parametri della App
   leggiDati: function(){
     if ("INTERNET_SEMPRE" in localStorage){
       INTERNET_SEMPRE = app.storage.getItem("INTERNET_SEMPRE");
+    }
+    if ("coordinate" in localStorage){
+      app.coordinate = JSON.parse(app.storage.getItem("coordinate"));
     }
   },
   // chiamata quando c'è un errore nella lettura della posizione
@@ -345,7 +355,7 @@ var mete = {
   // aggiorna la lista dei mappa.luoghi, ordinandola sulla base della distanza
   sortMete: function(){
     $.each(mete.elenco, function(key, value){
-      value.dist = getDistanceFromLatLng(value.lat, value.lng, pagine.coordinate.lat, pagine.coordinate.lng )
+      value.dist = getDistanceFromLatLng(value.lat, value.lng, app.coordinate.lat, app.coordinate.lng )
     })
     mete.elenco.sort(mycomparator);    
   }
@@ -353,26 +363,35 @@ var mete = {
 }
 // chiamata al caricamento della mappa
 function onMapLoaded(){
-    var mapOptions = {
-      zoom: 15,
-      center: new google.maps.LatLng(pagine.coordinate.lat, pagine.coordinate.lng),
-      mapTypeId: google.maps.MapTypeId.TERRAIN 
-    };
-    mappa = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
-    attesa(false,"");
-    dbgMsg("Mappa caricata");
+  var latlng = new google.maps.LatLng(app.coordinate.lat, app.coordinate.lng);
+  var mapOptions = {
+    zoom: 15,
+    center: latlng,
+    mapTypeId: google.maps.MapTypeId.TERRAIN 
+  };
+  mappa = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+  // inserisce i marker delle mete presenti
+  $.each(mete.elenco, function(key, value){
+    var newMarker = new google.maps.Marker({
+      position: new google.maps.LatLng(value.lat,value.lng),
+      map: mappa,
+      title: value.meta
+    });
+  });
+  // marker will be displayed on the lat long position
+  var marker = new google.maps.Marker({
+      position: latlng,
+      icon: 'img/icon_blue-pushpin.png',
+      map: mappa
+  });
+  attesa(false,"");
+  dbgMsg("Mappa caricata");
 }
 // classe con le pagine
 var pagine = {
   numPagina: 0,           // numero pagina attuale
   paginaMeteVisibile: false,
   saved: true,            // flag che indica se le pagine sono state salvate sul DB internet
-  // struttura con le coordinate e le altre info di geolocalizzazione
-  coordinate: {
-    lat: 46.145597,
-    lng: 12.215403,
-    alt: 390
-  },
   // elenco dei luoghi
   lista: [],
   // verifica se la pagina i è già arrivata
@@ -508,8 +527,12 @@ var pagine = {
           reverse:      true,
           showLoadMsg:  true
       });
-      attesa(true, "Sto scaricando la mappa...");
-      $.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyBH7uaEdJNrfDU4RHjgtPg971Fm8pHzZ3o&callback=onMapLoaded');
+      if(!mappaShown){
+        attesa(true, "Sto scaricando la mappa...");
+        $.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyBH7uaEdJNrfDU4RHjgtPg971Fm8pHzZ3o&callback=onMapLoaded');
+      } else {
+        onMapLoaded();
+      }
     } else {
       showAlert("Attenzione: manca la connessione WiFi, controllate le impostazioni");
     }
@@ -642,7 +665,7 @@ var pagine = {
     // dbgMsg("Aggiorna Distanza");
     if( pagine.numPagina>0){
       var el = pagine.lista[pagine.numPagina-1];
-      el.dist = getDistanceFromLatLng(pagine.coordinate.lat, pagine.coordinate.lng, el.lat, el.lng);
+      el.dist = getDistanceFromLatLng(app.coordinate.lat, app.coordinate.lng, el.lat, el.lng);
       var dst = el.dist;
       $("#lblDistanza1").html("Distanza: "+ strDistanza(dst));
       $("#lblDistanza2").html("Distanza: "+ strDistanza(dst));
