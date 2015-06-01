@@ -578,14 +578,19 @@ var pagine = {
           reverse:      true,
           showLoadMsg:  true
       });
+      $("#selMete" ).empty();
+      var testo = '<option value="-1">Seleziona una meta</option>';
       $.each(mete.elenco, function(key, value){
         var testo = '<option value="'+key+'">'+value.meta+'</option>';
         $('#selMete').append(testo);
       })
       $("#selMete" ).on( "change", function() {
-        var el = mete.elenco[$(this).attr('value')];
-        alert($(this).attr('value'));
-        mappa.setCenter(new google.maps.LatLng(el.lat, el.lng));
+        var id = $('#selMete option:selected').val();
+        alert(id);
+        if( id> 0) {
+          var el = mete.elenco[id];
+          mappa.setCenter(new google.maps.LatLng(el.lat, el.lng));
+        }
       });
       $('#selMete').selectmenu('refresh');
       if(!mappaShown){
