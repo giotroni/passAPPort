@@ -58,8 +58,7 @@ var app = {
     $("div[data-role='panel']").panel().enhanceWithin();
 
     $("#btnSettings").on("click", pagine.settings);    
-    $("#btnSettings1").on("click", pagine.settings);    
-    $("#btnReset").on("click", pagine.reset);
+    $("#btnReset").on("click", function(){showYesNo("Vuoi DAVVERO cancellare il database?", pagine.reset)});
     $("#btnUpdate").on("click", pagine.updateMete);
     $("#btnSave").on("click", pagine.savePagine);
     $("#btnHome").on("click", pagine.home);    
@@ -388,9 +387,16 @@ var mete = {
 // chiamata al caricamento della mappa
 function onMapLoaded(){
   var latlng = new google.maps.LatLng(app.coordinate.lat, app.coordinate.lng);
+  var centro;
+  if( pagine.numPagina>0 ){
+    var pag = pagine.lista[pagine.numPagina-1];
+    centro = new google.maps.LatLng(pag.lat, pag.lng) 
+  } else {
+    centro = latlng;
+  }
   var mapOptions = {
     zoom: 11,
-    center: latlng,
+    center: centro,
     mapTypeId: google.maps.MapTypeId.TERRAIN 
   };
   mappa = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
@@ -827,7 +833,6 @@ var pagine = {
     txt +=  "</b><br>" + el.desc;
     txt += "<br>Vale: "+ el.punti + " punti";
     txt +=  "<br><i>lat:</i> " + el.lat + "<br><i>Long:</i> " + el.lng + "<br><i>Alt:</i> " + el.alt;
-    showAlert(txt, "Info");
     $("#popupLblDesc").html(txt);
     $("#popupDesc" ).enhanceWithin().popup().popup("open"); // Abilita il pop-up che descrive le immagini per tutte le pagine//$("#popupDesc").popup( "open" );
     

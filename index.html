@@ -198,8 +198,8 @@
 	   <li><a href="#" id="btnHome" >Copertina</a></li>
 	   <li><a href="#" id="btnLastPage" >Ultima pagina</a></li>
 	   <li><a href="#" id="btnNuovaMeta" >Nuova Meta</a></li>
-	   <li><a href="#" id="btnShowMap" >Mappa</a></li>
-	   <li><a href="#" id="btnSettings1" >Impostazioni</a></li>
+	   <li><a href="#" id="btnShowMap" >Localizza sulla mappa</a></li>
+	   <li><a href="#" id="btnSettings" >Impostazioni</a></li>
 	</ul>
 	<a href="#" id="btnCheckPos"  data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-star ui-btn-icon-left">Verifica la posizione</a>
 	<!-- <a href="#" id="btnSettings1"  data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-gear ui-btn-icon-left">Impostazioni</a> -->
@@ -218,25 +218,6 @@
 
     </div><!-- /page-home -->
 
-    <div data-role="page" id="page-settings" >
-        <div data-role="header">
-            <h2>Impostazioni</h2>
-	    <a href="#" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-mini ui-btn-inline ui-icon-delete ui-btn-icon-left ui-btn-left btnBack" >Close</a>
-        </div>
-        <div role="main" class="ui-content" id="content-home">	
-	    <div id="lblUser"></div>
-	    <div class="ui-field-contain">
-		<label for="flip-wifi">Connessione ad internet</label>
-		<input data-role="flipswitch" name="flip-wifi" id="flip-wifi" data-on-text="Solo WiFi" data-off-text="Sempre" data-wrapper-class="custom-size-flipswitch" type="checkbox"></input>
-		<div id="lblAreaMete"></div>
-		<label for="button-update">Verifica la presenza di nuove mete</label>
-		<button id="btnUpdate">Aggiorna</button>
-	    </div>
-	    <a href="#" data-role="button" id="btnSave">Save</a>
-	    <a href="#" data-role="button" id="btnReset">Reset</a>
-	    
-        </div>
-    </div><!-- /page-settings -->
     
     <div data-role="page" id="page-interno1" data-add-back-btn="false"  class="interno interno2" name="interno">
         <div role="main" class="ui-content" id="content-interno">
@@ -329,5 +310,25 @@
     <div data-role="popup" id="popupDesc" class="ui-corner-all" data-position-to="window" data-overlay-theme="a" data-theme="c" style="background-color: white;">
 	<div id="popupLblDesc"></div>
     </div><!-- /popupDesc -->
+    <div data-role="page" id="page-settings" >
+        <div data-role="header">
+            <h2>Impostazioni</h2>
+	    <a href="#" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-mini ui-btn-inline ui-icon-delete ui-btn-icon-left ui-btn-left btnBack" >Close</a>
+        </div>
+        <div role="main" class="ui-content" id="content-home">	
+	    <div id="lblUser"></div>
+	    <div id="lblAreaMete"></div>
+	    <div class="ui-field-contain">
+		<label for="flip-wifi">Connessione ad internet:</label>
+		<input data-role="flipswitch" name="flip-wifi" id="flip-wifi" data-on-text="Assured" data-off-text="Uncertain" data-wrapper-class="custom-size-flipswitch" type="checkbox">
+		<label for="button-update">Verifica la presenza di nuove mete</label>
+		<button id="btnUpdate" name="button-update">Aggiorna</button>
+	    </div>
+	    <a href="#" data-role="button" id="btnSave">Save</a>
+	    <a href="#" data-role="button" id="btnReset">Reset</a>
+	    
+        </div>
+    </div><!-- /page-settings -->
+
 </body>
 </html>
