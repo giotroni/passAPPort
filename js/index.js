@@ -401,7 +401,7 @@ var mete = {
     // legge dal sito
     attesa(true, "Attendere: aggiorno l'elenco delle sfide");
     var questo = mete.sfide;
-    while(questo.length > 0) { // svuota l'array esistente
+    while(questo.length> 0) { // svuota l'array esistente
       questo.pop();
     };
     dbgMsg("Legge sfide da internet, area:  " + mete.areaMete);
@@ -438,8 +438,11 @@ var mete = {
   },
  // Memorizza le sfide nel DB interno
   scriveSfide: function(){
+    app.storage.setItem("numSfide", mete.sfide.length);
+    alert( "Num sfide: " + mete.sfide.length);
     $.each(mete.sfide, function(key, value){
       var valore = JSON.stringify(value);
+      alert( valore );
       app.storage.setItem("sfida"+key, valore)  
     })
   },
@@ -695,7 +698,7 @@ var pagine = {
         showLoadMsg:  true
     });
     pagine.paginaSfideVisibile = true;
-    pagine.elencaMete();
+    pagine.elencaSfide();
   },
   // mostra la pagina con l'elenco delle pagine
   showElencoPagine: function(){
