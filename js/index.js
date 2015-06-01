@@ -350,6 +350,7 @@ var mete = {
   cercaMetaPerId: function(id){
     var risultato=-1;
     $.each(mete.elenco, function(i, valore){
+      alert("id: " + id + " idMeta: " + valore.idMeta);
       if(valore.idMeta==id){
         risultato = i;
         return false;
@@ -473,16 +474,14 @@ function onMapLoaded(){
   $.each(mete.elenco, function(key, value){
     var txtArrivato = "";
     var icn = 'img/icon_red-dot.png';
-    $.each( pagine.lista, function(i, el){
-      if( el.idMeta == value.id){
-        if(  pagine.arrivato( i*1+1 ) ){
-          txtArrivato = "<br>Arrivato il: " + txtDataora(el.dataora);
-          icn = 'img/icon_blue-dot.png';
-        }
-        return false;
-      }
-    });
     // cerca l'elemento nella lista delle pagine
+    var j = pagine.cercaPaginaPerIdMeta(value.idMeta);
+    if( j>= 0){
+      if(  pagine.arrivato( j+1 ) ){
+        txtArrivato = "<br>Arrivato il: " + txtDataora(pagine.lista[j].dataora);
+        icn = 'img/icon_blue-dot.png';
+      }
+    }
     var newMarker  =new google.maps.Marker({
       position: new google.maps.LatLng(value.lat,value.lng),
       icon: icn,
