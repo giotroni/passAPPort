@@ -578,6 +578,16 @@ var pagine = {
           reverse:      true,
           showLoadMsg:  true
       });
+      $.each(mete.elenco, function(key, value){
+        var testo = '<option value="'+key+'">'+value.meta+'</option>';
+        $('#selMete').append(testo);
+      })
+      $("#selMete" ).on( "change", function() {
+        var el = mete.elenco[$(this).attr('value')];
+        alert($(this).attr('value'));
+        mappa.setCenter(new google.maps.LatLng(el.lat, el.lng));
+      });
+      $('#selMete').selectmenu('refresh');
       if(!mappaShown){
         attesa(true, "Sto scaricando la mappa...");
         $.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyBH7uaEdJNrfDU4RHjgtPg971Fm8pHzZ3o&callback=onMapLoaded');

@@ -281,6 +281,8 @@
 	    <a href="#" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-mini ui-btn-inline ui-icon-delete ui-btn-icon-left ui-btn-left btnBack" >Close</a>
         </div>
         <div role="main" class="ui-content" id="content-map">
+	    <select name="select-mete" id="selMete">
+	    </select>
 	    <div id="map_canvas" style="height:100%;"></div>
 	</div>
     </div><!-- /page-mappa -->
@@ -320,7 +322,7 @@
 	    <div id="lblAreaMete"></div>
 	    <div class="ui-field-contain">
 		<label for="flip-wifi">Connessione ad internet:</label>
-		<input data-role="flipswitch" name="flip-wifi" id="flip-wifi" data-on-text="Assured" data-off-text="Uncertain" data-wrapper-class="custom-size-flipswitch" type="checkbox">
+		<input data-role="flipswitch" name="flip-wifi" id="flip-wifi" data-on-text="Solo WiFi" data-off-text="Sempre" data-wrapper-class="custom-size-flipswitch" type="checkbox">
 		<label for="button-update">Verifica la presenza di nuove mete</label>
 		<button id="btnUpdate" name="button-update">Aggiorna</button>
 	    </div>
