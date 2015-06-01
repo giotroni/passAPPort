@@ -326,7 +326,7 @@ var mete = {
       while(questo.length > 0) { // svuota l'array esistente
         questo.pop();
       };
-      var lung = app.storage.getItem("numsfide");
+      var lung = app.storage.getItem("numSfide");
       for(i=0; i<lung; i++){
         var valore = app.storage.getItem("sfida"+i);
         questo.push(JSON.parse(valore));
@@ -729,7 +729,7 @@ var pagine = {
   // crea l'elenco sfide
   elencaSfide: function() {
     $('#lstSfide').empty();
-    alert("Num sfide" + mete.sfide.length);
+    alert("Num sfide " + mete.sfide.length);
     $.each(mete.sfide, function(key, value){
       var testo = '<li id="sfida_'+ key +'" ><a href="#" ><h3>SFIDA</h3';
       testo += 'Da: '+ mete.elenco[mete.cercaMetaPerId(value.id_Meta_Da)].meta + ' A: ' + mete.elenco[mete.cercaMetaPerId(value.id_Meta_A)].meta;
@@ -942,6 +942,17 @@ var pagine = {
         showAlert("Problemi di conessione", "Attenzione!");
       })
     }
+  },
+  // Cerca la pagina con idMeta
+  cercaPaginaPerIdMeta: function(id){
+    var risultato=-1;
+    $.each(pagine.lista, function(i, valore){
+      if(valore.idMeta==id){
+        risultato = i;
+        return false;
+      }
+    })
+    return risultato;
   },
   // fa venir fuori il popup con le info sulla meta
   popupNote: function(){
