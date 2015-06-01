@@ -63,6 +63,7 @@ var app = {
     $("#btnSave").on("click", pagine.savePagine);
     $("#btnHome").on("click", pagine.home);    
     $("#btnNuovaMeta").on("click", pagine.showMete);
+    $("#btnNuovaSfida").on("click", pagine.showSfide);
     $("#btnLastPage").on("click", pagine.lastPage);
     $("#btnPagine").on("click", pagine.showElencoPagine);
     $("#btnShowMap").on("click", pagine.showMap);
@@ -131,7 +132,7 @@ var app = {
     });
     $(window).on("navigate", function (event, data) {
       var direzione = data.state.direction;
-      if (direzione == 'back' && pagine.paginaMeteVisibile) {
+      if (direzione == 'back' && (pagine.paginaMeteVisibile || pagine.paginaSfideVisibile)) {
         // do something
         pagine.showPage();
       }
@@ -283,6 +284,7 @@ var app = {
 var mete = {
   // elenco dei luoghi
   elenco: [],
+  sfide: [],
   areaMete: 1,
   localitaMete: "Falcade",
   versioneMete: 1,
@@ -317,6 +319,24 @@ var mete = {
       showAlert("Non c'è la rete", "Attenzione!");
     }
     $("#lblAreaMete").html("Area mete: "+ mete.areaMete);
+    // aggiorna elenco sfide
+    if ("numSfide" in localStorage){
+      // legge le mete dal DB interno
+      var questo = mete.sfide;
+      while(questo.length > 0) { // svuota l'array esistente
+        questo.pop();
+      };
+      var lung = app.storage.getItem("numsfide");
+      for(i=0; i<lung; i++){
+        var valore = app.storage.getItem("sfida"+i);
+        questo.push(JSON.parse(valore));
+      }
+    } else if( app.checkWifi() ){
+      mete.updateSfide();
+    } else {
+      // niente da fare
+      showAlert("Non c'è la rete", "Attenzione!");
+    }
   },
   // verifica se ci sono nuove mete da scaricare
   checkmete: function(){
@@ -325,6 +345,17 @@ var mete = {
     if( networkState == Connection.WIFI ){
       
     }
+  },
+  // cerca una meta per il suo id
+  cercaMetaPerId: function(id){
+    var risultato=-1;
+    $.each(mete.elenco, function(i, valore){
+      if(valore.id_Meta==id){
+        risultato = i;
+        return false;
+      }
+    })
+    return risultato;
   },
   // aggiorna l'elenco delle mete
   updateMete: function(){
@@ -364,6 +395,35 @@ var mete = {
       showAlert("Problemi di conessione", "Attenzione!");
     })
   },
+  // aggiorna l'elenco delle mete
+  updateSfide: function(){
+    // legge dal sito
+    attesa(true, "Attendere: aggiorno l'elenco delle sfide");
+    var questo = mete.sfide;
+    while(questo.length > 0) { // svuota l'array esistente
+      questo.pop();
+    };
+    dbgMsg("Legge sfide da internet, area:  " + mete.areaMete);
+    $.ajax({
+      type: 'GET',
+      url: URL_PREFIX + 'php/leggiSfide.php',
+      data: {
+        user: id_User,
+        area: mete.areaMete
+        },
+      cache: false
+    }).done(function(result) {
+      dbgMsg("Lette le sfide: " + result)
+      var obj = $.parseJSON(result);
+      $.each(obj, function(i, valore){
+        questo.push(valore);
+      })
+      mete.scriveSfide();    // salva i dati nel DB interno
+      attesa(false, "");
+    }).fail(function(){
+      showAlert("Problemi di conessione", "Attenzione!");
+    })
+  },
  // Memorizza le mete nel DB interno
   scriveMete: function(){
     app.storage.setItem("numMete", mete.elenco.length);
@@ -373,6 +433,13 @@ var mete = {
     $.each(mete.elenco, function(key, value){
       var valore = JSON.stringify(value);
       app.storage.setItem("meta"+key, valore)  
+    })
+  },
+ // Memorizza le sfide nel DB interno
+  scriveSfide: function(){
+    $.each(mete.sfide, function(key, value){
+      var valore = JSON.stringify(value);
+      app.storage.setItem("sfida"+key, valore)  
     })
   },
   // aggiorna la lista dei mappa.luoghi, ordinandola sulla base della distanza
@@ -442,6 +509,7 @@ function onMapLoaded(){
 var pagine = {
   numPagina: 0,           // numero pagina attuale
   paginaMeteVisibile: false,
+  paginaSfideVisibile: false,
   saved: true,            // flag che indica se le pagine sono state salvate sul DB internet
   // elenco dei luoghi
   lista: [],
@@ -579,14 +647,13 @@ var pagine = {
           showLoadMsg:  true
       });
       $("#selMete" ).empty();
-      var testo = '<option value="-1">Seleziona una meta</option>';
+      $('#selMete').append('<option value="-1">Seleziona una meta</option>');
       $.each(mete.elenco, function(key, value){
         var testo = '<option value="'+key+'">'+value.meta+'</option>';
         $('#selMete').append(testo);
       })
       $("#selMete" ).on( "change", function() {
         var id = $('#selMete option:selected').val();
-        alert(id);
         if( id> 0) {
           var el = mete.elenco[id];
           mappa.setCenter(new google.maps.LatLng(el.lat, el.lng));
@@ -617,6 +684,18 @@ var pagine = {
     pagine.paginaMeteVisibile = true;
     pagine.elencaMete();
   },
+  // mostra la pagina con l'elenco delle Sfide
+  showSfide: function (){
+    // dbgMsg("mostra l'elenco delle mete");
+    $.mobile.pageContainer.pagecontainer("change", "#page-elencosfide", {
+        transition:   'flip',
+        changeHash:   false,
+        reverse:      true,
+        showLoadMsg:  true
+    });
+    pagine.paginaSfideVisibile = true;
+    pagine.elencaMete();
+  },
   // mostra la pagina con l'elenco delle pagine
   showElencoPagine: function(){
     $.mobile.pageContainer.pagecontainer("change", "#page-elencopagine", {
@@ -644,6 +723,22 @@ var pagine = {
       });
     });
     $('#lstMete').listview("refresh");
+  },
+  // crea l'elenco sfide
+  elencaSfide: function() {
+    $('#lstSfide').empty();
+    
+    $.each(mete.sfide, function(key, value){
+      var testo = '<li id="sfida_'+ key +'" ><a href="#" ><h3>SFIDA</h3';
+      testo += 'Da: '+ mete.elenco[mete.cercaMetaPerId(value.id_Meta_Da)].meta + ' A: ' + mete.elenco[mete.cercaMetaPerId(value.id_Meta_A)].meta;
+      testo += '</a></li>';
+      $('#lstSfide').append(testo);
+      $("#lstSfide li#sfida_"+key).bind("click", function(){
+          dbgMsg("Aggiungi sfida - key " + key + " id " + value.id_Meta_Da + " meta " + value.id_Meta_A);
+          pagine.nuovaSfida(key);
+      });
+    });
+    $('#lstSfida').listview("refresh");
   },
   // crea l'elenco pagine
   elencaPagine: function(){
@@ -725,6 +820,11 @@ var pagine = {
     } else {
       pagine.showPage();
     }
+  },
+  // aggiunge una nuova sfida
+  nuovaSfida: function(id){
+    paginaMeteVisibile = false;
+    pagine.showPage();
   },
   // aggiorna i dati sulla distanza
   aggiornaDistanza: function(){
