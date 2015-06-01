@@ -350,8 +350,7 @@ var mete = {
   cercaMetaPerId: function(id){
     var risultato=-1;
     $.each(mete.elenco, function(i, valore){
-      alert("id: " + id + " idMeta: " + valore.idMeta);
-      if(valore.idMeta==id){
+      if(valore.id==id){
         risultato = i;
         return false;
       }
