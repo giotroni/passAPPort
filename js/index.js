@@ -829,7 +829,7 @@ var pagine = {
     txt +=  "<br><i>lat:</i> " + el.lat + "<br><i>Long:</i> " + el.lng + "<br><i>Alt:</i> " + el.alt;
     showAlert(txt, "Info");
     $("#popupLblDesc").html(txt);
-    $( "#popupDesc" ).enhanceWithin().popup().popup("open"); // Abilita il pop-up che descrive le immagini per tutte le pagine//$("#popupDesc").popup( "open" );
+    $("#popupDesc" ).enhanceWithin().popup().popup("open"); // Abilita il pop-up che descrive le immagini per tutte le pagine//$("#popupDesc").popup( "open" );
     
   },
   // elimina una pagina ind
