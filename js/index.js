@@ -181,6 +181,7 @@ var app = {
            },
          cache: false
        }).done(function(result) {
+        dbgMsg(result);
         id_User = result;
         app.storage.setItem("id_User", id_User);
        }).fail(function(){
