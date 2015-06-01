@@ -350,7 +350,7 @@ var mete = {
   cercaMetaPerId: function(id){
     var risultato=-1;
     $.each(mete.elenco, function(i, valore){
-      if(valore.id_Meta==id){
+      if(valore.idMeta==id){
         risultato = i;
         return false;
       }
@@ -439,10 +439,8 @@ var mete = {
  // Memorizza le sfide nel DB interno
   scriveSfide: function(){
     app.storage.setItem("numSfide", mete.sfide.length);
-    alert( "Num sfide: " + mete.sfide.length);
     $.each(mete.sfide, function(key, value){
       var valore = JSON.stringify(value);
-      alert( valore );
       app.storage.setItem("sfida"+key, valore)  
     })
   },
