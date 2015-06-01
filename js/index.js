@@ -171,6 +171,7 @@ var app = {
     if ("id_User" in localStorage){
       id_User= app.storage.getItem("id_User");
     }
+    alert(id_User + " id " + device.uuid);
     if( id_User<0 ){
       // inizializza lo user
       $.ajax({
@@ -181,6 +182,7 @@ var app = {
            },
          cache: false
        }).done(function(result) {
+        alert("id: "+ result);
         id_User = result;
         app.storage.setItem("user", id_User);
        }).fail(function(){

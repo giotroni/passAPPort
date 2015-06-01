@@ -54,5 +54,11 @@
         <param name="android-package" value="org.apache.cordova.filetransfer.FileTransfer" />
     </feature>
     <gap:plugin name="org.apache.cordova.vibration" />
+    
+    <feature name="Device">
+        <param name="android-package" value="org.apache.cordova.device.Device" />
+    </feature>
+    <gap:plugin name="org.apache.cordova.device" />
+
 
 </widget>
