@@ -171,7 +171,6 @@ var app = {
     if ("id_User" in localStorage){
       id_User= app.storage.getItem("id_User");
     }
-    alert(id_User + " id " + device.uuid);
     if( id_User<0 ){
       // inizializza lo user
       $.ajax({
@@ -182,13 +181,13 @@ var app = {
            },
          cache: false
        }).done(function(result) {
-        alert("id: "+ result);
         id_User = result;
-        app.storage.setItem("user", id_User);
+        app.storage.setItem("id_User", id_User);
        }).fail(function(){
          showAlert("Problemi di conessione", "Attenzione!");
        })
     }
+    $("#lblUser").html("<h3>User: "+id_User+"</h3>");
   },
   // chiamata quando c'è un errore nella lettura della posizione
   onErrorGeo: function(error) {
@@ -318,6 +317,7 @@ var mete = {
       // niente da fare
       showAlert("Non c'è la rete", "Attenzione!");
     }
+    $("#lblAreaMete").html("Area mete: "+ mete.areaMete);
   },
   // verifica se ci sono nuove mete da scaricare
   checkmete: function(){
