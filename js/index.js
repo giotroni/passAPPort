@@ -355,6 +355,7 @@ var mete = {
         return false;
       }
     })
+    alert(id + " risultato " + mete.elenco[risultato].meta);
     return risultato;
   },
   // aggiorna l'elenco delle mete
@@ -727,11 +728,12 @@ var pagine = {
   // crea l'elenco sfide
   elencaSfide: function() {
     $('#lstSfide').empty();
-    
+    alert("Num sfide" + mete.sfide.length);
     $.each(mete.sfide, function(key, value){
       var testo = '<li id="sfida_'+ key +'" ><a href="#" ><h3>SFIDA</h3';
       testo += 'Da: '+ mete.elenco[mete.cercaMetaPerId(value.id_Meta_Da)].meta + ' A: ' + mete.elenco[mete.cercaMetaPerId(value.id_Meta_A)].meta;
       testo += '</a></li>';
+      alert(testo);
       $('#lstSfide').append(testo);
       $("#lstSfide li#sfida_"+key).bind("click", function(){
           dbgMsg("Aggiungi sfida - key " + key + " id " + value.id_Meta_Da + " meta " + value.id_Meta_A);
