@@ -846,8 +846,9 @@ var pagine = {
     var pagA = -1;
     alert(" sfida " + sfida.id_Meta_Da + " A " + sfida.id_Meta_A );
     // cerca tra le pagine se è presente la meta DA NON raggiunta
-    $.each(pagina.lista, function(key, value){
-      alert("idMeta " + value.idMeta + value.dataora.indexOf(MAI));
+    $.each(pagine.lista, function(key, value){
+      alert("idMeta " + value.idMeta);
+      alert( value.dataora.indexOf(MAI));
       if(value.dataora.indexOf(MAI)>=0){
         if( value.idMeta == sfida.id_Meta_Da){
           // pagina DA già presente
