@@ -182,14 +182,14 @@ var app = {
            },
          cache: false
        }).done(function(result) {
-        id_User = $.parseJSON(result);
-        alert(id_User);
+        id_User = result;   // $.parseJSON(result);
         app.storage.setItem("id_User", id_User);
        }).fail(function(){
          showAlert("Problemi di conessione", "Attenzione!");
        })
     }
     $("#lblUser").html("<h3>User: "+id_User+"</h3>");
+    alert("User: " + id_User);
   },
   // chiamata quando c'è un errore nella lettura della posizione
   onErrorGeo: function(error) {
@@ -759,7 +759,7 @@ var pagine = {
       }
       if( value.inserita ){
         testo += "<p>Sfida inserita.";
-        testo += 'Da: <a href="#" id="sfida_Da_'+ key +'">'+ mete.elenco[mete.cercaMetaPerId(value.id_Meta_Da)].meta + '</a>';
+        testo += 'Da: <a href="#" data.role="button" data-inline="true" id="sfida_Da_'+ key +'">'+ mete.elenco[mete.cercaMetaPerId(value.id_Meta_Da)].meta + '</a>';
         testo += ' A: <a href="#" id="sfida_A_'+ key +'" >' + mete.elenco[mete.cercaMetaPerId(value.id_Meta_A)].meta + '</a>';
         if( value.iniziata.length>0){
           testo += "<br>Iniziata il " + value.iniziata;
@@ -785,11 +785,13 @@ var pagine = {
       } else {
         $("#sfida_Da_"+key).bind("click", function(){
           // alert("Aggiungi sfida - key " + key + " da " + value.id_Meta_Da + " a " + value.id_Meta_A);
-          alert("Da " + key);
+          pagine.numPagina = value.pagDa;
+          pagine.showPage();
         });  
         $("#sfida_A_"+key).bind("click", function(){
           // alert("Aggiungi sfida - key " + key + " da " + value.id_Meta_Da + " a " + value.id_Meta_A);
-          alert("A " + key);
+          pagine.numPagina = value.pagA;
+          pagine.showPage();
         });  
       }
     });
@@ -904,13 +906,13 @@ var pagine = {
       }
     })
     // alert("pagDa " + pagDa  + " A " + pagA);
-    var msg = "Sfida inserita. ";
+    var msg = "Sfida inserita.<br>";
     if( pagDa <0){
       // aggiungi meta DA
       pagine.aggiungiPagina(mete.cercaMetaPerId(sfida.id_Meta_Da));
-      msg += " Aggiunta la meta partenza: " + pagine.lista[pagine.lista.length-1].meta;
+      msg += " Aggiunta la meta partenza: " + pagine.lista[pagine.lista.length-1].meta + "<br>";
     } else {
-      msg += " Meta partenza già presente";
+      msg += " Meta partenza gi&agrave presente<br>";
     }
     mete.sfide.pagDa= pagine.numPagina;   // crea un link dalla sfida alla pagina
     pagine.lista[mete.sfide.pagDa].sfida = id;       // crea un link dalla pagina alla sfida
@@ -918,9 +920,9 @@ var pagine = {
     if( pagA<0){
       // aggiungi meta A
       pagine.aggiungiPagina(mete.cercaMetaPerId(sfida.id_Meta_A));
-      msg += "<br>Aggiunta la meta destinazione: " + pagine.lista[pagine.lista.length-1].meta;
+      msg += "Aggiunta la meta destinazione: " + pagine.lista[pagine.lista.length-1].meta;
     } else {
-      msg += " Meta destinazione già presente";
+      msg += "Meta destinazione gi&agrave presente";
     }
     mete.sfide.pagA= pagine.numPagina;    // crea un link dalla sfida alla pagina
     pagine.lista[mete.sfide.pagA].sfida = id;        // crea un link dalla pagina alla sfida
@@ -955,7 +957,21 @@ var pagine = {
       el.dataora = adesso();
       pagine.saved = false;
       el.saved = false;
-      if( el.sfida )
+      if( el.sfida>=0 ){
+        var sfida = mete.sfide[el.sfida];
+        // se la meta era la partenza
+        alert("Num pagina: " + pagine.numPagina);
+        alert("Sfide Da: " + sfida.pagDa );
+        if(sfida.pagDa == pagine.numPagina){
+          sfida.iniziata = el.dataora;
+        } else {
+          // se la meta era la partenza
+          alert("Sfide A: " + sfida.pagA);
+          if(sfida.pagA == pagine.numPagina){
+            sfida.terminata= el.dataora;
+          }
+        }
+      }
       // vibra(1000);
       // var my_media = new Media("audio/audio_suonerie_applauso_01.mp3");
       // my_media.play();
