@@ -69,6 +69,7 @@ var app = {
     $("#btnShowMap").on("click", pagine.showMap);
     $(".numPagina").on("click", pagine.showElencoPagine);
     $(".btnBack").on("click", pagine.showPage);
+    $(".btnSfida").on("click", pagine.showSfide);
     
     $("#btnDelete").on("click", function(){showYesNo("Vuoi DAVVERO cancellare questa meta?", pagine.cancellaPagina)} );
     $(".btnSx").on("click", pagine.prevPage);
@@ -421,7 +422,12 @@ var mete = {
           "id_Meta_Da":   valore.id_Meta_Da,
           "id_Meta_A":    valore.id_Meta_A,
           "punti":        valore.punti,
-          "inserita":     false
+          "img":          valore.img,
+          "inserita":     false,
+          "iniziata":     "",
+          "pagDa":        -1,
+          "terminata":    "",
+          "pagA":         -1
         });
       })
       mete.scriveSfide();    // salva i dati nel DB interno
@@ -536,11 +542,18 @@ var pagine = {
   // conta i punti
   checkPunti: function(){
     var pti = 0;
+    // controlla le mete
     $.each(pagine.lista, function(key, value){
       if(pagine.arrivato(key+1)){
         pti += (value.punti * 1);
       }
     });
+    // controlla le sfide
+    $.each(mete.sfide, function(key, value){
+      if(value.terminata.length<0){
+        pti += (value.punti * 1);
+      }
+    });    
     return pti;
   },
   // va alla pagina copertina
@@ -611,12 +624,14 @@ var pagine = {
       $('#imgMeta'+suffisso).css('background-image', 'url('+appDir + el.img+')');
       $("#txtNota"+suffisso).val(el.note);
       if(  pagine.arrivato(pagine.numPagina ) ){
+        // ARRIVATO
         $('.imgShare').show();
         $('#smallImage'+suffisso).show();
         $('#smallImage'+suffisso).attr('src',el.foto);
         $("#lblArrivo"+suffisso).css("color","green");
         $("#lblArrivo"+suffisso).html("Arrivato il:<br>"+txtDataora(el.dataora));
         $('#imgTimbro'+suffisso).show();
+        $('.btnSfida').show();
         $('#imgTimbro'+suffisso).attr('src',appDir + el.timbro);
         var sData = adesso().substring(0, 10);
         if (el.dataora.indexOf(sData) >= 0){ // è oggi!!
@@ -626,6 +641,7 @@ var pagine = {
           $("#txtNota"+suffisso).attr("disabled", true);  
         }
       } else {
+        // NON ARRIVATO
         $("#txtNota"+suffisso).attr("disabled", false);  
         $('.imgShare').hide();
         $('#smallImage'+suffisso).hide();
@@ -633,6 +649,7 @@ var pagine = {
         $("#lblArrivo"+suffisso).css("color","red");
         $("#lblArrivo"+suffisso).html("Non ancora arrivato");
         $('#imgTimbro'+suffisso).hide();
+        $('.btnSfida').hide();
         $('#imgTimbro'+suffisso).attr('src','');
       }
     } else {
@@ -738,18 +755,24 @@ var pagine = {
       var testo = '<li id="sfida_'+ key +'" ><a href="#" ><h3>SFIDA</h3>';
       testo += 'Da: '+ mete.elenco[mete.cercaMetaPerId(value.id_Meta_Da)].meta + ' A: ' + mete.elenco[mete.cercaMetaPerId(value.id_Meta_A)].meta;
       if( value.inserita ){
-        testo += "<p>Inserita</p>";
-      }      
+        testo += "<p>Sfida inserita.";
+        if( value.iniziata.length>0){
+          testo += "<br>Iniziata il " + value.iniziata;
+          if( value.terminata.length>0){
+            testo += " e terminata il " + value.terminata;
+          }
+        }
+        testo += '</p>';
+      }
+      testo += '<br>Vale ' + value.punti + " punti";
       testo += '</a></li>';
       $('#lstSfide').append(testo);
-      $("#lstSfide li#sfida_"+key).bind("click", function(){
-        if( value.inserita ){
-          alert("Sfida già inserita");
-        } else {
-          alert("Aggiungi sfida - key " + key + " da " + value.id_Meta_Da + " a " + value.id_Meta_A);
+      if( !value.inserita ){
+        $("#lstSfide li#sfida_"+key).bind("click", function(){
+          // alert("Aggiungi sfida - key " + key + " da " + value.id_Meta_Da + " a " + value.id_Meta_A);
           pagine.nuovaSfida(key);
-        }  
-      });
+        });  
+      };
     });
     $('#lstSfide').listview("refresh");
   },
@@ -840,14 +863,14 @@ var pagine = {
         });
     pagine.saved = false;
     pagine.scrivePagine();
-    alert("num pag: " + pagine.numPagina );
+    // alert("num pag: " + pagine.numPagina );
   },
   // aggiunge una nuova sfida
   nuovaSfida: function(id){
     var sfida = mete.sfide[id];
     var pagDa = -1;
     var pagA = -1;
-    alert(" sfida " + sfida.id_Meta_Da + " A " + sfida.id_Meta_A );
+    // alert(" sfida " + sfida.id_Meta_Da + " A " + sfida.id_Meta_A );
     // cerca tra le pagine se è presente la meta DA NON raggiunta
     $.each(pagine.lista, function(key, value){
       if(value.dataora.indexOf(MAI)>=0){
@@ -861,24 +884,34 @@ var pagine = {
         }
       }
     })
-    alert("pagDa " + pagDa  + " A " + pagA);
+    // alert("pagDa " + pagDa  + " A " + pagA);
+    var msg = "Sfida inserita. ";
     if( pagDa <0){
       // aggiungi meta DA
       pagine.aggiungiPagina(mete.cercaMetaPerId(sfida.id_Meta_Da));
-      showAlert("Aggiunta la meta partenza: " + pagine.lista[pagine.lista.length-1].meta)
+      msg = " Aggiunta la meta partenza: " + pagine.lista[pagine.lista.length-1].meta;
     } else {
-      showAlert("Meta partenza già presente")
+      msg = " Meta partenza già presente";
     }
+    mete.sfide.pagDa= pagine.numPagina;   // crea un link dalla sfida alla pagina
+    pagine.lista[pagDa].sfida = id;       // crea un link dalla pagina alla sfida
+    alert("pag Da " + mete.sfide.pagDa +" sfida " + pagine.lista[pagDa].sfida);
     if( pagA<0){
       // aggiungi meta A
       pagine.aggiungiPagina(mete.cercaMetaPerId(sfida.id_Meta_A));
-      showAlert("Aggiunta la meta destinazione: " + pagine.lista[pagine.lista.length-1].meta)
+      msg += "<br>Aggiunta la meta destinazione: " + pagine.lista[pagine.lista.length-1].meta;
     } else {
-      showAlert("Meta destinazione già presente")
+      msg += " Meta destinazione già presente";
     }
+    mete.sfide.pagA= pagine.numPagina;    // crea un link dalla sfida alla pagina
+    pagine.lista[pagA].sfida = id;        // crea un link dalla pagina alla sfida
+    alert("pag A " + mete.sfide.pagA +" sfida " + pagine.lista[pagA].sfida);
+    showAlert(msg, "Nota");
     // sfida.inserita = true;
     mete.scriveSfide();
-    alert("ok: fine");
+    // alert("ok: fine");
+    pagine.numPagina = mete.sfide.pagDa;
+    pagine.showPage();
   },
   // aggiorna i dati sulla distanza
   aggiornaDistanza: function(){
@@ -903,6 +936,7 @@ var pagine = {
       el.dataora = adesso();
       pagine.saved = false;
       el.saved = false;
+      if( el.sfida )
       // vibra(1000);
       // var my_media = new Media("audio/audio_suonerie_applauso_01.mp3");
       // my_media.play();
@@ -1020,11 +1054,16 @@ var pagine = {
   // elimina una pagina ind
   cancellaPagina: function( ind ){
     if(ind == 1){
-      pagine.lista.splice(pagine.numPagina-1, 1);
-      if(pagine.numPagina > pagine.lista.length ){
-        pagine.numPagina = pagine.lista.length;
+      if(pagine.lista[pagine.numPagina-1].sfida.length == 0){
+        // la meta è parte di una sfida: non è possibile cancellarla
+        showAlert("la meta è parte di una sfida: non è possibile cancellarla","Attenzione");
+      } else {
+        pagine.lista.splice(pagine.numPagina-1, 1);
+        if(pagine.numPagina > pagine.lista.length ){
+          pagine.numPagina = pagine.lista.length;
+        }
+        pagine.showPage();
       }
-      pagine.showPage();
     }
   },
   // cancella tutto
