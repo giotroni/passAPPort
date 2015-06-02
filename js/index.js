@@ -581,7 +581,7 @@ var pagine = {
   nextPage: function (){
     // dbgMsg("Next page: "+pagine.numPagina + " max page: " + pagine.numMaxPagine());
     // verifica se siamo all'ultima pagina
-    alert("nuum pag; " + pagine.numPagina + " " + pagine.lista.length);
+    // alert("nuum pag; " + pagine.numPagina + " " + pagine.lista.length);
     direction = false;
     if( pagine.numPagina >= pagine.lista.length){
       // ultima pagina, non va oltre
@@ -789,12 +789,12 @@ var pagine = {
         });  
       } else {
         $("#sfida_Da_"+key).bind("click", function(){
-          alert("Legge meta " + key + " da " + value.pagDa );
+          // alert("Legge meta " + key + " da " + value.pagDa );
           pagine.numPagina = value.pagDa+1;
           pagine.showPage();
         });  
         $("#sfida_A_"+key).bind("click", function(){
-          alert("Aggiungi sfida - key " + key + " a " + value.pagA);
+          // alert("Aggiungi sfida - key " + key + " a " + value.pagA);
           pagine.numPagina = value.pagA+1;
           pagine.showPage();
         });  
@@ -911,13 +911,13 @@ var pagine = {
       }
     })
     // alert("pagDa " + pagDa  + " A " + pagA);
-    var msg = "Sfida inserita.<br>";
+    var msg = "Sfida inserita.";
     if( pagDa <0){
       // aggiungi meta DA
       pagine.aggiungiPagina(mete.cercaMetaPerId(sfida.id_Meta_Da));
-      msg += " Aggiunta la meta partenza: " + pagine.lista[pagine.lista.length-1].meta + "<br>";
+      msg += " Aggiunta la meta partenza: " + pagine.lista[pagine.lista.length-1].meta;
     } else {
-      msg += " Meta partenza gi&agrave presente<br>";
+      msg += " Meta partenza gi&agrave presente";
     }
     sfida.pagDa= pagine.numPagina;   // crea un link dalla sfida alla pagina
     pagine.lista[sfida.pagDa].sfida = id;       // crea un link dalla pagina alla sfida
@@ -958,8 +958,6 @@ var pagine = {
     var el = pagine.lista[pagine.numPagina-1];
     // dbgMsg("Check arrivato: " + el.arrivato + " dist " + el.dist );
     // SE non è ancora arrivato a questa meta
-    alert("Sfida: "+el.sfida);
-    alert("Da: "+mete.sfide[el.sfida].pagDa);
     if(!pagine.arrivato(pagine.numPagina) && pagine.vicino() ){
       el.dataora = adesso();
       pagine.saved = false;
@@ -970,13 +968,13 @@ var pagine = {
         // se la meta era la partenza
         alert("Num pagina: " + pagine.numPagina);
         alert("Sfide Da: " + sfida.pagDa );
-        if(sfida.pagDa == pagine.numPagina){
+        if(sfida.pagDa == (pagine.numPagina-1)){
           sfida.iniziata = el.dataora;
           alert("Iniziata: " + sfida.iniziata);
         } else {
-          // se la meta era la partenza
+          // se la meta era l'arrivo
           alert("Sfide A: " + sfida.pagA);
-          if(sfida.pagA == pagine.numPagina){
+          if(sfida.pagA == (pagine.numPagina-1)){
             sfida.terminata= el.dataora;
           }
         }
