@@ -916,9 +916,9 @@ var pagine = {
     } else {
       msg += " Meta partenza gi&agrave presente<br>";
     }
-    mete.sfide.pagDa= pagine.numPagina;   // crea un link dalla sfida alla pagina
-    pagine.lista[mete.sfide.pagDa].sfida = id;       // crea un link dalla pagina alla sfida
-    alert("pag Da " + mete.sfide.pagDa +" sfida " + pagine.lista[mete.sfide.pagDa].sfida);
+    sfida.pagDa= pagine.numPagina;   // crea un link dalla sfida alla pagina
+    pagine.lista[sfida.pagDa].sfida = id;       // crea un link dalla pagina alla sfida
+    alert("pag Da " + sfida.pagDa +" sfida " + pagine.lista[mete.sfide.pagDa].sfida);
     if( pagA<0){
       // aggiungi meta A
       pagine.aggiungiPagina(mete.cercaMetaPerId(sfida.id_Meta_A));
@@ -926,14 +926,14 @@ var pagine = {
     } else {
       msg += "Meta destinazione gi&agrave presente";
     }
-    mete.sfide.pagA= pagine.numPagina;    // crea un link dalla sfida alla pagina
-    pagine.lista[mete.sfide.pagA].sfida = id;        // crea un link dalla pagina alla sfida
-    alert("pag A " + mete.sfide.pagA +" sfida " + pagine.lista[mete.sfide.pagA].sfida);
+    sfida.pagA= pagine.numPagina;    // crea un link dalla sfida alla pagina
+    pagine.lista[sfida.pagA].sfida = id;        // crea un link dalla pagina alla sfida
+    alert("pag A " + sfida.pagA +" sfida " + pagine.lista[mete.sfide.pagA].sfida);
     showAlert(msg, "Nota");
     sfida.inserita = true;
     mete.scriveSfide();
     // alert("ok: fine");
-    pagine.numPagina = mete.sfide.pagDa+1;
+    pagine.numPagina = sfida.pagDa+1;
     pagine.showPage();
   },
   // aggiorna i dati sulla distanza
