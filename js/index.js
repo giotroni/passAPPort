@@ -59,7 +59,7 @@ var app = {
 
     $("#btnSettings").on("click", pagine.settings);    
     $("#btnReset").on("click", function(){showYesNo("Vuoi DAVVERO cancellare il database?", pagine.reset)});
-    $("#btnUpdate").on("click", pagine.updateMete);
+    $("#btnUpdate").on("click", function(){showYesNo("Vuoi aggiornare le mete?", pagine.updateMete)});
     $("#btnSave").on("click", pagine.savePagine);
     $("#btnHome").on("click", pagine.home);    
     $("#btnNuovaMeta").on("click", pagine.showMete);
@@ -130,13 +130,13 @@ var app = {
       }
       return false;         
     });
-    $(window).on("navigate", function (event, data) {
-      var direzione = data.state.direction;
-      if (direzione == 'back' && (pagine.paginaMeteVisibile || pagine.paginaSfideVisibile)) {
-        // do something
-        pagine.showPage();
-      }
-    });
+    //$(window).on("navigate", function (event, data) {
+    //  var direzione = data.state.direction;
+    //  if (direzione == 'back' && (pagine.paginaMeteVisibile || pagine.paginaSfideVisibile)) {
+    //    // do something
+    //    pagine.showPage();
+    //  }
+    //});
     dbgMsg("Partito user:" + id_User );
   },
   // chiamata quando la posizione è stata letta
@@ -417,7 +417,12 @@ var mete = {
       dbgMsg("Lette le sfide: " + result)
       var obj = $.parseJSON(result);
       $.each(obj, function(i, valore){
-        questo.push(valore);
+        questo.push({
+          "id_Meta_Da":   valore.id_Meta_Da,
+          "id_Meta_A":    valore.id_Meta_A,
+          "punti":        valore.punti,
+          "inserita":     false
+        });
       })
       mete.scriveSfide();    // salva i dati nel DB interno
       attesa(false, "");
@@ -513,6 +518,7 @@ var pagine = {
   saved: true,            // flag che indica se le pagine sono state salvate sul DB internet
   // elenco dei luoghi
   lista: [],
+  sfide: [],
   // verifica se la pagina i è già arrivata
   arrivato: function(i){
     var retVal = false;
@@ -727,16 +733,21 @@ var pagine = {
   // crea l'elenco sfide
   elencaSfide: function() {
     $('#lstSfide').empty();
-    alert("Num sfide " + mete.sfide.length);
     $.each(mete.sfide, function(key, value){
       var testo = '<li id="sfida_'+ key +'" ><a href="#" ><h3>SFIDA</h3>';
       testo += 'Da: '+ mete.elenco[mete.cercaMetaPerId(value.id_Meta_Da)].meta + ' A: ' + mete.elenco[mete.cercaMetaPerId(value.id_Meta_A)].meta;
+      if( value.inserita ){
+        testo += "<p>Inserita</p>";
+      }      
       testo += '</a></li>';
-      alert(testo);
       $('#lstSfide').append(testo);
       $("#lstSfide li#sfida_"+key).bind("click", function(){
-          dbgMsg("Aggiungi sfida - key " + key + " id " + value.id_Meta_Da + " meta " + value.id_Meta_A);
+        if( value.inserita ){
+          alert("Sfida già inserita");
+        } else {
+          alert("Aggiungi sfida - key " + key + " id " + value.id_Meta_Da + " meta " + value.id_Meta_A);
           pagine.nuovaSfida(key);
+        }  
       });
     });
     $('#lstSfide').listview("refresh");
@@ -791,41 +802,70 @@ var pagine = {
     });
     // dbgMsg("meta ok: " + metaOK);
     if( metaOK){
-      numPagina = pagine.lista.length;
-      // inserisce i dati della meta nell'array delle pagine
-      // dbgMsg("id: " + id + " " + mete.elenco[id].id + " " + mete.elenco[id].meta);
-      pagine.lista.push({
-          "idMeta": mete.elenco[id].id,
-          "meta": mete.elenco[id].meta,
-          "lat": mete.elenco[id].lat,
-          "lng": mete.elenco[id].lng,
-          "alt": mete.elenco[id].alt,
-          "img": mete.elenco[id].img,
-          "timbro": mete.elenco[id].timbro,
-          "punti": mete.elenco[id].punti,
-          "desc": mete.elenco[id].desc,
-          "localita": mete.elenco[id].localita,
-          "area": mete.area,
-          "note": "",
-          "dist": -1,
-          "saved": true,
-          // "arrivato":"0",
-          "dataora": MAI,
-          "foto": "",
-          "altro": ""
-          });
-      pagine.saved = false;
-      pagine.scrivePagine();
       // mostra la pagina
+      pagine.aggiungiPagina(id);
       pagine.nextPage();
     } else {
       pagine.showPage();
     }
   },
+  // aggiunge una pagina con la meta id
+  aggiungiPagina: function(id){
+    numPagina = pagine.lista.length;
+    // inserisce i dati della meta nell'array delle pagine
+    // dbgMsg("id: " + id + " " + mete.elenco[id].id + " " + mete.elenco[id].meta);
+    pagine.lista.push({
+        "idMeta": mete.elenco[id].id,
+        "meta": mete.elenco[id].meta,
+        "lat": mete.elenco[id].lat,
+        "lng": mete.elenco[id].lng,
+        "alt": mete.elenco[id].alt,
+        "img": mete.elenco[id].img,
+        "timbro": mete.elenco[id].timbro,
+        "punti": mete.elenco[id].punti,
+        "desc": mete.elenco[id].desc,
+        "localita": mete.elenco[id].localita,
+        "area": mete.area,
+        "note": "",
+        "dist": -1,
+        "saved": true,
+        // "arrivato":"0",
+        "dataora": MAI,
+        "foto": "",
+        "sfida": "",
+        "itinerario": "",
+        "altro": ""
+        });
+    pagine.saved = false;
+    pagine.scrivePagine();
+  },
   // aggiunge una nuova sfida
   nuovaSfida: function(id){
     paginaMeteVisibile = false;
     pagine.showPage();
+    var sfida = mete.sfide[id];
+    var pagDa = -1;
+    var pagA = -1;
+    // cerca tra le pagine se è presente la meta DA NON raggiunta
+    $.each(pagina.lista, function(key, value){
+      if( value.idMeta == sfida.id_Meta_Da && value.dataora.indexOf(MAI)>=0){
+        // pagina già presente
+        pagDa = key;
+      }
+      if( value.idMeta == sfida.id_Meta_A && value.dataora.indexOf(MAI)>=0){
+        // pagina già presente
+        pagA= key;
+      }
+    })
+    if( pagDa <0){
+      // aggiungi meta DA
+      pagine.aggiungiPagina(pagDa);
+    }
+    if( pagA<0){
+      // aggiungi meta A
+      pagine.aggiungiPagina(A);
+    }
+    sfida.inserita = true;
   },
   // aggiorna i dati sulla distanza
   aggiornaDistanza: function(){
