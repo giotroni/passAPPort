@@ -762,14 +762,13 @@ var pagine = {
         testo += '<a href="#" >';
       }
       if( value.inserita ){
-        testo += "<p>Sfida inserita.";
-        testo += '<h3>Da: <a href="#" data.role="button" data-inline="true" id="sfida_Da_'+ key +'">'+ mete.elenco[mete.cercaMetaPerId(value.id_Meta_Da)].meta + '</a>';
-        testo += ' A: <a href="#" id="sfida_A_'+ key +'" >' + mete.elenco[mete.cercaMetaPerId(value.id_Meta_A)].meta + '</a></h3>';
-        alert("Iniziata: " + value.iniziata);
+        testo += "<p>Sfida inserita.</p>";
+        testo += 'Da: <a href="#" data.role="button" class="ui-btn ui-shadow ui-corner-all ui-btn-a" data-inline="true" id="sfida_Da_'+ key +'">'+ mete.elenco[mete.cercaMetaPerId(value.id_Meta_Da)].meta + '</a>';
+        testo += ' A: <a href="#" id="sfida_A_'+ key +'" >' + mete.elenco[mete.cercaMetaPerId(value.id_Meta_A)].meta + '</a><br>';
         if( value.iniziata.length>0){
-          testo += "<br>Iniziata il " + value.iniziata;
+          testo += "Iniziata il " + value.iniziata;
           if( value.terminata.length>0){
-            testo += " e terminata il " + value.terminata;
+            testo += "<br>e terminata il " + value.terminata;
           }
         }
         testo += '</p>';
@@ -863,7 +862,7 @@ var pagine = {
   aggiungiPagina: function(id){
     // inserisce i dati della meta nell'array delle pagine
     // dbgMsg("id: " + id + " " + mete.elenco[id].id + " " + mete.elenco[id].meta);
-    alert("Aggiungi meta: " + id + " " + mete.elenco[id].meta);
+    // alert("Aggiungi meta: " + id + " " + mete.elenco[id].meta);
     pagine.numPagina = pagine.lista.length;
     pagine.lista.push({
         "idMeta": mete.elenco[id].id,
@@ -883,7 +882,7 @@ var pagine = {
         // "arrivato":"0",
         "dataora": MAI,
         "foto": "",
-        "sfida": "",
+        "sfida": -1,
         "itinerario": "",
         "altro": ""
         });
@@ -966,14 +965,10 @@ var pagine = {
       if( el.sfida>=0 ){
         var sfida = mete.sfide[el.sfida];
         // se la meta era la partenza
-        alert("Num pagina: " + pagine.numPagina);
-        alert("Sfide Da: " + sfida.pagDa );
         if(sfida.pagDa == (pagine.numPagina-1)){
           sfida.iniziata = el.dataora;
-          alert("Iniziata: " + sfida.iniziata);
         } else {
           // se la meta era l'arrivo
-          alert("Sfide A: " + sfida.pagA);
           if(sfida.pagA == (pagine.numPagina-1)){
             sfida.terminata= el.dataora;
           }
