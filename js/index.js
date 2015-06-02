@@ -959,6 +959,7 @@ var pagine = {
       el.dataora = adesso();
       pagine.saved = false;
       el.saved = false;
+      alert(el.sfida);
       if( el.sfida>=0 ){
         var sfida = mete.sfide[el.sfida];
         // se la meta era la partenza
