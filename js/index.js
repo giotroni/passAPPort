@@ -183,6 +183,7 @@ var app = {
          cache: false
        }).done(function(result) {
         id_User = $.parseJSON(result);
+        alert(id_User);
         app.storage.setItem("id_User", id_User);
        }).fail(function(){
          showAlert("Problemi di conessione", "Attenzione!");
@@ -752,10 +753,14 @@ var pagine = {
   elencaSfide: function() {
     $('#lstSfide').empty();
     $.each(mete.sfide, function(key, value){
-      var testo = '<li id="sfida_'+ key +'" ><a href="#" ><h3>SFIDA</h3>';
-      testo += 'Da: '+ mete.elenco[mete.cercaMetaPerId(value.id_Meta_Da)].meta + ' A: ' + mete.elenco[mete.cercaMetaPerId(value.id_Meta_A)].meta;
+      var testo = '<li id="sfida_'+ key +'" >';
+      if( !value.inserita ){
+        testo += '<a href="#" >';
+      }
       if( value.inserita ){
         testo += "<p>Sfida inserita.";
+        testo += 'Da: <a href="#" id="sfida_Da_'+ key +'">'+ mete.elenco[mete.cercaMetaPerId(value.id_Meta_Da)].meta + '</a>';
+        testo += ' A: <a href="#" id="sfida_A_'+ key +'" >' + mete.elenco[mete.cercaMetaPerId(value.id_Meta_A)].meta + '</a>';
         if( value.iniziata.length>0){
           testo += "<br>Iniziata il " + value.iniziata;
           if( value.terminata.length>0){
@@ -763,16 +768,30 @@ var pagine = {
           }
         }
         testo += '</p>';
+      } else {
+        testo += 'Da: '+ mete.elenco[mete.cercaMetaPerId(value.id_Meta_Da)].meta + ' A: ' + mete.elenco[mete.cercaMetaPerId(value.id_Meta_A)].meta;
       }
       testo += '<br>Vale ' + value.punti + " punti";
-      testo += '</a></li>';
+      if( !value.inserita ){
+        testo += '</a>'
+      }
+      testo += '</li>';
       $('#lstSfide').append(testo);
       if( !value.inserita ){
         $("#lstSfide li#sfida_"+key).bind("click", function(){
           // alert("Aggiungi sfida - key " + key + " da " + value.id_Meta_Da + " a " + value.id_Meta_A);
           pagine.nuovaSfida(key);
         });  
-      };
+      } else {
+        $("#sfida_Da_"+key).bind("click", function(){
+          // alert("Aggiungi sfida - key " + key + " da " + value.id_Meta_Da + " a " + value.id_Meta_A);
+          alert("Da " + key);
+        });  
+        $("#sfida_A_"+key).bind("click", function(){
+          // alert("Aggiungi sfida - key " + key + " da " + value.id_Meta_Da + " a " + value.id_Meta_A);
+          alert("A " + key);
+        });  
+      }
     });
     $('#lstSfide').listview("refresh");
   },
@@ -1054,7 +1073,7 @@ var pagine = {
   // elimina una pagina ind
   cancellaPagina: function( ind ){
     if(ind == 1){
-      if(pagine.lista[pagine.numPagina-1].sfida.length == 0){
+      if(pagine.lista[pagine.numPagina-1].sfida >= 0){
         // la meta è parte di una sfida: non è possibile cancellarla
         showAlert("la meta è parte di una sfida: non è possibile cancellarla","Attenzione");
       } else {
