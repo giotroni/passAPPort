@@ -780,7 +780,7 @@ var pagine = {
     var metaOK = true;
     var sData = adesso().substring(0, 10);
     // dbgMsg(sData);
-    paginaMeteVisibile = false;
+    pagine.paginaMeteVisibile = false;
     // dbgMsg("id " + mete.elenco[id].id);
     $.each(pagine.lista, function(key, value){
       // evita di aggiungere più volte la stessa meta se non è ancora stata raggiunta o se è stata raggiunta oggi
@@ -841,7 +841,7 @@ var pagine = {
   },
   // aggiunge una nuova sfida
   nuovaSfida: function(id){
-    pagina.MeteVisibile = false;
+    pagine.paginaSfideVisibile = false;
     var sfida = mete.sfide[id];
     var pagDa = -1;
     var pagA = -1;
