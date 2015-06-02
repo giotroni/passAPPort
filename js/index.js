@@ -864,10 +864,14 @@ var pagine = {
     if( pagDa <0){
       // aggiungi meta DA
       pagine.aggiungiPagina(pagDa);
+      showAlert("Aggiunta la meta partenza: " + pagine.lista[pagine.lista.length-1].meta)
+    } else {
+      showAlert("Meta partenza già presente")
     }
     if( pagA<0){
       // aggiungi meta A
       pagine.aggiungiPagina(pagA);
+      showAlert("Aggiunta la meta destinazione: " + pagine.lista[pagine.lista.length-1].meta)
     }
     sfida.inserita = true;
     alert("ok: fine");
