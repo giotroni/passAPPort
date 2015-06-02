@@ -841,7 +841,7 @@ var pagine = {
   },
   // aggiunge una nuova sfida
   nuovaSfida: function(id){
-    paginaMeteVisibile = false;
+    pagina.MeteVisibile = false;
     var sfida = mete.sfide[id];
     var pagDa = -1;
     var pagA = -1;
