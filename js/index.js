@@ -568,7 +568,7 @@ var pagine = {
     // verifica se siamo all'ultima pagina
     direction = false;
     if( pagine.numPagina >= pagine.lista.length){
-      // se si aggiunge una meta?
+      // ultima pagina, non va oltre
       pagine.showMete();
     } else {
       // altrimenti vai alla pagina successiva e mostrale
@@ -745,7 +745,7 @@ var pagine = {
         if( value.inserita ){
           alert("Sfida già inserita");
         } else {
-          alert("Aggiungi sfida - key " + key + " id " + value.id_Meta_Da + " meta " + value.id_Meta_A);
+          alert("Aggiungi sfida - key " + key + " da " + value.id_Meta_Da + " a " + value.id_Meta_A);
           pagine.nuovaSfida(key);
         }  
       });
@@ -811,7 +811,6 @@ var pagine = {
   },
   // aggiunge una pagina con la meta id
   aggiungiPagina: function(id){
-    numPagina = pagine.lista.length;
     // inserisce i dati della meta nell'array delle pagine
     // dbgMsg("id: " + id + " " + mete.elenco[id].id + " " + mete.elenco[id].meta);
     pagine.lista.push({
@@ -838,11 +837,11 @@ var pagine = {
         });
     pagine.saved = false;
     pagine.scrivePagine();
+    pagine.numPagina = pagine.lista.length;
   },
   // aggiunge una nuova sfida
   nuovaSfida: function(id){
     paginaMeteVisibile = false;
-    pagine.showPage();
     var sfida = mete.sfide[id];
     var pagDa = -1;
     var pagA = -1;
@@ -857,15 +856,17 @@ var pagine = {
         pagA= key;
       }
     })
+    alert("pagDa " + pagDa  + " A " + pagA);
     if( pagDa <0){
       // aggiungi meta DA
       pagine.aggiungiPagina(pagDa);
     }
     if( pagA<0){
       // aggiungi meta A
-      pagine.aggiungiPagina(A);
+      pagine.aggiungiPagina(pagA);
     }
     sfida.inserita = true;
+    alert("ok: fine");
   },
   // aggiorna i dati sulla distanza
   aggiornaDistanza: function(){
@@ -1025,5 +1026,6 @@ var pagine = {
     // dbgMsg(pagine.lista[pagine.numPagina-1].note);
   }
 }
+
 
 app.initialize();
