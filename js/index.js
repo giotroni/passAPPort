@@ -763,7 +763,7 @@ var pagine = {
       }
       if( value.inserita ){
         testo += "<p>Sfida inserita.</p>";
-        testo += 'Da: <a href="#" data.role="button" class="ui-btn ui-shadow ui-corner-all ui-btn-a" data-inline="true" id="sfida_Da_'+ key +'">'+ mete.elenco[mete.cercaMetaPerId(value.id_Meta_Da)].meta + '</a>';
+        testo += 'Da: <a href="#" data.role="button" data-inline="true" id="sfida_Da_'+ key +'">'+ mete.elenco[mete.cercaMetaPerId(value.id_Meta_Da)].meta + '</a>';
         testo += ' A: <a href="#" id="sfida_A_'+ key +'" >' + mete.elenco[mete.cercaMetaPerId(value.id_Meta_A)].meta + '</a><br>';
         if( value.iniziata.length>0){
           testo += "Iniziata il " + value.iniziata;
@@ -920,7 +920,7 @@ var pagine = {
     }
     sfida.pagDa= pagine.numPagina;   // crea un link dalla sfida alla pagina
     pagine.lista[sfida.pagDa].sfida = id;       // crea un link dalla pagina alla sfida
-    alert("pag Da " + sfida.pagDa +" sfida " + pagine.lista[sfida.pagDa].sfida);
+    // alert("pag Da " + sfida.pagDa +" sfida " + pagine.lista[sfida.pagDa].sfida);
     if( pagA<0){
       // aggiungi meta A
       pagine.aggiungiPagina(mete.cercaMetaPerId(sfida.id_Meta_A));
@@ -930,7 +930,7 @@ var pagine = {
     }
     sfida.pagA= pagine.numPagina;    // crea un link dalla sfida alla pagina
     pagine.lista[sfida.pagA].sfida = id;        // crea un link dalla pagina alla sfida
-    alert("pag A " + sfida.pagA +" sfida " + pagine.lista[sfida.pagA].sfida);
+    // alert("pag A " + sfida.pagA +" sfida " + pagine.lista[sfida.pagA].sfida);
     showAlert(msg, "Nota");
     sfida.inserita = true;
     mete.scriveSfide();
