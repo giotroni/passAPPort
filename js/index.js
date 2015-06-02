@@ -566,6 +566,7 @@ var pagine = {
   nextPage: function (){
     // dbgMsg("Next page: "+pagine.numPagina + " max page: " + pagine.numMaxPagine());
     // verifica se siamo all'ultima pagina
+    alert("nuum pag; " + pagine.numPagina + " " + pagine.lista.length);
     direction = false;
     if( pagine.numPagina >= pagine.lista.length){
       // ultima pagina, non va oltre
@@ -813,6 +814,8 @@ var pagine = {
   aggiungiPagina: function(id){
     // inserisce i dati della meta nell'array delle pagine
     // dbgMsg("id: " + id + " " + mete.elenco[id].id + " " + mete.elenco[id].meta);
+    alert("Aggiungi meta: " + id);
+    pagine.numPagina = pagine.lista.length;
     pagine.lista.push({
         "idMeta": mete.elenco[id].id,
         "meta": mete.elenco[id].meta,
@@ -837,7 +840,6 @@ var pagine = {
         });
     pagine.saved = false;
     pagine.scrivePagine();
-    pagine.numPagina = pagine.lista.length;
   },
   // aggiunge una nuova sfida
   nuovaSfida: function(id){
@@ -863,17 +865,20 @@ var pagine = {
     alert("pagDa " + pagDa  + " A " + pagA);
     if( pagDa <0){
       // aggiungi meta DA
-      pagine.aggiungiPagina(pagDa);
+      pagine.aggiungiPagina(sfida.id_Meta_Da);
       showAlert("Aggiunta la meta partenza: " + pagine.lista[pagine.lista.length-1].meta)
     } else {
       showAlert("Meta partenza già presente")
     }
     if( pagA<0){
       // aggiungi meta A
-      pagine.aggiungiPagina(pagA);
+      pagine.aggiungiPagina(sfida.id_Meta_A);
       showAlert("Aggiunta la meta destinazione: " + pagine.lista[pagine.lista.length-1].meta)
+    } else {
+      showAlert("Meta destinazione già presente")
     }
     sfida.inserita = true;
+    mete.scriveSfide();
     alert("ok: fine");
   },
   // aggiorna i dati sulla distanza
