@@ -814,7 +814,7 @@ var pagine = {
   aggiungiPagina: function(id){
     // inserisce i dati della meta nell'array delle pagine
     // dbgMsg("id: " + id + " " + mete.elenco[id].id + " " + mete.elenco[id].meta);
-    alert("Aggiungi meta: " + id);
+    alert("Aggiungi meta: " + id + " " + mete.elenco[id].meta);
     pagine.numPagina = pagine.lista.length;
     pagine.lista.push({
         "idMeta": mete.elenco[id].id,
@@ -840,6 +840,7 @@ var pagine = {
         });
     pagine.saved = false;
     pagine.scrivePagine();
+    alert("num pag: " + pagine.numPagina );
   },
   // aggiunge una nuova sfida
   nuovaSfida: function(id){
@@ -849,8 +850,6 @@ var pagine = {
     alert(" sfida " + sfida.id_Meta_Da + " A " + sfida.id_Meta_A );
     // cerca tra le pagine se è presente la meta DA NON raggiunta
     $.each(pagine.lista, function(key, value){
-      alert("idMeta " + value.idMeta);
-      alert( value.dataora.indexOf(MAI));
       if(value.dataora.indexOf(MAI)>=0){
         if( value.idMeta == sfida.id_Meta_Da){
           // pagina DA già presente
@@ -877,7 +876,7 @@ var pagine = {
     } else {
       showAlert("Meta destinazione già presente")
     }
-    sfida.inserita = true;
+    // sfida.inserita = true;
     mete.scriveSfide();
     alert("ok: fine");
   },
