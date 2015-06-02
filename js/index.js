@@ -625,6 +625,11 @@ var pagine = {
       $("#numPagina"+suffisso).html("<i><b>pag. "+pagine.numPagina +"</b></i>")
       $('#imgMeta'+suffisso).css('background-image', 'url('+appDir + el.img+')');
       $("#txtNota"+suffisso).val(el.note);
+      if(el.sfida>=0){
+        $('.btnSfida').show();
+      } else {
+        $('.btnSfida').hide();
+      }
       if(  pagine.arrivato(pagine.numPagina ) ){
         // ARRIVATO
         $('.imgShare').show();
@@ -633,7 +638,6 @@ var pagine = {
         $("#lblArrivo"+suffisso).css("color","green");
         $("#lblArrivo"+suffisso).html("Arrivato il:<br>"+txtDataora(el.dataora));
         $('#imgTimbro'+suffisso).show();
-        $('.btnSfida').show();
         $('#imgTimbro'+suffisso).attr('src',appDir + el.timbro);
         var sData = adesso().substring(0, 10);
         if (el.dataora.indexOf(sData) >= 0){ // è oggi!!
@@ -651,7 +655,6 @@ var pagine = {
         $("#lblArrivo"+suffisso).css("color","red");
         $("#lblArrivo"+suffisso).html("Non ancora arrivato");
         $('#imgTimbro'+suffisso).hide();
-        $('.btnSfida').hide();
         $('#imgTimbro'+suffisso).attr('src','');
       }
     } else {
@@ -955,11 +958,13 @@ var pagine = {
     var el = pagine.lista[pagine.numPagina-1];
     // dbgMsg("Check arrivato: " + el.arrivato + " dist " + el.dist );
     // SE non è ancora arrivato a questa meta
+    alert("Sfida: "+el.sfida);
+    alert("Da: "+mete.sfide[el.sfida].pagDa);
     if(!pagine.arrivato(pagine.numPagina) && pagine.vicino() ){
       el.dataora = adesso();
       pagine.saved = false;
       el.saved = false;
-      alert(el.sfida);
+      dbgMsg("Arrivato-sfida: " + el.sfida)
       if( el.sfida>=0 ){
         var sfida = mete.sfide[el.sfida];
         // se la meta era la partenza
