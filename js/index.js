@@ -346,7 +346,7 @@ var mete = {
       
     }
   },
-  // cerca una meta per il suo id
+  // cerca una meta per il suo id e ritorna l'indice attuale nell'array
   cercaMetaPerId: function(id){
     var risultato=-1;
     $.each(mete.elenco, function(i, valore){
@@ -355,7 +355,7 @@ var mete = {
         return false;
       }
     })
-    alert(id + " risultato " + mete.elenco[risultato].meta);
+    // alert(id + " risultato " + mete.elenco[risultato].meta);
     return risultato;
   },
   // aggiorna l'elenco delle mete
@@ -864,14 +864,14 @@ var pagine = {
     alert("pagDa " + pagDa  + " A " + pagA);
     if( pagDa <0){
       // aggiungi meta DA
-      pagine.aggiungiPagina(sfida.id_Meta_Da);
+      pagine.aggiungiPagina(mete.cercaMetaPerId(sfida.id_Meta_Da));
       showAlert("Aggiunta la meta partenza: " + pagine.lista[pagine.lista.length-1].meta)
     } else {
       showAlert("Meta partenza già presente")
     }
     if( pagA<0){
       // aggiungi meta A
-      pagine.aggiungiPagina(sfida.id_Meta_A);
+      pagine.aggiungiPagina(mete.cercaMetaPerId(sfida.id_Meta_A));
       showAlert("Aggiunta la meta destinazione: " + pagine.lista[pagine.lista.length-1].meta)
     } else {
       showAlert("Meta destinazione già presente")
