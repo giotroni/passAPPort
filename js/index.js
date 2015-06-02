@@ -890,7 +890,7 @@ var pagine = {
   },
   // aggiunge una nuova sfida
   nuovaSfida: function(id){
-    var sfida = mete.sfide[id];
+    var sfida = mete.sfide[id];     // la sfida oggetto
     var pagDa = -1;
     var pagA = -1;
     // alert(" sfida " + sfida.id_Meta_Da + " A " + sfida.id_Meta_A );
@@ -918,7 +918,7 @@ var pagine = {
     }
     sfida.pagDa= pagine.numPagina;   // crea un link dalla sfida alla pagina
     pagine.lista[sfida.pagDa].sfida = id;       // crea un link dalla pagina alla sfida
-    alert("pag Da " + sfida.pagDa +" sfida " + pagine.lista[mete.sfide.pagDa].sfida);
+    alert("pag Da " + sfida.pagDa +" sfida " + pagine.lista[sfida.pagDa].sfida);
     if( pagA<0){
       // aggiungi meta A
       pagine.aggiungiPagina(mete.cercaMetaPerId(sfida.id_Meta_A));
@@ -928,7 +928,7 @@ var pagine = {
     }
     sfida.pagA= pagine.numPagina;    // crea un link dalla sfida alla pagina
     pagine.lista[sfida.pagA].sfida = id;        // crea un link dalla pagina alla sfida
-    alert("pag A " + sfida.pagA +" sfida " + pagine.lista[mete.sfide.pagA].sfida);
+    alert("pag A " + sfida.pagA +" sfida " + pagine.lista[sfida.pagA].sfida);
     showAlert(msg, "Nota");
     sfida.inserita = true;
     mete.scriveSfide();
