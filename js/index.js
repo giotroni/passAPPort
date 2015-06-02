@@ -847,13 +847,16 @@ var pagine = {
     var pagA = -1;
     // cerca tra le pagine se è presente la meta DA NON raggiunta
     $.each(pagina.lista, function(key, value){
-      if( value.idMeta == sfida.id_Meta_Da && value.dataora.indexOf(MAI)>=0){
-        // pagina già presente
-        pagDa = key;
-      }
-      if( value.idMeta == sfida.id_Meta_A && value.dataora.indexOf(MAI)>=0){
-        // pagina già presente
-        pagA= key;
+      alert("idMeta " + value.idMeta + " sfida " + sfida.id_Meta_Da + " A " + sfida.id_Meta_A +" arrivato " + value.dataora.indexOf(MAI));
+      if(value.dataora.indexOf(MAI)>=0){
+        if( value.idMeta == sfida.id_Meta_Da){
+          // pagina DA già presente
+          pagDa = key;
+        }
+        if( value.idMeta == sfida.id_Meta_A ){
+          // pagina A già presente
+          pagA= key;
+        }
       }
     })
     alert("pagDa " + pagDa  + " A " + pagA);
