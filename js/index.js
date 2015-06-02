@@ -739,7 +739,7 @@ var pagine = {
           pagine.nuovaSfida(key);
       });
     });
-    $('#lstSfida').listview("refresh");
+    $('#lstSfide').listview("refresh");
   },
   // crea l'elenco pagine
   elencaPagine: function(){
